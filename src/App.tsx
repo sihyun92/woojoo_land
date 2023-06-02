@@ -1,5 +1,7 @@
+import MainPage from "./pages/main";
+
 function App() {
-  return <div className="App">테스트 중입니다!</div>;
+  return <MainPage />;
 }
 
 export default App;

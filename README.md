@@ -71,6 +71,7 @@ npm start
 2. Figma
 3. Notion
 4. Github
+5. [postman]('https://www.postman.com/')
 
 ## 코드 컨벤션 (Blog-Project와 최대한 같게) (Public 전환 시 삭제)
 
