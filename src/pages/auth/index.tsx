@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import styled from "styled-components";
 import { login, logout } from "../../lib/API/authAPI";
 
 // component
@@ -60,5 +61,7 @@ function AuthPage() {
     </>
   );
 }
+
+const AuthContainer = styled.div``;
 
 export default AuthPage;
