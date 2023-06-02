@@ -23,7 +23,7 @@ function MainPage({ username, setUsername }: IMainPageProps) {
           <button onClick={onLogout}>로그아웃</button>
         </>
       ) : (
-        <Link to="/auth">로그인</Link>
+        <Link to="/auth/login">로그인</Link>
       )}
     </div>
   );
