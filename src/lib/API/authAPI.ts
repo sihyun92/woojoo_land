@@ -1,15 +1,15 @@
-interface IAuthProps {
-  email: string;
-  password: string;
-  oldPassword?: string;
-  newPassword?: string;
-  displayName?: string;
-  profileImgBase64?: string;
-  accessToken?: string;
-  masterKey?: boolean;
-}
+// interface IAuthProps {
+//   email: string;
+//   password: string;
+//   oldPassword?: string;
+//   newPassword?: string;
+//   displayName?: string;
+//   profileImgBase64?: string;
+//   accessToken?: string;
+//   masterKey?: boolean;
+// }
 
-export async function login({ email, password }: IAuthProps) {
+async function login(email: string, password: string) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
     {
@@ -20,22 +20,24 @@ export async function login({ email, password }: IAuthProps) {
         username: "KDT5_TeamAirPod8",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email,
+        password,
       }),
     },
   );
   const result = await response.json();
   console.log(result);
+  localStorage.setItem("Token", result.accessToken);
+  localStorage.setItem("username", result.user.displayName);
   return result;
 }
 
-export async function register({
-  email,
-  password,
-  displayName,
-  profileImgBase64,
-}: IAuthProps) {
+async function register(
+  email: string,
+  password: string,
+  displayName: string,
+  profileImgBase64: string,
+) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
     {
@@ -46,10 +48,10 @@ export async function register({
         username: "KDT5_TeamAirPod8",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
-        displayName: displayName,
-        profileImgBase64: profileImgBase64,
+        email,
+        password,
+        displayName,
+        profileImgBase64,
       }),
     },
   );
@@ -58,7 +60,7 @@ export async function register({
   return result;
 }
 
-export async function check({ accessToken }: IAuthProps) {
+async function check() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
     {
@@ -67,7 +69,7 @@ export async function check({ accessToken }: IAuthProps) {
         "content-type": "application/json",
         apikey: "KDT5_nREmPe9B",
         username: "KDT5_TeamAirPod8",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
     },
   );
@@ -76,7 +78,7 @@ export async function check({ accessToken }: IAuthProps) {
   return result;
 }
 
-export async function logout({ accessToken }: IAuthProps) {
+async function logout() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/logout",
     {
@@ -85,7 +87,7 @@ export async function logout({ accessToken }: IAuthProps) {
         "content-type": "application/json",
         apikey: "KDT5_nREmPe9B",
         username: "KDT5_TeamAirPod8",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
     },
   );
@@ -94,13 +96,12 @@ export async function logout({ accessToken }: IAuthProps) {
   return result;
 }
 
-export async function userUpdate({
-  displayName,
-  profileImgBase64,
-  oldPassword,
-  newPassword,
-  accessToken,
-}: IAuthProps) {
+async function userUpdate(
+  displayName: string,
+  profileImgBase64: string,
+  oldPassword: string,
+  newPassword: string,
+) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
     {
@@ -109,13 +110,13 @@ export async function userUpdate({
         "content-type": "application/json",
         apikey: "KDT5_nREmPe9B",
         username: "KDT5_TeamAirPod8",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
       body: JSON.stringify({
-        displayName: displayName,
-        profileImgBase64: profileImgBase64,
-        oldPassword: oldPassword,
-        newPassword: newPassword,
+        displayName,
+        profileImgBase64,
+        oldPassword,
+        newPassword,
       }),
     },
   );
@@ -124,7 +125,7 @@ export async function userUpdate({
   return result;
 }
 
-export async function userCheck({ masterKey }: IAuthProps) {
+async function userCheck() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
     {
@@ -133,7 +134,7 @@ export async function userCheck({ masterKey }: IAuthProps) {
         "content-type": "application/json",
         apikey: "KDT5_nREmPe9B",
         username: "KDT5_TeamAirPod8",
-        masterKey: `${masterKey}`,
+        masterKey: "true",
       },
     },
   );
@@ -141,3 +142,5 @@ export async function userCheck({ masterKey }: IAuthProps) {
   console.log(result);
   return result;
 }
+
+export { login, register, check, logout, userUpdate, userCheck };
