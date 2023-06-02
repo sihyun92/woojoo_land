@@ -1,12 +1,14 @@
 import { FormEvent, useState } from "react";
 import { login, logout } from "../../lib/API/authAPI";
 
+// component
 function AuthPage() {
   // hooks
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
+  // function
   const onChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     if (name === "email") {
@@ -30,6 +32,8 @@ function AuthPage() {
     localStorage.removeItem("username");
     setUsername("");
   };
+
+  // render
   return (
     <>
       <h1>{username}</h1>
