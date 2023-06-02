@@ -1,6 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Button from "../../components/common/Button";
 import { login } from "../../lib/API/authAPI";
 
 // interface
@@ -55,9 +56,9 @@ function LoginPage({ setUsername }: ILoginPageProps) {
           onChange={onChange}
           name="password"
         />
-        <button type="submit">로그인</button>
+        <Button auth type="submit">로그인</Button>
       </AuthForm>
-        <button onClick={() => navigate('/auth/register')}>회원가입</button>
+        <Button changeAuth onClick={() => navigate('/auth/register')}>회원가입</Button>
     </AuthContainer>
   );
 }
