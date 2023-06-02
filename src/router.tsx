@@ -17,8 +17,14 @@ function Router() {
           element={<App username={username} setUsername={setUsername} />}
         />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/auth/login" element={<LoginPage setUsername={setUsername} />} />
-        <Route path="/auth/register" element={<RegisterPage setUsername={setUsername} />} />
+        <Route
+          path="/auth/login"
+          element={<LoginPage setUsername={setUsername} />}
+        />
+        <Route
+          path="/auth/register"
+          element={<RegisterPage setUsername={setUsername} />}
+        />
         <Route path="/user" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
