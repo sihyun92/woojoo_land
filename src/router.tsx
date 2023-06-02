@@ -2,7 +2,8 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import AdminPage from "./pages/admin";
-import AuthPage from "./pages/auth";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/Register";
 import UserPage from "./pages/user";
 
 function Router() {
@@ -16,7 +17,8 @@ function Router() {
           element={<App username={username} setUsername={setUsername} />}
         />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/auth" element={<AuthPage setUsername={setUsername} />} />
+        <Route path="/auth/login" element={<LoginPage setUsername={setUsername} />} />
+        <Route path="/auth/register" element={<RegisterPage setUsername={setUsername} />} />
         <Route path="/user" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
