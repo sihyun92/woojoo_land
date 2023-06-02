@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { login, register } from "../../lib/API/authAPI";
+import { register } from "../../lib/API/authAPI";
 
 // interface
 interface IRegisterPageProps {
