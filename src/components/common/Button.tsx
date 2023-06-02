@@ -21,7 +21,7 @@ const StyledButton = styled.button<{ active?: boolean }>`
       padding: 0.5rem 1rem;
       background: #333;
       color: #fff;
-    `}
+    `} 
 `;
 
 export default Button;
