@@ -1,7 +1,8 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { login, register } from "../../lib/API/authAPI";
+import Button from "../../components/common/Button";
+import { register } from "../../lib/API/authAPI";
 
 // interface
 interface IRegisterPageProps {
@@ -43,6 +44,12 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
   // render
   return (
     <AuthContainer>
+      <AuthTab>
+        <Button onClick={() => navigate("/auth/login")}>로그인</Button>
+        <Button active onClick={() => navigate("/auth/register")}>
+          회원가입
+        </Button>
+      </AuthTab>
       <AuthForm onSubmit={onSubmit}>
         <input
           type="text"
@@ -68,9 +75,10 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
           onChange={onChange}
           name="displayName"
         />
-        <button type="submit">회원가입</button>
+        <Button auth type="submit">
+          회원가입
+        </Button>
       </AuthForm>
-      <button onClick={() => navigate("/auth/login")}>로그인</button>
     </AuthContainer>
   );
 }
@@ -82,9 +90,16 @@ const AuthContainer = styled.div`
   margin-top: 2.5rem;
 `;
 
+const AuthTab = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   input {
     padding: 0.5rem 1rem;
   }

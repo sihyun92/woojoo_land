@@ -1,6 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Button from "../../components/common/Button";
 import { login } from "../../lib/API/authAPI";
 
 // interface
@@ -26,7 +27,6 @@ function LoginPage({ setUsername }: ILoginPageProps) {
   };
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(email, password);
     await login(email, password);
     const username = localStorage.getItem("username");
     setUsername(username || "");
@@ -38,6 +38,12 @@ function LoginPage({ setUsername }: ILoginPageProps) {
   // render
   return (
     <AuthContainer>
+      <AuthTab>
+        <Button active onClick={() => navigate("/auth/login")}>
+          로그인
+        </Button>
+        <Button onClick={() => navigate("/auth/register")}>회원가입</Button>
+      </AuthTab>
       <AuthForm onSubmit={onSubmit}>
         <input
           type="text"
@@ -55,9 +61,10 @@ function LoginPage({ setUsername }: ILoginPageProps) {
           onChange={onChange}
           name="password"
         />
-        <button type="submit">로그인</button>
+        <Button auth type="submit">
+          로그인
+        </Button>
       </AuthForm>
-        <button onClick={() => navigate('/auth/register')}>회원가입</button>
     </AuthContainer>
   );
 }
@@ -69,9 +76,16 @@ const AuthContainer = styled.div`
   margin-top: 2.5rem;
 `;
 
+const AuthTab = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   input {
     padding: 0.5rem 1rem;
   }
