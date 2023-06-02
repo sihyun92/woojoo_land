@@ -300,6 +300,19 @@ const purchaseDetail = async (detailId: string) => {
   return result;
 };
 
+// 단일 제품 상세 조회
+const productCheck = async (id: string) => {
+  const response = await fetch(
+    `curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/:${id}`,
+    {
+      method: "GET",
+      headers,
+    },
+  );
+  const result = await response.json();
+  return result;
+};
+
 export {
   login,
   register,
@@ -315,4 +328,5 @@ export {
   purchaseConfirm,
   purchaseDetailsAll,
   purchaseDetail,
+  productCheck,
 };
