@@ -9,17 +9,20 @@
 //   masterKey?: boolean;
 // }
 
+// fetch headers
+const headers = {
+  "content-type": "application/json",
+  apikey: "KDT5_nREmPe9B",
+  username: "KDT5_TeamAirPod8",
+};
+
 // 로그인
 async function login(email: string, password: string) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
     {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
-      },
+      headers,
       body: JSON.stringify({
         email,
         password,
@@ -30,7 +33,7 @@ async function login(email: string, password: string) {
   console.log(result);
   localStorage.setItem("Token", result.accessToken);
   localStorage.setItem("username", result.user.displayName);
-  return result; 
+  return result;
 }
 
 // 회원가입
@@ -44,11 +47,7 @@ async function register(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
     {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
-      },
+      headers,
       body: JSON.stringify({
         email,
         password,
@@ -69,9 +68,7 @@ async function check() {
     {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
+        ...headers,
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
     },
@@ -88,9 +85,7 @@ async function logout() {
     {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
+        ...headers,
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
     },
@@ -102,19 +97,17 @@ async function logout() {
 
 // 사용자 정보 수정
 async function userUpdate(
-  displayName: string,
-  profileImgBase64: string,
-  oldPassword: string,
-  newPassword: string,
+  displayName?: string,
+  profileImgBase64?: string,
+  oldPassword?: string,
+  newPassword?: string,
 ) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
     {
       method: "PUT",
       headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
+        ...headers,
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
       body: JSON.stringify({
@@ -137,9 +130,7 @@ async function userCheck() {
     {
       method: "PUT",
       headers: {
-        "content-type": "application/json",
-        apikey: "KDT5_nREmPe9B",
-        username: "KDT5_TeamAirPod8",
+        ...headers,
         masterKey: "true",
       },
     },
