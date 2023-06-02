@@ -9,6 +9,7 @@
 //   masterKey?: boolean;
 // }
 
+// 로그인
 async function login(email: string, password: string) {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
@@ -32,6 +33,7 @@ async function login(email: string, password: string) {
   return result;
 }
 
+// 회원가입
 async function register(
   email: string,
   password: string,
@@ -60,6 +62,7 @@ async function register(
   return result;
 }
 
+// 인증확인
 async function check() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
@@ -78,6 +81,7 @@ async function check() {
   return result;
 }
 
+// 로그아웃
 async function logout() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/logout",
@@ -96,6 +100,7 @@ async function logout() {
   return result;
 }
 
+// 사용자 정보 수정
 async function userUpdate(
   displayName: string,
   profileImgBase64: string,
@@ -125,6 +130,7 @@ async function userUpdate(
   return result;
 }
 
+// 사용자 목록 조회
 async function userCheck() {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
