@@ -44,6 +44,12 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
   // render
   return (
     <AuthContainer>
+      <AuthTab>
+        <Button onClick={() => navigate("/auth/login")}>로그인</Button>
+        <Button active onClick={() => navigate("/auth/register")}>
+          회원가입
+        </Button>
+      </AuthTab>
       <AuthForm onSubmit={onSubmit}>
         <input
           type="text"
@@ -73,9 +79,6 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
           회원가입
         </Button>
       </AuthForm>
-      <Button changeAuth onClick={() => navigate("/auth/login")}>
-        로그인
-      </Button>
     </AuthContainer>
   );
 }
@@ -85,6 +88,12 @@ const AuthContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 2.5rem;
+`;
+
+const AuthTab = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const AuthForm = styled.form`
