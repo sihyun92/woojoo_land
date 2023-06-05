@@ -12,6 +12,7 @@ import UserPage from "./pages/user";
 import LikePage from "./pages/user/LikePage";
 import AccountPage from "./pages/user/AccountPage";
 import PersonalSettings from "./pages/user/PersonalSettings";
+import Layout from "./components/common/Layout";
 
 function Router() {
   const [username, setUsername] = useState("");
@@ -21,9 +22,20 @@ function Router() {
         {/* path name은 임시로 지었습니다 */}
         <Route
           path="/"
-          element={<App username={username} setUsername={setUsername} />}
+          element={
+            <Layout>
+              <App username={username} setUsername={setUsername} />
+            </Layout>
+          }
         />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route
+          path="/admin"
+          element={
+            <Layout>
+              <AdminPage />
+            </Layout>
+          }
+        />
         <Route
           path="/auth/login"
           element={<LoginPage setUsername={setUsername} />}
@@ -32,7 +44,14 @@ function Router() {
           path="/auth/register"
           element={<RegisterPage setUsername={setUsername} />}
         />
-        <Route path="/user" element={<UserPage />}>
+        <Route
+          path="/user"
+          element={
+            <Layout>
+              <UserPage />
+            </Layout>
+          }
+        >
           <Route path="account" element={<AccountPage />} />
           <Route path="like" element={<LikePage />} />
           <Route path="settings" element={<PersonalSettings />} />
