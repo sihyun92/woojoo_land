@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { OrderDetailsAll } from "../../lib/API/authAPI";
+import { orderDetailsAll } from "../../lib/API/authAPI";
 import styled from "styled-components";
 
 interface TransactionDetail {
@@ -28,7 +28,7 @@ function OrderListPage() {
 
   const getOrders = async () => {
     try {
-      const orderList = await OrderDetailsAll();
+      const orderList = await orderDetailsAll();
       setOrders(orderList);
     } catch (error) {
       console.log(error);
