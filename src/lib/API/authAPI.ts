@@ -9,6 +9,13 @@
 //   masterKey?: boolean;
 // }
 
+interface RequestBody {
+  displayName?: string;
+  profileImgBase64?: string;
+  oldPassword?: string;
+  newPassword?: string;
+}
+
 // fetch headers
 const headers = {
   "content-type": "application/json",
@@ -96,12 +103,7 @@ const logout = async () => {
 };
 
 // 사용자 정보 수정
-const userUpdate = async (
-  displayName?: string,
-  profileImgBase64?: string,
-  oldPassword?: string,
-  newPassword?: string,
-) => {
+const userUpdate = async (user: RequestBody) => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
     {
@@ -110,12 +112,7 @@ const userUpdate = async (
         ...headers,
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
-      body: JSON.stringify({
-        displayName,
-        profileImgBase64,
-        oldPassword,
-        newPassword,
-      }),
+      body: JSON.stringify(user),
     },
   );
   const result = await response.json();
