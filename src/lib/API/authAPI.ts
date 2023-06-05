@@ -224,7 +224,7 @@ const accountDisconnect = async (accountId: string, signature: boolean) => {
 };
 
 // 제품 거래(구매) 취소
-const purchaseCancle = async (detailId: string) => {
+const orderCancle = async (detailId: string) => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel",
     {
@@ -244,9 +244,9 @@ const purchaseCancle = async (detailId: string) => {
 };
 
 // 제품 거래(구매) 확정
-const purchaseConfirm = async (detailId: string) => {
+const orderConfirm = async (detailId: string) => {
   const response = await fetch(
-    "curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok",
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok",
     {
       method: "POST",
       headers: {
@@ -264,9 +264,9 @@ const purchaseConfirm = async (detailId: string) => {
 };
 
 // 제품 전체 거래(구매) 내역
-const purchaseDetailsAll = async () => {
+const orderDetailsAll = async () => {
   const response = await fetch(
-    "curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details",
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details",
     {
       method: "GET",
       headers: {
@@ -281,9 +281,9 @@ const purchaseDetailsAll = async () => {
 };
 
 // 단일 제품 상세 거래(구매) 내역
-const purchaseDetail = async (detailId: string) => {
+const orderDetail = async (detailId: string) => {
   const response = await fetch(
-    "curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail",
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail",
     {
       method: "POST",
       headers: {
@@ -311,8 +311,8 @@ export {
   myAccount,
   accountConnect,
   accountDisconnect,
-  purchaseCancle,
-  purchaseConfirm,
-  purchaseDetailsAll,
-  purchaseDetail,
+  orderCancle,
+  orderConfirm,
+  orderDetailsAll,
+  orderDetail,
 };
