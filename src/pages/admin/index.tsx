@@ -135,7 +135,7 @@ function AdminPage() {
       <UserCheck>
         <h3>사용자 목록 조회</h3>
         <ul>
-          {users
+          {users.length
             ? users.map((user: IUser) => {
                 return (
                   <li key={user.email}>
@@ -150,7 +150,7 @@ function AdminPage() {
       <ProductCheck>
         <h3>모든 제품 조회</h3>
         <ul>
-          {products
+          {products.length
             ? products.map((product: IProduct) => {
                 return (
                   <li key={product.id}>
