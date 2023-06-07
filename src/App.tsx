@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import MainPage from "./pages/main";
+import MainPage from "./pages/main/MainPage";
 
 interface IAppProps {
   username: string;
