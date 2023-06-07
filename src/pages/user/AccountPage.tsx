@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { accountDisconnect, myAccount } from "../../lib/API/authAPI";
+import { accountDisconnect, myAccount } from "../../lib/API/userAPI";
 import styled from "styled-components";
 
 interface ResponseValue {

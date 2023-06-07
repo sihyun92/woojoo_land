@@ -9,7 +9,7 @@
 //   masterKey?: boolean;
 // }
 
-interface RequestBody {
+interface IUserUpdate {
   displayName?: string;
   profileImgBase64?: string;
   oldPassword?: string;
@@ -103,7 +103,7 @@ const logout = async () => {
 };
 
 // 사용자 정보 수정
-const userUpdate = async (user: RequestBody) => {
+const userUpdate = async (user: IUserUpdate) => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
     {
@@ -113,23 +113,6 @@ const userUpdate = async (user: RequestBody) => {
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
       },
       body: JSON.stringify(user),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
-};
-
-// 사용자 목록 조회
-const userCheck = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
-    {
-      method: "PUT",
-      headers: {
-        ...headers,
-        masterKey: "true",
-      },
     },
   );
   const result = await response.json();
@@ -303,7 +286,6 @@ export {
   check,
   logout,
   userUpdate,
-  userCheck,
   accountList,
   myAccount,
   accountConnect,
