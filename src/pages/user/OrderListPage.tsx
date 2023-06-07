@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { orderDetailsAll } from "../../lib/API/authAPI";
+import { orderDetailsAll } from "../../lib/API/userAPI";
 import styled from "styled-components";
 
 interface TransactionDetail {

@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
-import { userUpdate } from "../../lib/API/authAPI";
+import { userUpdate } from "../../lib/API/userAPI";
 
 function PersonalSettings() {
   const [user, setUser] = useState({});

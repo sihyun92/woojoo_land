@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AuthTemplate from "../../components/auth/AuthTemplate";
 import Button from "../../components/common/Button";
-import { register } from "../../lib/API/authAPI";
+import { register } from "../../lib/API/userAPI";
 
 // interface
 interface IRegisterPageProps {

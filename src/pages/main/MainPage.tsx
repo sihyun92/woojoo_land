@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../lib/API/authAPI";
+import { logout } from "../../lib/API/userAPI";
 
 interface IMainPageProps {
   username: string;

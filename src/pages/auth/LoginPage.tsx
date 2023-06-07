@@ -4,7 +4,7 @@ import styled from "styled-components";
 import AuthTemplate from "../../components/auth/AuthTemplate";
 import AuthForm from "../../components/auth/AuthForm";
 import Button from "../../components/common/Button";
-import { login } from "../../lib/API/authAPI";
+import { login } from "../../lib/API/userAPI";
 
 // interface
 interface ILoginPageProps {
