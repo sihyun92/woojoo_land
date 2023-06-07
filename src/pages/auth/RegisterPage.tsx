@@ -1,6 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthTemplate from "../../components/auth/AuthTemplate";
 import Button from "../../components/common/Button";
 import { register } from "../../lib/API/authAPI";
 
@@ -43,43 +44,48 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
 
   // render
   return (
-    <AuthContainer>
-      <AuthTab>
-        <Button onClick={() => navigate("/auth/login")}>로그인</Button>
-        <Button active onClick={() => navigate("/auth/register")}>
-          회원가입
-        </Button>
-      </AuthTab>
-      <AuthForm onSubmit={onSubmit}>
-        <input
-          type="text"
-          required
-          value={email}
-          placeholder="이메일"
-          onChange={onChange}
-          name="email"
-        />
-        <input
-          type="password"
-          required
-          value={password}
-          placeholder="비밀번호"
-          onChange={onChange}
-          name="password"
-        />
-        <input
-          type="text"
-          required
-          value={displayName}
-          placeholder="닉네임"
-          onChange={onChange}
-          name="displayName"
-        />
-        <Button auth type="submit">
-          회원가입
-        </Button>
-      </AuthForm>
-    </AuthContainer>
+    <>
+      <AuthTemplate>
+        <AuthForm />
+      </AuthTemplate>
+      <AuthContainer>
+        <AuthTab>
+          <Button onClick={() => navigate("/auth/login")}>로그인</Button>
+          <Button active onClick={() => navigate("/auth/register")}>
+            회원가입
+          </Button>
+        </AuthTab>
+        <AuthForm onSubmit={onSubmit}>
+          <input
+            type="text"
+            required
+            value={email}
+            placeholder="이메일"
+            onChange={onChange}
+            name="email"
+          />
+          <input
+            type="password"
+            required
+            value={password}
+            placeholder="비밀번호"
+            onChange={onChange}
+            name="password"
+          />
+          <input
+            type="text"
+            required
+            value={displayName}
+            placeholder="닉네임"
+            onChange={onChange}
+            name="displayName"
+          />
+          <Button auth type="submit">
+            회원가입
+          </Button>
+        </AuthForm>
+      </AuthContainer>
+    </>
   );
 }
 

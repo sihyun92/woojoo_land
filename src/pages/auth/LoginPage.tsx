@@ -1,6 +1,8 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthTemplate from "../../components/auth/AuthTemplate";
+import AuthForm from "../../components/auth/AuthForm";
 import Button from "../../components/common/Button";
 import { login } from "../../lib/API/authAPI";
 
@@ -37,35 +39,40 @@ function LoginPage({ setUsername }: ILoginPageProps) {
 
   // render
   return (
-    <AuthContainer>
-      <AuthTab>
-        <Button active onClick={() => navigate("/auth/login")}>
-          로그인
-        </Button>
-        <Button onClick={() => navigate("/auth/register")}>회원가입</Button>
-      </AuthTab>
-      <AuthForm onSubmit={onSubmit}>
-        <input
-          type="text"
-          required
-          value={email}
-          placeholder="이메일"
-          onChange={onChange}
-          name="email"
-        />
-        <input
-          type="password"
-          required
-          value={password}
-          placeholder="패스워드"
-          onChange={onChange}
-          name="password"
-        />
-        <Button auth type="submit">
-          로그인
-        </Button>
-      </AuthForm>
-    </AuthContainer>
+    <>
+      <AuthTemplate>
+        <AuthForm type="login" />
+      </AuthTemplate>
+      <AuthContainer>
+        <AuthTab>
+          <Button active onClick={() => navigate("/auth/login")}>
+            로그인
+          </Button>
+          <Button onClick={() => navigate("/auth/register")}>회원가입</Button>
+        </AuthTab>
+        <AuthFormI onSubmit={onSubmit}>
+          <input
+            type="text"
+            required
+            value={email}
+            placeholder="이메일"
+            onChange={onChange}
+            name="email"
+          />
+          <input
+            type="password"
+            required
+            value={password}
+            placeholder="패스워드"
+            onChange={onChange}
+            name="password"
+          />
+          <Button auth type="submit">
+            로그인
+          </Button>
+        </AuthFormI>
+      </AuthContainer>
+    </>
   );
 }
 
@@ -82,7 +89,7 @@ const AuthTab = styled.div`
   justify-content: center;
 `;
 
-const AuthForm = styled.form`
+const AuthFormI = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
