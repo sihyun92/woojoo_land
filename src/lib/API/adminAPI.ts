@@ -33,9 +33,9 @@ const headers = {
 // 사용자 목록 조회
 const userCheck = async () => {
   const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/users",
     {
-      method: "PUT",
+      method: "GET",
       headers: {
         ...headers,
         masterKey: "true",
@@ -118,9 +118,9 @@ const productPost = async (product: IProductPost) => {
 };
 
 // 제품 수정
-const productEdit = async (product: IProductEdit) => {
+const productEdit = async (product: IProductEdit, ID: string) => {
   const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products ",
+    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${ID}`,
     {
       method: "PUT",
       headers: {
