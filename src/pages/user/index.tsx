@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import UserNav from "../../components/user/UserNav";
 import styled from "styled-components";
-import PurchaseListPage from "./PurchaseListPage";
+import OrderListPage from "./OrderListPage";
 
 function UserPage() {
   const location = useLocation();
@@ -9,7 +9,7 @@ function UserPage() {
   return (
     <UserContainer>
       <UserNav />
-      {location.pathname === "/user" ? <PurchaseListPage /> : <Outlet />}
+      {location.pathname === "/user" ? <OrderListPage /> : <Outlet />}
     </UserContainer>
   );
 }
