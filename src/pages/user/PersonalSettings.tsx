@@ -4,10 +4,14 @@ import { userUpdate } from "../../lib/API/authAPI";
 
 function PersonalSettings() {
   const [user, setUser] = useState({});
+  const [error, setError] = useState("");
 
-  const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    userUpdate(user);
+    const message = await userUpdate(user);
+    if (typeof message === "string") {
+      setError(message);
+    }
   };
 
   const onChangeForm = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +58,7 @@ function PersonalSettings() {
         {/* <div>
           <span>프로필 이미지</span>
         </div> */}
+        {error ? error : ""}
         {Object.keys(user).length ? (
           <button type="submit" onClick={onSubmit}>
             저장
