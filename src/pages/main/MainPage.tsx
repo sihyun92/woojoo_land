@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../lib/API/userAPI";
-import SubHeader from "../../components/common/SubHeader";
 
 interface IMainPageProps {
   username: string;
