@@ -31,3 +31,4 @@
 
 - user 페이지 임시 기본 스타일링
 - UserTitle, UserLayout 컴포넌트 생성 및 적용
+- 계좌 추가 Modal 생성 및 형태 구현
