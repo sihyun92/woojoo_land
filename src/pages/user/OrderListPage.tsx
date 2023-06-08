@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { orderDetailsAll } from "../../lib/API/userAPI";
 import styled from "styled-components";
+import UserTitle from "../../components/user/UserTitle";
 
 interface TransactionDetail {
   detailId: string; // 거래 내역 ID
@@ -36,7 +37,7 @@ function OrderListPage() {
   };
   return (
     <OrderRoute>
-      <h2>주문 내역</h2>
+      <UserTitle>주문 내역</UserTitle>
       {typeof orders !== "string"
         ? orders.map((order: TransactionDetail) => {
             return (
@@ -53,7 +54,7 @@ function OrderListPage() {
   );
 }
 
-const OrderRoute = styled.main`
+const OrderRoute = styled.div`
   display: flex;
   flex-direction: column;
 `;
