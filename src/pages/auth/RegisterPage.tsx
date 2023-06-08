@@ -1,8 +1,10 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthForm from "../../components/auth/AuthForm";
+import AuthTemplate from "../../components/auth/AuthTemplate";
 import Button from "../../components/common/Button";
-import { register } from "../../lib/API/authAPI";
+import { register } from "../../lib/API/userAPI";
 
 // interface
 interface IRegisterPageProps {
@@ -19,7 +21,7 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
   const navigate = useNavigate();
 
   // function
-  const onChange = (event: FormEvent) => {
+  const onRegisterChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     if (name === "email") {
       setEmail(value);
@@ -29,7 +31,7 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
       setDisplayName(value);
     }
   };
-  const onSubmit = async (event: FormEvent) => {
+  const onRegister = async (event: FormEvent) => {
     event.preventDefault();
     console.log(email, password);
     await register(email, password, displayName, profileImgBase64);
@@ -43,43 +45,48 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
 
   // render
   return (
-    <AuthContainer>
-      <AuthTab>
-        <Button onClick={() => navigate("/auth/login")}>로그인</Button>
-        <Button active onClick={() => navigate("/auth/register")}>
-          회원가입
-        </Button>
-      </AuthTab>
-      <AuthForm onSubmit={onSubmit}>
-        <input
-          type="text"
-          required
-          value={email}
-          placeholder="이메일"
-          onChange={onChange}
-          name="email"
-        />
-        <input
-          type="password"
-          required
-          value={password}
-          placeholder="비밀번호"
-          onChange={onChange}
-          name="password"
-        />
-        <input
-          type="text"
-          required
-          value={displayName}
-          placeholder="닉네임"
-          onChange={onChange}
-          name="displayName"
-        />
-        <Button auth type="submit">
-          회원가입
-        </Button>
-      </AuthForm>
-    </AuthContainer>
+    <>
+      <AuthContainer>
+        <AuthTemplate>
+          <AuthForm type="register" />
+        </AuthTemplate>
+        <AuthTab>
+          <Button onClick={() => navigate("/auth/login")}>로그인</Button>
+          <Button active onClick={() => navigate("/auth/register")}>
+            회원가입
+          </Button>
+        </AuthTab>
+        <AuthFormI onSubmit={onRegister}>
+          <input
+            type="text"
+            required
+            value={email}
+            placeholder="이메일"
+            onChange={onRegisterChange}
+            name="email"
+          />
+          <input
+            type="password"
+            required
+            value={password}
+            placeholder="비밀번호"
+            onChange={onRegisterChange}
+            name="password"
+          />
+          <input
+            type="text"
+            required
+            value={displayName}
+            placeholder="닉네임"
+            onChange={onRegisterChange}
+            name="displayName"
+          />
+          <Button auth type="submit">
+            회원가입
+          </Button>
+        </AuthFormI>
+      </AuthContainer>
+    </>
   );
 }
 
@@ -96,7 +103,7 @@ const AuthTab = styled.div`
   justify-content: center;
 `;
 
-const AuthForm = styled.form`
+const AuthFormI = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;

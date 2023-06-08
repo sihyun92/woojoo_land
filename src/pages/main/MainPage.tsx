@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../lib/API/authAPI";
+import { logout } from "../../lib/API/userAPI";
+import SubHeader from "../../components/common/SubHeader";
 
 interface IMainPageProps {
   username: string;
@@ -15,17 +16,19 @@ function MainPage({ username, setUsername }: IMainPageProps) {
     setUsername("");
   };
   return (
-    <div>
-      <h1>MainPage</h1>
-      {username ? (
-        <>
-          <h2>{username}</h2>
-          <button onClick={onLogout}>로그아웃</button>
-        </>
-      ) : (
-        <Link to="/auth/login">로그인</Link>
-      )}
-    </div>
+    <>
+      <div>
+        <h1>MainPage</h1>
+        {username ? (
+          <>
+            <h2>{username}</h2>
+            <button onClick={onLogout}>로그아웃</button>
+          </>
+        ) : (
+          <Link to="/auth/login">로그인</Link>
+        )}
+      </div>
+    </>
   );
 }
 
