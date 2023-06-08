@@ -25,7 +25,7 @@ function App() {
   const [username, setUsername] = useState("");
   return (
     <BrowserRouter>
-      <Header />
+      <Header /> 
       <Routes>
         {/* 메인 */}
         <Route
