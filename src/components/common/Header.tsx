@@ -3,25 +3,22 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo>우주 부동산</Logo>
+        <Logo>Gal 부동산</Logo>
         <Search>
           <SearchInput type="text" />
           <MdSearch />
         </Search>
         <User>
           <Auth>
-            <a href="/auth/login" target="_blank" rel="noopener noreferrer">
-              로그인
-            </a>
+            <Link to="/auth/login">로그인</Link>
             <span>|</span>
-            <a href="/auth/register" target="_blank" rel="noopener noreferrer">
-              회원가입
-            </a>
+            <Link to="/auth/register">회원가입</Link>
           </Auth>
           <ButtonWrapper>
             <button>
@@ -43,6 +40,7 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #ff6214;
   border-bottom: 1px solid ${theme.colors.gray};
 `;
 
