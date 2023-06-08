@@ -1,14 +1,12 @@
-import { FormEvent } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { login, register } from "../../lib/API/userAPI";
 import Button from "../common/Button";
 
 interface IAuthFormProps {
   type: string;
-  onLoginChange?: (event: FormEvent) => void;
-  onLogin?: (event: FormEvent) => void;
-  onRegisterChange?: (event: FormEvent) => void;
-  onRegister?: (event: FormEvent) => void;
+  setUsername: Dispatch<SetStateAction<string>>;
 }
 
 interface ITextMap {
@@ -25,34 +23,74 @@ const PARAMS = {
   register: "/auth/register",
 };
 
-function AuthForm({
-  type,
-  onLoginChange,
-  onLogin,
-  onRegister,
-  onRegisterChange,
-}: IAuthFormProps) {
+function AuthForm({ type, setUsername }: IAuthFormProps) {
   const text = textMap[type];
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [profileImgBase64, setProfileImgBase64] = useState("");
+  const navigate = useNavigate();
+
+  const onChange = (event: FormEvent) => {
+    const { name, value } = event.target as HTMLInputElement;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "displayName") {
+      setDisplayName(value);
+    }
+  };
+
+  const onRegister = async (event: FormEvent) => {
+    event.preventDefault();
+    console.log(email, password);
+    await register(email, password, displayName, profileImgBase64);
+    const username = localStorage.getItem("username");
+    setUsername(username || "");
+    setEmail("");
+    setPassword("");
+    setProfileImgBase64("");
+    navigate("/");
+  };
+
+  const onLogin = async (event: FormEvent) => {
+    event.preventDefault();
+    await login(email, password);
+    const username = localStorage.getItem("username");
+    setUsername(username || "");
+    setEmail("");
+    setPassword("");
+    navigate("/");
+  };
+
   return (
     <AuthFormBlock>
       <Tab>
-        <TabButton to={PARAMS.login} >로그인</TabButton>
+        <TabButton to={PARAMS.login}>로그인</TabButton>
         <TabButton to={PARAMS.register}>회원가입</TabButton>
       </Tab>
-      <h3>{text}</h3>
-      <form>
-        <StyledInput autoComplete="email" name="email" placeholder="이메일" />
+      <form onSubmit={type === "login" ? onLogin : onRegister}>
+        <StyledInput
+          autoComplete="email"
+          name="email"
+          placeholder="이메일"
+          onChange={onChange}
+        />
         <StyledInput
           type="password"
           autoComplete="new-password"
           name="password"
           placeholder="패스워드"
+          onChange={onChange}
         />
         {type === "register" && (
           <StyledInput
             autoComplete="displayName"
             name="displayName"
             placeholder="닉네임"
+            onChange={onChange}
           />
         )}
         {type === "login" ? (
