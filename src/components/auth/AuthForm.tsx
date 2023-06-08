@@ -68,6 +68,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   return (
     <AuthFormBlock>
       <Tab>
+        {/* NavLink를 Styled-Components로 스타일링 */}
         <TabButton to={PARAMS.login}>로그인</TabButton>
         <TabButton to={PARAMS.register}>회원가입</TabButton>
       </Tab>
@@ -116,16 +117,6 @@ const Tab = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  a {
-    padding: 0.5rem 1rem;
-    background: #fff;
-    width: 100%;
-    text-align: center;
-    border: 1px solid #ccc;
-    &:last-child {
-      background: #333;
-    }
-  }
 `;
 
 const TabButton = styled(NavLink)`
@@ -134,8 +125,10 @@ const TabButton = styled(NavLink)`
   width: 100%;
   text-align: center;
   border: 1px solid #ccc;
-  &:last-child {
+  /* .active라는 클래스이름을 넣어주면 라우팅되면서 active라는 클래스이름이 자동으로 적용 */
+  &.active {
     background: #333;
+    color: #fff;
   }
 `;
 
