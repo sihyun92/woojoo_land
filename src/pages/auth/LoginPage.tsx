@@ -19,7 +19,7 @@ function LoginPage({ setUsername }: ILoginPageProps) {
   const navigate = useNavigate();
 
   // function
-  const onChange = (event: FormEvent) => {
+  const onLoginChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     if (name === "email") {
       setEmail(value);
@@ -27,7 +27,7 @@ function LoginPage({ setUsername }: ILoginPageProps) {
       setPassword(value);
     }
   };
-  const onSubmit = async (event: FormEvent) => {
+  const onLogin = async (event: FormEvent) => {
     event.preventDefault();
     await login(email, password);
     const username = localStorage.getItem("username");
@@ -47,13 +47,13 @@ function LoginPage({ setUsername }: ILoginPageProps) {
           </Button>
           <Button onClick={() => navigate("/auth/register")}>회원가입</Button>
         </AuthTab>
-        <AuthFormI onSubmit={onSubmit}>
+        <AuthFormI onSubmit={onLogin}>
           <input
             type="text"
             required
             value={email}
             placeholder="이메일"
-            onChange={onChange}
+            onChange={onLoginChange}
             name="email"
           />
           <input
@@ -61,7 +61,7 @@ function LoginPage({ setUsername }: ILoginPageProps) {
             required
             value={password}
             placeholder="패스워드"
-            onChange={onChange}
+            onChange={onLoginChange}
             name="password"
           />
           <Button auth type="submit">
