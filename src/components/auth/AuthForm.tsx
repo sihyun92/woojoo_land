@@ -1,9 +1,14 @@
+import { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../common/Button";
 
 interface IAuthFormProps {
   type: string;
+  onLoginChange?: (event: FormEvent) => void;
+  onLogin?: (event: FormEvent) => void;
+  onRegisterChange?: (event: FormEvent) => void;
+  onRegister?: (event: FormEvent) => void;
 }
 
 interface ITextMap {
@@ -15,14 +20,26 @@ const textMap: ITextMap = {
   register: "회원가입",
 };
 
-function AuthForm({ type }: IAuthFormProps) {
+const params = {
+  login: "/auth/login",
+  register: "/auth/register",
+};
+
+function AuthForm({
+  type,
+  onLoginChange,
+  onLogin,
+  onRegister,
+  onRegisterChange,
+}: IAuthFormProps) {
   const text = textMap[type];
   return (
     <AuthFormBlock>
       <Tab>
-        <Link to="/auth/login">로그인</Link>
-        <Link to="/auth/register">회원가입</Link>
+        <Link to={params.login}>로그인</Link>
+        <Link to={params.register}>회원가입</Link>
       </Tab>
+      <h3>{text}</h3>
       <form>
         <StyledInput autoComplete="email" name="email" placeholder="이메일" />
         <StyledInput
@@ -38,7 +55,11 @@ function AuthForm({ type }: IAuthFormProps) {
             placeholder="닉네임"
           />
         )}
-        <AuthButton fullWidth>로그인</AuthButton>
+        {type === "login" ? (
+          <AuthButton fullWidth>로그인</AuthButton>
+        ) : (
+          <AuthButton fullWidth>회원가입</AuthButton>
+        )}
       </form>
     </AuthFormBlock>
   );
