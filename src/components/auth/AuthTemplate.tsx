@@ -1,14 +1,10 @@
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function AuthTemplate({ children }: PropsWithChildren) {
   return (
     <AuthTemplateBlock>
       <WhiteBox>
-        <div className="logo-area">
-          <Link to="/">우주부동산</Link>
-        </div>
         {children}
       </WhiteBox>
     </AuthTemplateBlock>
@@ -18,27 +14,18 @@ function AuthTemplate({ children }: PropsWithChildren) {
 const AuthTemplateBlock = styled.div`
   position: absolute;
   left: 0;
-  top: 0;
+  top: 200px;
   bottom: 0;
   right: 0;
-  background: #ccc;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 `;
 
 const WhiteBox = styled.div`
-  .logo-area {
-    display: block;
-    padding-bottom: 2rem;
-    text-align: center;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.025);
-  padding: 2rem;
-  width: 360px;
+  width: 30rem;
   background: #fff;
   border-radius: 2px;
 `;
