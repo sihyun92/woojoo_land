@@ -19,7 +19,7 @@ import PersonalSettings from "./pages/user/PersonalSettings";
 import MainPage from "./pages/main/MainPage";
 import Header from "./components/common/Header";
 import SubHeader from "./components/common/SubHeader";
-import Banner from "./components/main/Banner";
+import Banner from "./components/main/MainBanner";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -39,6 +39,7 @@ function App() {
           }
         />
       </Routes>
+
       <Main>
         <Inner>
           <Routes>
