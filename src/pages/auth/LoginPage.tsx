@@ -40,6 +40,9 @@ function LoginPage({ setUsername }: ILoginPageProps) {
   // render
   return (
     <>
+      <AuthTemplate>
+        <AuthForm type="login" />
+      </AuthTemplate>
       <AuthContainer>
         <AuthTab>
           <Button active onClick={() => navigate("/auth/login")}>
