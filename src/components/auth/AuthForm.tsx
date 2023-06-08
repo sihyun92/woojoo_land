@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../common/Button";
 
@@ -20,7 +20,7 @@ const textMap: ITextMap = {
   register: "회원가입",
 };
 
-const params = {
+const PARAMS = {
   login: "/auth/login",
   register: "/auth/register",
 };
@@ -36,8 +36,8 @@ function AuthForm({
   return (
     <AuthFormBlock>
       <Tab>
-        <Link to={params.login}>로그인</Link>
-        <Link to={params.register}>회원가입</Link>
+        <TabButton to={PARAMS.login} >로그인</TabButton>
+        <TabButton to={PARAMS.register}>회원가입</TabButton>
       </Tab>
       <h3>{text}</h3>
       <form>
@@ -87,6 +87,17 @@ const Tab = styled.div`
     &:last-child {
       background: #333;
     }
+  }
+`;
+
+const TabButton = styled(NavLink)`
+  padding: 0.5rem 1rem;
+  background: #fff;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #ccc;
+  &:last-child {
+    background: #333;
   }
 `;
 
