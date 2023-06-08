@@ -18,22 +18,31 @@ import PersonalSettings from "./pages/user/PersonalSettings";
 // main
 import MainPage from "./pages/main/MainPage";
 import Header from "./components/common/Header";
+import SubHeader from "./components/common/SubHeader";
+import Banner from "./components/main/MainBanner";
 
 function App() {
   const [username, setUsername] = useState("");
   return (
     <BrowserRouter>
       <Header />
+      <Routes>
+        {/* 메인 */}
+        <Route
+          path="/"
+          element={
+            <>
+              <SubHeader />
+              <Banner />
+              <MainPage username={username} setUsername={setUsername} />
+            </>
+          }
+        />
+      </Routes>
+
       <Main>
         <Inner>
           <Routes>
-            {/* 메인 */}
-            <Route
-              path="/"
-              element={
-                <MainPage username={username} setUsername={setUsername} />
-              }
-            />
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
 
