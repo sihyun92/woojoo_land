@@ -45,9 +45,6 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
   // render
   return (
     <>
-      <AuthTemplate>
-        <AuthForm />
-      </AuthTemplate>
       <AuthContainer>
         <AuthTab>
           <Button onClick={() => navigate("/auth/login")}>로그인</Button>
