@@ -3,6 +3,7 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (

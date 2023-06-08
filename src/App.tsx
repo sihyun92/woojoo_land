@@ -14,11 +14,13 @@ import PersonalSettings from "./pages/user/PersonalSettings";
 
 // main
 import MainPage from "./pages/main/MainPage";
+import Header from "./components/common/Header";
 
 function App() {
   const [username, setUsername] = useState("");
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         {/* 메인 */}
         <Route
