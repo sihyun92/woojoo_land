@@ -14,7 +14,7 @@ interface ITextMap {
 }
 
 const textMap: ITextMap = {
-  login: "로그인",
+  login: "이메일 로그인",
   register: "회원가입",
 };
 
@@ -27,15 +27,36 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const text = textMap[type];
 
   const [email, setEmail] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isEmail, setIsEmail] = useState(false);
+
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [profileImgBase64, setProfileImgBase64] = useState("");
   const navigate = useNavigate();
 
-  const onChange = (event: FormEvent) => {
+  const onLoginChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     if (name === "email") {
       setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const onRegisterChange = (event: FormEvent) => {
+    const { name, value } = event.target as HTMLInputElement;
+    if (name === "email") {
+      const rEmail =
+        /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      if (!rEmail.test(value)) {
+        setEmailError("이메일 형식으로 적어주세요!");
+        setIsEmail(false);
+      } else {
+        setEmail(value);
+        setIsEmail(true);
+      }
     } else if (name === "password") {
       setPassword(value);
     } else if (name === "displayName") {
@@ -57,12 +78,16 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
 
   const onLogin = async (event: FormEvent) => {
     event.preventDefault();
-    await login(email, password);
-    const username = localStorage.getItem("username");
-    setUsername(username || "");
-    setEmail("");
-    setPassword("");
-    navigate("/");
+    if (email === "" || password === "") {
+      setLoginError("아이디와 비밀번호를 확인해주세요!");
+    } else {
+      await login(email, password);
+      const username = localStorage.getItem("username");
+      setUsername(username || "");
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    }
   };
 
   return (
@@ -72,44 +97,104 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         <TabButton to={PARAMS.login}>로그인</TabButton>
         <TabButton to={PARAMS.register}>회원가입</TabButton>
       </Tab>
-      <form onSubmit={type === "login" ? onLogin : onRegister}>
-        <StyledInput
-          autoComplete="email"
-          name="email"
-          placeholder="이메일"
-          onChange={onChange}
-        />
-        <StyledInput
-          type="password"
-          autoComplete="new-password"
-          name="password"
-          placeholder="패스워드"
-          onChange={onChange}
-        />
+      <h3>{text}</h3>
+      <StyledForm onSubmit={type === "login" ? onLogin : onRegister}>
+        {/* Login */}
+        {type === "login" && (
+          <>
+            <LoginForm>
+              <LoginInputWrapper>
+                <StyledInput
+                  autoComplete="email"
+                  name="email"
+                  placeholder="이메일 입력"
+                  onChange={onLoginChange}
+                />
+                <StyledInput
+                  type="password"
+                  autoComplete="new-password"
+                  name="password"
+                  placeholder="비밀번호 입력"
+                  onChange={onLoginChange}
+                />
+              </LoginInputWrapper>
+              <LoginButton login>로그인</LoginButton>
+            </LoginForm>
+            <span>{loginError}</span>
+          </>
+        )}
+        {/* Register */}
         {type === "register" && (
-          <StyledInput
-            autoComplete="displayName"
-            name="displayName"
-            placeholder="닉네임"
-            onChange={onChange}
-          />
+          <RegisterForm>
+            <ProfileImage>프로필 이미지</ProfileImage>
+            <RegisterInputBlock>
+              <span>닉네임</span>
+              <StyledInput
+                autoComplete="displayName"
+                name="displayName"
+                placeholder="닉네임"
+                onChange={onRegisterChange}
+              />
+            </RegisterInputBlock>
+            <RegisterInputBlock>
+              <span>이메일</span>
+              <StyledInput
+                autoComplete="email"
+                name="email"
+                placeholder="이메일"
+                onChange={onRegisterChange}
+              />
+            </RegisterInputBlock>
+            <RegisterInputBlock>
+              <span>비밀번호</span>
+              <StyledInput
+                type="password"
+                autoComplete="new-password"
+                name="password"
+                placeholder="패스워드"
+                onChange={onRegisterChange}
+              />
+            </RegisterInputBlock>
+            <RegisterInputBlock>
+              <span>비밀번호 확인</span>
+              <StyledInput
+                type="password"
+                autoComplete="new-password"
+                name="passwordConfirm"
+                placeholder="패스워드 확인"
+                onChange={onRegisterChange}
+              />
+            </RegisterInputBlock>
+            <RegisterButton register fullWidth>
+              회원가입
+            </RegisterButton>
+          </RegisterForm>
         )}
-        {type === "login" ? (
-          <AuthButton fullWidth>로그인</AuthButton>
-        ) : (
-          <AuthButton fullWidth>회원가입</AuthButton>
-        )}
-      </form>
+      </StyledForm>
     </AuthFormBlock>
   );
 }
 
+// Style
 const AuthFormBlock = styled.div`
+  border-radius: 1rem;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding-bottom: 40px;
   h3 {
-    margin: 0;
-    color: #333;
-    margin-bottom: 1rem;
+    padding-top: 30px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 700;
+    font-size: 1.5rem;
   }
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 `;
 
 const Tab = styled.div`
@@ -120,33 +205,94 @@ const Tab = styled.div`
 `;
 
 const TabButton = styled(NavLink)`
-  padding: 0.5rem 1rem;
-  background: #fff;
+  background: #f4f4f4;
   width: 100%;
-  text-align: center;
+  height: 3.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #ccc;
+  border: none;
+  color: #818181;
+  &:first-child {
+    border-radius: 16px 0 0 0;
+  }
+  &:last-child {
+    border-radius: 0 16px 0 0;
+  }
   /* .active라는 클래스이름을 넣어주면 라우팅되면서 active라는 클래스이름이 자동으로 적용 */
   &.active {
-    background: #333;
-    color: #fff;
+    background: #fff;
+    font-weight: 700;
+    color: #000;
   }
+`;
+
+// Login
+const LoginForm = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 80px;
+`;
+
+const LoginInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 8px;
 `;
 
 const StyledInput = styled.input`
-  font-size: 1rem;
+  font-size: 0.875rem;
   outline: none;
   border: 1px solid #ccc;
-  padding-bottom: 0.5rem;
-  width: 100%;
+  padding: 0.5rem;
+  width: 200px;
+  background: #ccc;
+  border-radius: 4px;
   &:focus {
     border: 1px solid #707070;
   }
-  & + & {
-    margin-top: 1rem;
+`;
+
+const LoginButton = styled(Button)`
+  height: 100%;
+`;
+
+// Register
+const RegisterForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const ProfileImage = styled.div`
+  width: 120px;
+  height: 120px;
+  background: #ccc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin-bottom: 20px;
+`;
+
+const RegisterInputBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  span {
+    font-size: 0.875rem;
+    font-weight: 700;
   }
 `;
 
-const AuthButton = styled(Button)`
+const RegisterButton = styled(Button)`
   margin-top: 1rem;
 `;
 
