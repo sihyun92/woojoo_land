@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { accountDisconnect, myAccount } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import UserTitle from "../../components/user/UserTitle";
+import AccountModal from "./AccountModal";
 
 interface IBank {
   id: string;
@@ -16,8 +17,9 @@ function AccountPage() {
     getAccounts();
   }, []);
 
-  const [accountsInfo, setAccountsInfo] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [accounts, setAccounts] = useState([]);
+  const [accountsInfo, setAccountsInfo] = useState([]);
 
   const getAccounts = async () => {
     const accountsList = await myAccount();
@@ -37,7 +39,7 @@ function AccountPage() {
   //계좌 추가 버튼 함수
   const newAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    //
+    setIsModalOpen(true);
     // 계좌 추가용 모달 띄우는 기능 추가
     //
   };
@@ -68,6 +70,7 @@ function AccountPage() {
           : "연결된 계좌가 없습니다"}
       </AccountListBox>
       <AddAccount onClick={newAccount}>계좌 추가</AddAccount>
+      {isModalOpen && <AccountModal />}
     </AccountRoute>
   );
 }
