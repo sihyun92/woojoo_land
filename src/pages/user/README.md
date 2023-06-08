@@ -32,3 +32,8 @@
 - user 페이지 임시 기본 스타일링
 - UserTitle, UserLayout 컴포넌트 생성 및 적용
 - 계좌 추가 Modal 생성 및 형태 구현
+- yarn.lock 충돌 관련 트러블 슈팅
+  - 원본 저장소 yarn.lock 삭제
+  - 이후 모든 클론 로컬 저장소에서 yarn.lock 과 node_modules 삭제 후 npm ci 로 yarn.lock 삭제
+  - 기존 커밋 내역에 남아있던 yarn.lock은 일단 원격 저장소에 push 후 깃허브에서 직접 삭제
+  - 모든 저장소에서 yarn.lock 삭제 확인 후 원본 저장소와 sync
