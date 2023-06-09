@@ -23,6 +23,11 @@ const PARAMS = {
   register: "/auth/register",
 };
 
+/**
+ * @todo 회원가입 유효성 검사 구현
+ * @param param0
+ * @returns
+ */
 function AuthForm({ type, setUsername }: IAuthFormProps) {
   const text = textMap[type];
 
