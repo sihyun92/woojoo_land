@@ -1,15 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { IoMdHeartEmpty } from "react-icons/io";
-interface IProduct {
-  title?: string;
-  price?: number;
-  description?: string;
-  tags?: string[];
-  thumbnailBase64?: string;
-  photoBase64?: string;
-  discountRate?: number;
-}
+import { IProduct } from "../../lib/API/adminAPI";
 
 function MainCommet(props: IProduct) {
   return (
