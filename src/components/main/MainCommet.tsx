@@ -1,51 +1,31 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IProduct } from "../../lib/API/adminAPI";
 
-function MainCommet() {
+function MainCommet(props: IProduct) {
   return (
     <>
-      <Title>🪐 신상 행성</Title>
       <Container>
-        <Wrapper>
-          <Commet>
-            <IoMdHeartEmpty />
-          </Commet>
-        </Wrapper>
-        <Wrapper>
-          <Commet>
-            <IoMdHeartEmpty />
-          </Commet>
-        </Wrapper>
-        <Wrapper>
-          <Commet>
-            <IoMdHeartEmpty />
-          </Commet>
-        </Wrapper>
-        <Wrapper>
-          <Commet>
-            <IoMdHeartEmpty />
-          </Commet>
-        </Wrapper>
+        <Commet>
+          <IoMdHeartEmpty />
+        </Commet>
+        <Desc>
+          <Title>{props.title}</Title>
+          <Py>평당</Py>
+          <PriceWrapper>
+            <Discount>{props.discountRate}%</Discount>
+            <Price>{props.price}$</Price>
+          </PriceWrapper>
+        </Desc>
       </Container>
     </>
   );
 }
 
-const Title = styled.h1`
-  font-size: 2.625rem;
-  font-weight: bold;
-  margin: 2rem 0;
-`;
 const Container = styled.div`
-  display: flex;
-  width: 75rem;
-  justify-content: space-between;
-`;
-const Wrapper = styled.div`
   width: 17.8125rem;
   height: 23.5625rem;
-  background-color: coral;
 `;
 
 const Commet = styled.div`
@@ -62,6 +42,35 @@ const Commet = styled.div`
     right: 0.5rem;
     bottom: 0.5rem;
   }
+`;
+
+const Desc = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+`;
+
+const Title = styled.div`
+  font-size: 2.5rem;
+`;
+
+const Py = styled.div`
+  text-align: right;
+  font-size: 1rem;
+`;
+
+const PriceWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Discount = styled.div`
+  font-size: 1.5rem;
+`;
+
+const Price = styled.div`
+  font-size: 1.5rem;
+  margin-top: 4px;
 `;
 
 export default MainCommet;
