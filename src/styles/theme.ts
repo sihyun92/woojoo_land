@@ -19,6 +19,7 @@ export const theme: DefaultTheme = {
       "#d0d0d0", //[3] input 박스 배경에 사용
       "#f0f0f0", //[4] 현재 사용되지 않음
       "#818181", //[5] 본문 텍스트에 사용
+      "#bbbbbb", //[6] header input border
     ],
     pink: "#FF2626", //좋아요 하트 컬러
   },

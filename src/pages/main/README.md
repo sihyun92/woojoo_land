@@ -13,3 +13,8 @@ Header 컴포넌트 초안 작성, ProductPage 세분화
 ### 23.06.07.
 
 2차 코드 컨벤션 작성
+
+### 23.06.08.
+
+기본 Header와 MainPage에서만 사용되는 SubHeader 구성
+MainPage Banner와 Commet에 대한 컴포넌트 구성

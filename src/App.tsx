@@ -25,7 +25,7 @@ function App() {
   const [username, setUsername] = useState("");
   return (
     <BrowserRouter>
-      <Header /> 
+      <Header username={username} setUsername={setUsername} />
       <Routes>
         {/* 메인 */}
         <Route
@@ -34,7 +34,7 @@ function App() {
             <>
               <SubHeader />
               <Banner />
-              <MainPage username={username} setUsername={setUsername} />
+              <MainPage />
             </>
           }
         />
