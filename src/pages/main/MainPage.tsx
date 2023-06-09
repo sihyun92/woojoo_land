@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import MainCommet from "../../components/main/MainCommet";
+import MainList from "../../components/main/MainList";
+import MainPackage from "../../components/main/MainPackage";
 
 function MainPage() {
   return (
     <Main>
       <Inner>
-        <MainCommet />
+        <MainList />
+        <MainPackage />
       </Inner>
     </Main>
   );
