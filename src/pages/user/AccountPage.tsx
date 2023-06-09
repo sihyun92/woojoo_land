@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { accountDisconnect, myAccount } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import UserTitle from "../../components/user/UserTitle";
-import AccountModal from "./AccountModal";
+import UserModal from "../../components/user/UserModal";
+import Button from "../../components/common/Button";
 
-interface IBank {
+export interface IAccount {
   id: string;
   bankName: string;
   bankCode: string;
@@ -19,29 +20,26 @@ function AccountPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [accounts, setAccounts] = useState([]);
-  const [accountsInfo, setAccountsInfo] = useState([]);
 
   const getAccounts = async () => {
     const accountsList = await myAccount();
-    setAccountsInfo(accountsList);
     setAccounts(accountsList.accounts);
   };
 
   //계좌 삭제 버튼 함수
-  const delAccount = (
+  const delAccount = async (
     event: React.MouseEvent<HTMLButtonElement>,
     id: string,
   ) => {
     event.preventDefault();
-    accountDisconnect(id, true);
+    await accountDisconnect(id, true);
+    getAccounts();
   };
 
   //계좌 추가 버튼 함수
   const newAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setIsModalOpen(true);
-    // 계좌 추가용 모달 띄우는 기능 추가
-    //
   };
 
   return (
@@ -49,7 +47,7 @@ function AccountPage() {
       <UserTitle>계좌 관리</UserTitle>
       <AccountListBox>
         {accounts
-          ? accounts.map((account: IBank) => {
+          ? accounts.map((account: IAccount) => {
               return (
                 <AccountList key={account.id}>
                   <AccountWrapper>
@@ -69,8 +67,10 @@ function AccountPage() {
             })
           : "연결된 계좌가 없습니다"}
       </AccountListBox>
-      <AddAccount onClick={newAccount}>계좌 추가</AddAccount>
-      {isModalOpen && <AccountModal />}
+      <AddAccount onClick={newAccount} orange middleWidth>
+        계좌 추가
+      </AddAccount>
+      {isModalOpen && <UserModal setIsModalOpen={setIsModalOpen} />}
     </AccountRoute>
   );
 }
@@ -110,8 +110,9 @@ const Balance = styled.span``;
 const DelAccount = styled.button`
   margin-left: 40px;
 `;
-const AddAccount = styled.button`
-  width: 10rem;
+const AddAccount = styled(Button)`
+  font-weight: 700;
+  font-size: 1rem;
 `;
 
 export default AccountPage;

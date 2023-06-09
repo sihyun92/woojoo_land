@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { userUpdate, check } from "../../lib/API/userAPI";
 import UserTitle from "../../components/user/UserTitle";
+import GreyInput from "../../components/common/GreyInput";
 
 function PersonalSettings() {
   const [email, setEmail] = useState("");
@@ -53,11 +54,12 @@ function PersonalSettings() {
           <span>닉네임</span>
         </NameTitle>
         <NameInput>
-          <input
+          <GreyInput
             onChange={onChangeForm}
             name="displayName"
             type="text"
             placeholder=""
+            fullWidth
           />
         </NameInput>
         <PassWordTitle>
@@ -65,17 +67,19 @@ function PersonalSettings() {
           <span>새 비밀번호</span>
         </PassWordTitle>
         <PassWordInput>
-          <input
+          <GreyInput
             onChange={onChangeForm}
             name="oldPassword"
             type="password"
             placeholder=""
+            fullWidth
           />
-          <input
+          <GreyInput
             onChange={onChangeForm}
             name="newPassword"
             type="password"
             placeholder=""
+            fullWidth
           />
         </PassWordInput>
 
