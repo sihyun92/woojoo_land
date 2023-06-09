@@ -20,6 +20,10 @@ import MainPage from "./pages/main/MainPage";
 import Header from "./components/common/Header";
 import SubHeader from "./components/common/SubHeader";
 import Banner from "./components/main/MainBanner";
+import AdminPages from "./pages/admin/AdminPages";
+import ProductsPage from "./pages/admin/ProductsPage";
+import HistoryPage from "./pages/admin/HistroyPage";
+import UserListPage from "./pages/admin/UserListPage";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -45,6 +49,12 @@ function App() {
           <Routes>
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
+            {/* 관리자 디자인 테스트 페이지 */}
+            <Route path="/admins" element={<AdminPages />}>
+              <Route path="products" element={<ProductsPage />} />
+              <Route path="history" element={<HistoryPage />} />
+              <Route path="userlist" element={<UserListPage />} />
+            </Route>
 
             {/* Auth 페이지 */}
             <Route
