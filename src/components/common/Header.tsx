@@ -4,34 +4,59 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { logout } from "../../lib/API/userAPI";
 
-function Header() {
+interface IMainPageProps {
+  username: string;
+  setUsername: Dispatch<SetStateAction<string>>;
+}
+
+function Header({ username, setUsername }: IMainPageProps) {
+  const onLogout = async () => {
+    await logout();
+    localStorage.removeItem("Token");
+    localStorage.removeItem("username");
+    setUsername("");
+  };
   return (
-    <HeaderContainer>
-      <HeaderWrapper>
-        <Logo>Gal 부동산</Logo>
-        <Search>
-          <SearchInput type="text" />
-          <MdSearch />
-        </Search>
-        <User>
-          <Auth>
-            <Link to="/auth/login">로그인</Link>
-            <span>|</span>
-            <Link to="/auth/register">회원가입</Link>
-          </Auth>
-          <ButtonWrapper>
-            <button>
-              <IoMdHeartEmpty />
-            </button>
-            <button>
-              <MdOutlineShoppingCart />
-            </button>
-            <button>프로필</button>
-          </ButtonWrapper>
-        </User>
-      </HeaderWrapper>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <HeaderWrapper>
+          <Logo>Gal 부동산</Logo>
+          <Search>
+            <SearchInput type="text" />
+            <MdSearch />
+          </Search>
+          <User>
+            <Auth>
+              {username ? (
+                <>
+                  <h2>{username}</h2>
+                  <span>|</span>
+                  <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth/login">로그인</Link>
+                  <span>|</span>
+                  <Link to="/auth/register">회원가입</Link>
+                </>
+              )}
+            </Auth>
+            <ButtonWrapper>
+              <button>
+                <IoMdHeartEmpty />
+              </button>
+              <button>
+                <MdOutlineShoppingCart />
+              </button>
+              <button>프로필</button>
+            </ButtonWrapper>
+          </User>
+        </HeaderWrapper>
+      </HeaderContainer>
+    </>
   );
 }
 const HeaderContainer = styled.header`
@@ -55,6 +80,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const Logo = styled.div``;
+
 const Search = styled.div`
   display: flex;
   position: relative;
@@ -87,6 +113,14 @@ const User = styled.div`
 const Auth = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const LogoutBtn = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 1rem;
+  padding: 0;
 `;
 
 const ButtonWrapper = styled.div`
