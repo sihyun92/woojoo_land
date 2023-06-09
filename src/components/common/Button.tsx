@@ -11,13 +11,16 @@ function Button({ ...rest }: IButtonProps) {
 
 const StyledButton = styled.button<{
   active?: boolean;
+  middleWidth?: boolean;
   fullWidth?: boolean;
   login?: boolean;
   register?: boolean;
+  orange?: boolean;
 }>`
   border: none;
   outline: none;
   cursor: pointer;
+  border-radius: 5px;
   background: #707070;
   color: #fff;
   padding: 0.5rem 1rem;
@@ -27,6 +30,12 @@ const StyledButton = styled.button<{
       padding: 0.5rem 1rem;
       background: #333;
       color: #fff;
+    `}
+  ${(rest) =>
+    rest.middleWidth &&
+    css`
+      width: 160px;
+      height: 2.5rem;
     `}
   ${(rest) =>
     rest.fullWidth &&
@@ -43,11 +52,16 @@ const StyledButton = styled.button<{
       font-size: 1rem;
       font-weight: 700;
     `}
-  ${(rest) =>
+      ${(rest) =>
     rest.register &&
     css`
       background: ${theme.colors.orange.main};
       width: 100%;
+    `}
+      ${(rest) =>
+    rest.orange &&
+    css`
+      background: ${theme.colors.orange.main};
     `}
 `;
 

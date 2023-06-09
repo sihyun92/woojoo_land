@@ -43,38 +43,46 @@ const Navigator = styled.nav`
   display: flex;
   flex-direction: column;
 `;
+
 const NavTitle = styled.div`
   display: flex;
   margin: 20px 0;
   align-items: center;
 `;
+
 const TitleBar = styled.div`
   width: 5px;
   height: 30px;
   margin-right: 10px;
   background-color: #ff6113;
 `;
+
 const MyPage = styled.h2`
   font-size: 30px;
   font-weight: 700;
 `;
+
 const NavContainer = styled.ul`
-  gap: 1px;
   display: grid;
-  grid-template-columns: 250px;
+  border-top: 1px solid #333;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  grid-template-columns: 285px;
   grid-template-rows: 1fr 1fr 1fr 1fr;
 `;
+
 const NavList = styled.li`
   display: flex;
-  padding: 8px 10px;
+  padding: 13px 10px;
   align-items: center;
-  border: 1px solid #333;
   justify-content: space-between;
+  border-bottom: 1px solid #333;
 
   .chebronRight {
     font-size: 25px;
   }
 `;
+
 const ListName = styled.span`
   font-size: 18px;
   font-weight: 600;
