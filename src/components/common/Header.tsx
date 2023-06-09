@@ -96,7 +96,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   width: 26.25rem;
   height: 3rem;
-  border: 2px solid #bbb;
+  border: 0.125rem solid ${theme.colors.gray[6]};
   border-radius: 0.625rem;
   padding-left: 0.5rem;
   &:focus {
