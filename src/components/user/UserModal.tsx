@@ -165,6 +165,7 @@ const ModalBackground = styled.div`
   position: fixed;
   backdrop-filter: brightness(60%);
 `;
+
 const Modal = styled.form`
   top: 0;
   left: 0;
@@ -178,8 +179,8 @@ const Modal = styled.form`
   align-items: center;
   border-radius: 20px;
   flex-direction: column;
-  background-color: #fff;
   justify-content: space-evenly;
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 const ModalTitle = styled.h2`
