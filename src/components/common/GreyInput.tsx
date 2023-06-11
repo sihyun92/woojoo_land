@@ -9,26 +9,30 @@ const StyledInput = styled.input<{
   middleWidth?: boolean;
   fullWidth?: boolean;
 }>`
-  font-size: 14px;
-  outline: none;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
   width: 200px;
-  background: #ccc;
-  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: ${(props) => props.theme.colors.gray[2]};
+  border: 1px solid ${(props) => props.theme.colors.gray[3]};
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.gray[3]};
+  }
 
   &:focus {
-    border: 1px solid #707070;
+    border: 1px solid ${(props) => props.theme.colors.gray[5]};
   }
 
   ${(props) =>
-    props.fullWidth &&
+    props.middleWidth &&
     css`
       width: 416px;
     `}
 
   ${(props) =>
-    props.middleWidth &&
+    props.fullWidth &&
     css`
       width: 549px;
     `}
