@@ -40,7 +40,12 @@
 
 ## 23.06.09
 
-- userNav 스타일 조정
+- UserNav 스타일 조정
 - GreyInput 공통 input 컴포넌트 생성
 - 계좌 추가 Modal 임시 스타일링
 - 계좌 추가 기능 구현
+
+## 23.06.11
+
+- UserModal 스타일 디자인 기획대로 수정
+- 계좌 추가시 AccountPage 내 현재 계좌 목록 재렌더링
