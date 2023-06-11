@@ -14,6 +14,7 @@ export interface IAccount {
 }
 
 function AccountPage() {
+  // 계좌 목록 최초 렌더링
   useEffect(() => {
     getAccounts();
   }, []);
@@ -21,12 +22,13 @@ function AccountPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [accounts, setAccounts] = useState([]);
 
+  // 계정 내 연결된 계좌 목록 조회
   const getAccounts = async () => {
     const accountsList = await myAccount();
     setAccounts(accountsList.accounts);
   };
 
-  //계좌 삭제 버튼 함수
+  //계좌 삭제 버튼
   const delAccount = async (
     event: React.MouseEvent<HTMLButtonElement>,
     id: string,
@@ -36,10 +38,16 @@ function AccountPage() {
     getAccounts();
   };
 
-  //계좌 추가 버튼 함수
+  //계좌 추가 버튼
   const newAccount = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setIsModalOpen(true);
+  };
+
+  // 모달 종료 후 계좌 목록 재 렌더링
+  const closeModal = () => {
+    setIsModalOpen(false);
+    getAccounts();
   };
 
   return (
@@ -70,7 +78,9 @@ function AccountPage() {
       <AddAccount onClick={newAccount} orange middleWidth>
         계좌 추가
       </AddAccount>
-      {isModalOpen && <UserModal setIsModalOpen={setIsModalOpen} />}
+      {isModalOpen && (
+        <UserModal setIsModalOpen={setIsModalOpen} closeModal={closeModal} />
+      )}
     </AccountRoute>
   );
 }
