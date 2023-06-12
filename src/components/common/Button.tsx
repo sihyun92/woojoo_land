@@ -24,6 +24,12 @@ const StyledButton = styled.button<{
   background: #707070;
   color: #fff;
   padding: 0.5rem 1rem;
+  &:disabled {
+    background: #ccc;
+    color: #707070;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
   ${(rest) =>
     rest.active &&
     css`
