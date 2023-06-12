@@ -8,6 +8,10 @@ import Header from "./components/common/Header";
 
 // admin
 import AdminPage from "./pages/admin";
+import AdminPages from "./pages/admin/AdminPages";
+import ProductsPage from "./pages/admin/ProductsPage";
+import HistoryPage from "./pages/admin/HistroyPage";
+import UserListPage from "./pages/admin/UserListPage";
 
 // auth
 import LoginPage from "./pages/auth/LoginPage";
@@ -21,12 +25,7 @@ import PersonalSettings from "./pages/user/PersonalSettings";
 
 // main
 import MainPage from "./pages/main/MainPage";
-import SubHeader from "./components/common/SubHeader";
-import Banner from "./components/main/MainBanner";
-import AdminPages from "./pages/admin/AdminPages";
-import ProductsPage from "./pages/admin/ProductsPage";
-import HistoryPage from "./pages/admin/HistroyPage";
-import UserListPage from "./pages/admin/UserListPage";
+import ProductPage from "./pages/main/ProductPage";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -35,22 +34,13 @@ function App() {
       <Header username={username} setUsername={setUsername} />
       <Routes>
         {/* 메인 */}
-        <Route
-          path="/"
-          element={
-            <>
-              <SubHeader />
-              <Banner />
-              <MainPage />
-            </>
-          }
-        />
+        <Route path="/" element={<MainPage />} />
       </Routes>
 
       <Main>
         <Inner>
           <Routes>
-            ``
+            <Route path="/product" element={<ProductPage />} />
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
