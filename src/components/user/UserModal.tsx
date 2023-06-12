@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import GreyInput from "../common/GreyInput";
+import GrayInput from "../common/GrayInput";
 import Button from "../common/Button";
 import {
   Dispatch,
@@ -112,7 +112,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
         <AccountInputs>
           <InputBox>
             <span>은행코드</span>
-            <GreyInput
+            <GrayInput
               readonly
               required
               type="text"
@@ -125,7 +125,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
           </InputBox>
           <InputBox>
             <span>계좌번호</span>
-            <GreyInput
+            <GrayInput
               required
               type="text"
               middleWidth
@@ -136,7 +136,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
           </InputBox>
           <InputBox>
             <span>전화번호</span>
-            <GreyInput
+            <GrayInput
               require
               type="text"
               middleWidth

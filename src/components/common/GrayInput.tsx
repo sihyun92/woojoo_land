@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 // 저희 props 대신 rest를 사용하기로 결정했었습니다.
-function GreyInput({ ...props }) {
+function GrayInput({ ...props }) {
   return <StyledInput {...props} />;
 }
 
@@ -38,4 +38,4 @@ const StyledInput = styled.input<{
     `}
 `;
 
-export default GreyInput;
+export default GrayInput;
