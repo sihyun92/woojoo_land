@@ -2,6 +2,10 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
+// common
+import Header from "./components/common/Header";
+// import Footer from "./components/common/Footer";
+
 // admin
 import AdminPage from "./pages/admin";
 
@@ -17,7 +21,6 @@ import PersonalSettings from "./pages/user/PersonalSettings";
 
 // main
 import MainPage from "./pages/main/MainPage";
-import Header from "./components/common/Header";
 import SubHeader from "./components/common/SubHeader";
 import Banner from "./components/main/MainBanner";
 import AdminPages from "./pages/admin/AdminPages";
@@ -47,6 +50,7 @@ function App() {
       <Main>
         <Inner>
           <Routes>
+            ``
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
@@ -55,7 +59,6 @@ function App() {
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
             </Route>
-
             {/* Auth 페이지 */}
             <Route
               path="/auth/login"
@@ -74,6 +77,7 @@ function App() {
           </Routes>
         </Inner>
       </Main>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }
