@@ -17,7 +17,7 @@ function MainList() {
       }
     }
     fetchList();
-  });
+  }, []);
 
   return (
     <>
