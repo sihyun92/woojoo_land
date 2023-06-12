@@ -9,9 +9,9 @@ function UserLayout({ children }: TChildren) {
 }
 
 const UserMain = styled.main`
-  display: flex;
   width: 100%;
-  margin: 35px 0 0 10px;
+  display: flex;
+  margin: 22px 0 0 1rem;
 `;
 
 export default UserLayout;

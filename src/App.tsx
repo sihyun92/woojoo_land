@@ -21,7 +21,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import UserPage from "./pages/user";
 import LikePage from "./pages/user/LikePage";
 import AccountPage from "./pages/user/AccountPage";
-import PersonalSettings from "./pages/user/PersonalSettings";
+import SettingPage from "./pages/user/SettingPage";
 
 // main
 import MainPage from "./pages/main/MainPage";
@@ -62,7 +62,7 @@ function App() {
             <Route path="/user" element={<UserPage />}>
               <Route path="account" element={<AccountPage />} />
               <Route path="like" element={<LikePage />} />
-              <Route path="settings" element={<PersonalSettings />} />
+              <Route path="settings" element={<SettingPage />} />
             </Route>
           </Routes>
         </Inner>
