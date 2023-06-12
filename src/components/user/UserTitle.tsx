@@ -10,9 +10,10 @@ function UserTitle({ children }: TChildren) {
 
 const Title = styled.h2`
   display: block;
-  margin-bottom: 10px;
-  font-size: 25px;
   font-weight: 700;
+  font-size: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
 
 export default UserTitle;
