@@ -12,6 +12,7 @@ const Title = styled.h2`
   display: block;
   font-weight: 700;
   font-size: 1.75rem;
+  margin-bottom: 1rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
