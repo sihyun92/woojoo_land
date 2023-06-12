@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
 import Button from "../common/Button";
 
+// Interface
 interface IAuthFormProps {
   type: string;
   setUsername: Dispatch<SetStateAction<string>>;
@@ -13,20 +14,25 @@ interface ITextMap {
   [key: string]: string;
 }
 
+// Constant / Variable
 const textMap: ITextMap = {
+  // 로그인 / 회원가입에 따른 제목
   login: "이메일 로그인",
   register: "회원가입",
 };
 
 const PARAMS = {
+  // URL 파리미터 End-Point
   login: "/auth/login",
   register: "/auth/register",
 };
 
 function AuthForm({ type, setUsername }: IAuthFormProps) {
+  // 컴포넌트 타입에 따른 제목
   const text = textMap[type];
 
-  // 입력
+  // Hooks
+  // 입력 / 출력
   const [email, setEmail] = useState("");
   const [displayNameMessage, setDisplayNameMessage] = useState("");
   const [password, setPassword] = useState("");
@@ -46,8 +52,10 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const [isDisplayName, setIsDisplayName] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
+  // 라우팅
   const navigate = useNavigate();
 
+  // Function
   const onLoginChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     if (name === "email") {
@@ -87,11 +95,11 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
     } else if (name === "displayName") {
       // 닉네임 유효성 검사
       if (value.length < 2 || value.length > 5) {
-        setDisplayNameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
-        setIsDisplayName(false);
-      } else {
         setDisplayName(value);
         setIsDisplayName(true);
+      } else {
+        setDisplayNameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
+        setIsDisplayName(false);
       }
     } else if (name === "passwordConfirm") {
       // 비밀번호 일치 유효성 검사
@@ -108,8 +116,10 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const onRegister = async (event: FormEvent) => {
     event.preventDefault();
     if (email === "" || password === "" || displayName === "") {
+      // 입력값이 하나라도 없을 때 메시지 출력
       setRegisterMessage("필수 입력 사항입니다!");
     } else {
+      // 입력값이 제대로 들어갔을 때 회원가입 요청
       await register(email, password, displayName, profileImgBase64);
       const username = localStorage.getItem("username");
       setUsername(username || "");
@@ -123,8 +133,10 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const onLogin = async (event: FormEvent) => {
     event.preventDefault();
     if (email === "" || password === "") {
+      // 입력값이 하나라도 없을 때 메시지 출력
       setLoginMessage("아이디와 비밀번호를 확인해주세요!");
     } else {
+      // 입력값이 제대로 들어갔을 때 로그인 요청
       await login(email, password);
       const username = localStorage.getItem("username");
       setUsername(username || "");
@@ -134,6 +146,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
     }
   };
 
+  // Render
   return (
     <AuthFormBlock>
       <Tab>
@@ -162,9 +175,11 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
                   onChange={onLoginChange}
                 />
               </LoginInputWrapper>
-              <LoginButton login>로그인</LoginButton>
+              <LoginButton disabled={!email} login>
+                로그인
+              </LoginButton>
             </LoginForm>
-            <span>{loginMessage}</span>
+            <LoginError>{loginMessage}</LoginError>
           </>
         )}
         {/* Register */}
@@ -181,7 +196,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
                   onChange={onRegisterChange}
                 />
               </RegisterInputBlock>
-              {displayNameMessage && (
+              {isDisplayName && (
                 <ErrorMessage>{displayNameMessage}</ErrorMessage>
               )}
               <RegisterInputBlock>
@@ -324,6 +339,12 @@ const StyledInput = styled.input`
   &:focus {
     border: 1px solid #707070;
   }
+`;
+
+const LoginError = styled.span`
+  color: #f00;
+  font-weight: 700;
+  margin-top: 1.25rem;
 `;
 
 const ErrorMessage = styled.span`
