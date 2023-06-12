@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import MainList from "../../components/main/MainList";
 import MainPackage from "../../components/main/MainPackage";
+import SubHeader from "../../components/common/SubHeader";
+import Banner from "../../components/main/MainBanner";
 
 function MainPage() {
   return (
-    <Main>
-      <Inner>
-        <MainList />
-        <MainPackage />
-      </Inner>
-    </Main>
+    <>
+      <SubHeader />
+      <Banner />
+      <Main>
+        <Inner>
+          <MainList />
+          <MainPackage />
+        </Inner>
+      </Main>
+    </>
   );
 }
 

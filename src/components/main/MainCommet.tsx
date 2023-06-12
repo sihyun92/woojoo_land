@@ -24,13 +24,13 @@ function MainCommet(props: IProduct) {
 }
 
 const Container = styled.div`
-  width: 17.8125rem;
-  height: 23.5625rem;
+  width: 285px;
+  height: 377px;
 `;
 
 const Commet = styled.div`
   position: relative;
-  width: 17.8125rem;
+  width: 285px;
   height: 285px;
   background-color: ${theme.colors.black};
   border-radius: 1.25rem;
