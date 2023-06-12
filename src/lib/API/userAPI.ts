@@ -25,22 +25,25 @@ const headers = {
 
 // 로그인
 const login = async (email: string, password: string) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  localStorage.setItem("Token", result.accessToken);
-  localStorage.setItem("username", result.user.displayName);
-  return result;
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      },
+    );
+    const result = await response.json();
+    localStorage.setItem("Token", result.accessToken);
+    localStorage.setItem("username", result.user.displayName);
+    return result;
+  } catch (e) {
+    console.error(e, "로그인에 실패했습니다!");
+  }
 };
 
 // 회원가입
