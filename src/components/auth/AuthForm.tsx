@@ -137,12 +137,17 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
       setLoginMessage("아이디와 비밀번호를 확인해주세요!");
     } else {
       // 입력값이 제대로 들어갔을 때 로그인 요청
-      await login(email, password);
       const username = localStorage.getItem("username");
-      setUsername(username || "");
-      setEmail("");
-      setPassword("");
-      navigate("/");
+      await login(email, password).then((response) => {
+        if (response === undefined) {
+          setLoginMessage("아이디와 비밀번호를 확인해주세요!");
+        } else {
+          setUsername(username || "");
+          setEmail("");
+          setPassword("");
+          navigate("/");
+        }
+      });
     }
   };
 
