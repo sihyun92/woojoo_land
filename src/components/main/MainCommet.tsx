@@ -2,23 +2,27 @@ import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IProduct } from "../../lib/API/adminAPI";
+import { Link } from "react-router-dom";
 
 function MainCommet(props: IProduct) {
   return (
     <>
-      <Container>
-        <Commet>
-          <IoMdHeartEmpty />
-        </Commet>
-        <Desc>
-          <Title>{props.title}</Title>
-          <Py>평당</Py>
-          <PriceWrapper>
-            <Discount>{props.discountRate}%</Discount>
-            <Price>{props.price}$</Price>
-          </PriceWrapper>
-        </Desc>
-      </Container>
+      <Link to={`/product/${props.id}`}>
+        <Container>
+          <Commet>
+            <img src="/images/Thumbnail.png" alt="Thumbnail" />
+            <IoMdHeartEmpty />
+          </Commet>
+          <Desc>
+            <Title>{props.title}</Title>
+            <Py>평당</Py>
+            <PriceWrapper>
+              <Discount>{props.discountRate}%</Discount>
+              <Price>{props.price}$</Price>
+            </PriceWrapper>
+          </Desc>
+        </Container>
+      </Link>
     </>
   );
 }
@@ -29,25 +33,28 @@ const Container = styled.div`
 `;
 
 const Commet = styled.div`
+  width: 288px;
+  height: 288px;
+  display: flex;
   position: relative;
-  width: 285px;
-  height: 285px;
-  background-color: ${theme.colors.black};
+  align-items: center;
   border-radius: 1.25rem;
+  justify-content: center;
+  background-color: ${theme.colors.black};
 
   > svg {
+    right: 0.5rem;
+    bottom: 0.5rem;
     position: absolute;
     font-size: 1.25rem;
     color: ${theme.colors.white};
-    right: 0.5rem;
-    bottom: 0.5rem;
   }
 `;
 
 const Desc = styled.div`
   display: flex;
-  flex-direction: column;
   margin-top: 0.5rem;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
@@ -55,8 +62,8 @@ const Title = styled.div`
 `;
 
 const Py = styled.div`
-  text-align: right;
   font-size: 1rem;
+  text-align: right;
 `;
 
 const PriceWrapper = styled.div`
@@ -66,11 +73,12 @@ const PriceWrapper = styled.div`
 
 const Discount = styled.div`
   font-size: 1.5rem;
+  color: ${theme.colors.orange.main};
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
   margin-top: 4px;
+  font-size: 1.5rem;
 `;
 
 export default MainCommet;
