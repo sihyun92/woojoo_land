@@ -32,15 +32,13 @@ function App() {
   return (
     <BrowserRouter>
       <Header username={username} setUsername={setUsername} />
-      <Routes>
-        {/* 메인 */}
-        <Route path="/" element={<MainPage />} />
-      </Routes>
-
       <Main>
         <Inner>
           <Routes>
+            {/* 메인 */}
+            <Route path="/" element={<MainPage />} />
             <Route path="/product" element={<ProductPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
