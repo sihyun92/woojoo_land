@@ -2,12 +2,10 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
-import { useDispatch } from "react-redux";
-import { check } from "../../modules/user";
 
 interface IMainPageProps {
   username: string;
@@ -50,6 +48,16 @@ function Header({ username, setUsername }: IMainPageProps) {
     }
   };
 
+  // MainPage에서만 SubHeader 컴포넌트 출력
+  const location = useLocation();
+
+  const getSubHeader = () => {
+    if (location.pathname === "/") {
+      return <SubHeader />;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <HeaderContainer>
@@ -83,17 +91,9 @@ function Header({ username, setUsername }: IMainPageProps) {
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
-              </Link>
-              <Link to="/user">
-                <UserImg>
-                  {userImg ? (
-                    <img src={userImg} alt="프로필" />
-                  ) : (
-                    <img src="/images/User.png" alt="프로필" />
-                  )}
-                </UserImg>
-              </Link>
-            </LinkWrapper>
+              </button>
+              <Link to="/user">프로필</Link>
+            </ButtonWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
