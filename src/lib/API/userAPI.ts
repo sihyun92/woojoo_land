@@ -24,7 +24,7 @@ const headers = {
 };
 
 // 로그인
-const login = async (email: string, password: string) => {
+const login = async (email: string, password?: string) => {
   try {
     const response = await fetch(
       "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
