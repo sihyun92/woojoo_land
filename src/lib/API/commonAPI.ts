@@ -1,3 +1,15 @@
+export interface IProductDetail {
+  id?: string;
+  title?: string;
+  price?: number;
+  description?: string;
+  tags?: string[];
+  thumbnailBase64?: string;
+  photoBase64?: string;
+  discountRate?: number;
+  isSoldOut: boolean;
+}
+
 // fetch headers
 const headers = {
   "content-type": "application/json",
