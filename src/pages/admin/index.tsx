@@ -35,41 +35,26 @@ function AdminPage() {
     getUsers();
   }, []);
 
-  // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
-  const [ProfileImg, setProfileImg] = useState("");
+  const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
 
-  //상품 추가의 정보 상태
+  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [productform, setProductForm] = useState({
     title: "",
     price: 0,
     tags: [],
     description: "",
-    thumbnailBase64: "",
+    thumbnail: "",
   });
 
-  //상품 수정의 정보 상태
   const [updateform, setUpdateForm] = useState({
     title: "",
     price: 0,
     tags: [],
     description: "",
-    thumbnailBase64: "",
+    thumbnail: "",
   });
 
-  //제품 이미지 랜더링
-  function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
-    const files = event.target.files as FileList;
-    for (const file of files) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.addEventListener("load", (e) => {
-        setProfileImg((e.target as FileReader).result as string);
-      });
-    }
-  }
-
-  const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
   const [productid, setProductId] = useState("");
 
   // 사용자 목록 서버에서 가져오기
@@ -127,7 +112,7 @@ function AdminPage() {
       price: 0,
       tags: [],
       description: "",
-      thumbnailBase64: "",
+      thumbnail: "",
     });
     getProducts();
   };
@@ -143,8 +128,9 @@ function AdminPage() {
       price: 0,
       tags: [],
       description: "",
-      thumbnailBase64: "",
+      thumbnail: thumbnail,
     });
+    console.log(thumbnail);
     getProducts();
   };
 
@@ -156,6 +142,34 @@ function AdminPage() {
     event.preventDefault();
     await productDel(ID);
     getProducts();
+  };
+
+  // 이미지 선택 기능
+
+  // 파일이 선택되었을 때 썸네일 생성
+  const handleChange = (event: any) => {
+    const file = event.target.files[0]; //선택된 첫번째 파일을 'file' 변수 선언
+    if (file) {
+      //만약 'file'이 true면
+      handleChangeThumbnail(file) // 'handleChangeThumbnail'에 'file'을 넣어 실행한다.
+        .then((ImgUrl: any) => {
+          setThumbnail(ImgUrl); //'setThumbnail'에 'ImgUrl'을 보낸다.
+          console.log(thumbnail);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  // 제품 사진 랜더링
+  const handleChangeThumbnail = (image: File) => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(image); //이미지 문자열로 받기
+      reader.onload = (event: any) => res(event.target.result); //파일 읽기 성공하면 resolve를 호출하여 값을 반환
+      reader.onerror = (error) => rej(error); // 읽기 오류시 호출
+    });
   };
 
   return (
@@ -188,17 +202,7 @@ function AdminPage() {
                       <span>이름 : {product.title}</span>
                       <span>가격 : {product.price}</span>
                       <span>설명 : {product.description}</span>
-                      <span>태그 : {product.tags}</span>
-                      <span>
-                        썸네일이미지 :{" "}
-                        {product.thumbnail && (
-                          <img
-                            src={product.thumbnail}
-                            alt="Thumbnail"
-                            width={120}
-                          />
-                        )}
-                      </span>
+                      <span>썸네일이미지 : {product.thumbnail}</span>
                     </div>
                     <button
                       onClick={(event) => {
@@ -239,7 +243,8 @@ function AdminPage() {
             placeholder="상세 설명"
             onChange={onChange}
           />
-          <input
+          <input type="file" />
+          {/* <input
             type="text"
             name="tags"
             required
@@ -284,16 +289,17 @@ function AdminPage() {
             onChange={onChange2}
           />
           <input
-            type="text"
-            name="tags[]"
-            required
-            value={updateform.tags}
-            placeholder="태그"
-            onChange={onChange2}
+            type="file"
+            accept=".jpg, .jpeg, .webp, .png, .gif, .svg"
+            onChange={handleChange}
           />
-          <input type="file" onChange={uploadImage} />
           {/* 상품 이미지 썸네일 영역 */}
-          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
+          {thumbnail && <img src={thumbnail} alt="Thumbnail" width={120} />}
+
+          {/* <input type="text" name="" value={} placeholder="" onChange={} />
+          <input type="text" name="" value={} placeholder="" onChange={} />
+          <input type="text" name="" value={} placeholder="" onChange={} /> */}
+
           <button type="submit">수정</button>
         </form>
       </Edit>
