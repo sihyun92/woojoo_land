@@ -2,9 +2,9 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { logout, check } from "../../lib/API/userAPI";
+import { Link, useLocation } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
@@ -72,6 +72,7 @@ function Header({
         <HeaderWrapper>
           <Link to="/">
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
+            <img src="/images/Logo.svg" alt="우주부동산" width={250} />
           </Link>
           <Search>
             <SearchInput type="text" />
@@ -99,18 +100,9 @@ function Header({
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
-              </Link>
-              <Link to="/user">
-                <UserImg>
-                  {userImg ? (
-                    <img src={userImg} alt="프로필" />
-                  ) : (
-                    <img src="/images/User.png" alt="프로필" />
-                  )}
-                  <img src="/images/User.png" alt="프로필" />
-                </UserImg>
-              </Link>
-            </LinkWrapper>
+              </button>
+              <Link to="/user">프로필</Link>
+            </ButtonWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
