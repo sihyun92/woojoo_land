@@ -1,6 +1,5 @@
 import MainCommet from "./MainCommet";
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
 
@@ -26,6 +25,7 @@ function MainList() {
         {list.map((item) => (
           <MainCommet
             key={item.id}
+            id={item.id}
             title={item.title}
             price={item.price}
             discountRate={item.discountRate}
