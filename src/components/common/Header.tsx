@@ -2,9 +2,10 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 import { logout } from "../../lib/API/userAPI";
+import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
   username: string;
@@ -18,12 +19,23 @@ function Header({ username, setUsername }: IMainPageProps) {
     localStorage.removeItem("username");
     setUsername("");
   };
+
+  // MainPage에서만 SubHeader 컴포넌트 출력
+  const location = useLocation();
+
+  const getSubHeader = () => {
+    if (location.pathname === "/") {
+      return <SubHeader />;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <HeaderContainer>
         <HeaderWrapper>
           <Link to="/">
-            <img src="/images/Logo.svg" alt="우주부동산" width={250}/>
+            <img src="/images/Logo.svg" alt="우주부동산" width={250} />
           </Link>
           <Search>
             <SearchInput type="text" />
@@ -52,11 +64,12 @@ function Header({ username, setUsername }: IMainPageProps) {
               <button>
                 <MdOutlineShoppingCart />
               </button>
-              <button>프로필</button>
+              <Link to="/user">프로필</Link>
             </ButtonWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
+      {getSubHeader()}
     </>
   );
 }
@@ -88,7 +101,7 @@ const Search = styled.div`
     color: ${theme.colors.orange.main};
     font-size: 1.75rem;
     position: absolute;
-    right: .75rem;
+    right: 0.75rem;
     top: calc((3rem - 1.8rem) / 2);
     cursor: pointer;
   }
