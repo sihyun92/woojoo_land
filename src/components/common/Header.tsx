@@ -2,9 +2,10 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 import { logout } from "../../lib/API/userAPI";
+import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
   username: string;
@@ -23,11 +24,23 @@ function Header({ username, setUsername }: IMainPageProps) {
     setUsername("");
   };
 
+  // MainPage에서만 SubHeader 컴포넌트 출력
+  const location = useLocation();
+
+  const getSubHeader = () => {
+    if (location.pathname === "/") {
+      return <SubHeader />;
+    } else {
+      return null;
+    }
+  };
   return (
     <>
       <HeaderContainer>
         <HeaderWrapper>
-          <Logo>Gal 부동산</Logo>
+          <Link to="/">
+            <img src="/images/Logo.svg" alt="우주부동산" width={250} />
+          </Link>
           <Search>
             <SearchInput type="text" />
             <MdSearch />
@@ -55,11 +68,12 @@ function Header({ username, setUsername }: IMainPageProps) {
               <button>
                 <MdOutlineShoppingCart />
               </button>
-              <button>프로필</button>
+              <Link to="/user">프로필</Link>
             </ButtonWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
+      {getSubHeader()}
     </>
   );
 }
@@ -83,16 +97,16 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.div``;
-
 const Search = styled.div`
   display: flex;
   position: relative;
+  margin-right: 3.75rem;
   svg {
-    font-size: 1.5rem;
+    color: ${theme.colors.orange.main};
+    font-size: 1.75rem;
     position: absolute;
-    right: 0.5rem;
-    top: calc((3rem - 1.5rem) / 2);
+    right: 0.75rem;
+    top: calc((3rem - 1.8rem) / 2);
     cursor: pointer;
   }
 `;
@@ -100,7 +114,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   width: 26.25rem;
   height: 3rem;
-  border: 0.125rem solid ${theme.colors.gray[6]};
+  border: none; // 검색바 선 삭제
   border-radius: 0.625rem;
   padding-left: 0.5rem;
   &:focus {

@@ -59,7 +59,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
     event.preventDefault();
     const res = await getAuth(password);
     typeof res === "string"
-      ? setError("잘못된 비밀번호 입니다.")
+      ? setError("잘못된 비밀번호입니다!")
       : setIsChecked(true);
   };
 
@@ -80,7 +80,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
             인증확인
           </Button>
         </form>
-        <span>{error ? error : ""}</span>
+        <ErrorMessage>{error ? error : ""}</ErrorMessage>
       </SettingRoute>
     </>
   );
@@ -94,13 +94,20 @@ const SettingRoute = styled.div`
 const SubTitle = styled.span`
   font-size: 1.125rem;
   display: block;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 `;
 
 const SettingInput = styled(GrayInput)`
   width: 717px;
   height: 2.5rem;
   margin-right: 1rem;
+`;
+
+const ErrorMessage = styled.span`
+  color: #f00;
+  display: block;
+  font-weight: 700;
+  margin-top: 1.25rem;
 `;
 
 export default SettingAuth;
