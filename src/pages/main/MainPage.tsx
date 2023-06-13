@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import MainList from "../../components/main/MainList";
 import MainPackage from "../../components/main/MainPackage";
-import SubHeader from "../../components/common/SubHeader";
 import Banner from "../../components/main/MainBanner";
 
 function MainPage() {
   return (
     <>
-      <SubHeader />
       <Banner />
       <Main>
         <Inner>
