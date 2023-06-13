@@ -24,3 +24,9 @@ MainPage Banner와 Commet에 대한 컴포넌트 구성
 MainPage 내 MainList 컴포넌트와 MainCommet, MainPackage 컴포넌트 생성
 MainList에서 제품 전체 조회 후, MainCommet 컴포넌트를 통해 리스트 출력 성공
 MainBanner 컴포넌트 가안 완성
+
+### 23.06.13
+
+Router 병합
+MainPage에서만 출력하도록 SubHeader 수정
+상품 상세 페이지를 담당할 ProductPage 컴포넌트 생성
