@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
@@ -28,7 +28,14 @@ import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 
 function App() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(
+    // localStorage.getItem("username" || ""),
+    "",
+  );
+  useEffect(() => {
+    console.log(typeof localStorage.getItem("username"));
+    localStorage.getItem("username");
+  }, []);
   return (
     <BrowserRouter>
       <Header username={username} setUsername={setUsername} />
