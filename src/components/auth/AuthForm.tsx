@@ -142,10 +142,13 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         if (response === undefined) {
           setLoginMessage("아이디와 비밀번호를 확인해주세요!");
         } else {
+          event.preventDefault();
           setUsername(username || "");
           setEmail("");
           setPassword("");
-          navigate("/");
+          navigate("/", {
+            state: { name: localStorage.getItem("username") },
+          });
         }
       });
     }
