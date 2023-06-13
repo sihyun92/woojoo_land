@@ -1,10 +1,9 @@
-// import { Link } from "react-router-dom";
 import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { logout } from "../../lib/API/userAPI";
 
 interface IMainPageProps {
@@ -13,12 +12,17 @@ interface IMainPageProps {
 }
 
 function Header({ username, setUsername }: IMainPageProps) {
+  // useEffect(() => {
+  //   localStorage.getItem(username);
+  // }, [username]);
   const onLogout = async () => {
     await logout();
     localStorage.removeItem("Token");
     localStorage.removeItem("username");
+    localStorage.clear();
     setUsername("");
   };
+
   return (
     <>
       <HeaderContainer>
