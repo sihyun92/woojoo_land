@@ -20,10 +20,12 @@ function LikePage() {
   useEffect(() => {
     getProducts();
     getLike();
+    getCart();
   }, []);
 
   const [products, setProducts] = useState([]);
   const [likes, setLikes] = useState<IProduct[]>([]);
+  const [carts, setCarts] = useState<IProduct[]>([]);
 
   // 로컬스토리지
   // 사용자: [{ 이름: 머머, 가격: 머머 }, { 이름: 머머, 가격: 머머 }]
@@ -35,14 +37,27 @@ function LikePage() {
 
   const postLike = async (updatedLikes: IProduct[]) => {
     const res = await check();
-    localStorage.setItem(res.email, JSON.stringify(updatedLikes));
+    localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
+  };
+
+  const postCart = async (updatedCarts: IProduct[]) => {
+    const res = await check();
+    localStorage.setItem(`cart_${res.email}`, JSON.stringify(updatedCarts));
   };
 
   const getLike = async () => {
     const res = await check();
-    const getLikeItems = localStorage.getItem(res.email);
+    const getLikeItems = localStorage.getItem(`like_${res.email}`);
     if (getLikeItems) {
       setLikes(JSON.parse(getLikeItems));
+    }
+  };
+
+  const getCart = async () => {
+    const res = await check();
+    const getCartItems = localStorage.getItem(`cart_${res.email}`);
+    if (getCartItems) {
+      setCarts(JSON.parse(getCartItems));
     }
   };
 
@@ -58,15 +73,27 @@ function LikePage() {
     }
   };
 
+  const onCart = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    like: IProduct,
+  ) => {
+    event.preventDefault();
+    if (carts) {
+      const updatedCarts = [...carts, like];
+      setCarts(updatedCarts);
+      postCart(updatedCarts);
+    }
+  };
+
   return (
     <div>
       <UserTitle>찜한 상품</UserTitle>
       <h3>모든 제품</h3>
       <ul>
         {products.length
-          ? products.map((product: IProduct) => {
+          ? products.map((product: IProduct, index) => {
               return (
-                <li key={product.id}>
+                <li key={index}>
                   <div>
                     <span>id : {product.id}</span>
                     <span>이름 : {product.title}</span>
@@ -89,15 +116,41 @@ function LikePage() {
       <h3>찜한 상품 리스트</h3>
       <ul>
         {likes
-          ? likes.map((like: IProduct) => {
+          ? likes.map((like: IProduct, index) => {
               return (
-                <li key={like.id}>
-                  <span>{like.title}</span>
-                  <span>{like.price}</span>
+                <li key={index}>
+                  <div>
+                    <span>{like.title}</span>
+                    <span>{like.price}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      onCart(event, like);
+                    }}
+                  >
+                    장바구니에 넣기
+                  </button>
                 </li>
               );
             })
           : "찜한 상품이 없습니다"}
+      </ul>
+
+      <h3>장바구니 리스트</h3>
+      <ul>
+        {carts
+          ? carts.map((cart: IProduct, index) => {
+              return (
+                <li key={index}>
+                  <div>
+                    <span>{cart.title}</span>
+                    <span>{cart.price}</span>
+                  </div>
+                </li>
+              );
+            })
+          : "장바구니에 상품이 없습니다"}
       </ul>
     </div>
   );
