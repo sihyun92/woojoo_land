@@ -76,9 +76,9 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
             onChange={onChange}
             placeholder="비밀번호를 입력해주세요"
           />
-          <Button orange middleWidth type="submit">
+          <AuthButton orange middleWidth type="submit">
             인증확인
-          </Button>
+          </AuthButton>
         </form>
         <ErrorMessage>{error ? error : ""}</ErrorMessage>
       </SettingRoute>
@@ -92,8 +92,8 @@ const SettingRoute = styled.div`
 `;
 
 const SubTitle = styled.span`
-  font-size: 1.125rem;
   display: block;
+  font-size: 1.125rem;
   margin-bottom: 1rem;
 `;
 
@@ -101,6 +101,11 @@ const SettingInput = styled(GrayInput)`
   width: 717px;
   height: 2.5rem;
   margin-right: 1rem;
+`;
+
+const AuthButton = styled(Button)`
+  font-weight: 700;
+  font-size: 1.125rem;
 `;
 
 const ErrorMessage = styled.span`
