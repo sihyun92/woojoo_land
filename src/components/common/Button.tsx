@@ -16,6 +16,8 @@ const StyledButton = styled.button<{
   login?: boolean;
   register?: boolean;
   orange?: boolean;
+  adminlogout?: boolean;
+  admin?: boolean;
 }>`
   border: none;
   outline: none;
@@ -68,6 +70,36 @@ const StyledButton = styled.button<{
     rest.orange &&
     css`
       background: ${theme.colors.orange.main};
+    `}
+      ${(rest) =>
+    rest.adminlogout &&
+    css`
+      border: 1px solid ${theme.colors.orange.main};
+      color: ${theme.colors.orange.main};
+      border-radius: 1.25rem;
+      transition: 0.3s;
+      background: none;
+      width: 8.125rem;
+      font-size: 1rem;
+      &:hover{
+        background: ${theme.colors.orange.main};
+        color: ${theme.colors.white};
+      }
+    `}
+      ${(rest) =>
+    rest.admin &&
+    css`
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange.main};
+      border-radius: 5px;
+      transition: 0.3s;
+      width: 134px;
+      height: 40px;
+      font-size: 1rem;
+      &:hover{
+        background: ${theme.colors.orange.hover};
+        color: ${theme.colors.white};
+      }
     `}
 `;
 

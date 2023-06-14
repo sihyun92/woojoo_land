@@ -68,7 +68,7 @@ function Header({ username, setUsername }: IMainPageProps) {
               <button>
                 <MdOutlineShoppingCart />
               </button>
-              <Link to="/user">프로필</Link>
+              <Link to="/user"><UserImg><img src="/images/User.png" alt="프로필" /></UserImg></Link>
             </ButtonWrapper>
           </User>
         </HeaderWrapper>
@@ -114,7 +114,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   width: 26.25rem;
   height: 3rem;
-  border: none; // 검색바 선 삭제
+  border: none; // 검색바 선 제거
   border-radius: 0.625rem;
   padding-left: 0.5rem;
   &:focus {
@@ -123,40 +123,59 @@ const SearchInput = styled.input`
 `;
 
 const User = styled.div`
+  flex-direction: column;
   display: flex;
   width: 8.25rem;
-  flex-direction: column;
-  height: 100%;
+  height: 66px;
 `;
 const Auth = styled.div`
-  display: flex;
   justify-content: space-between;
+  color: ${theme.colors.white};
+  display: flex;
 `;
 
 const LogoutBtn = styled.button`
+  color: ${theme.colors.white};
   background: none;
-  border: none;
   cursor: pointer;
+  border: none;
   height: 1rem;
   padding: 0;
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex;
-  margin-top: auto;
   justify-content: space-between;
+  margin-top: auto;
+  display: flex;
 
   > button {
-    width: 2.5rem;
-    height: 2.5rem;
+    color: ${theme.colors.white};
+    position: relative;
     background: none;
-    border: none;
     cursor: pointer;
-
+    height: 2.5rem;
+    width: 2.5rem;
+    border: none;
     > svg {
-      font-size: 1.25rem;
+      font-size: 1.5625rem;
+      position: absolute;
+      margin: auto 0;
+      bottom: 0;
+      left: 2px;
+      top: 0;
     }
   }
 `;
+
+const UserImg = styled.div`
+  background-color: ${theme.colors.white};
+  border-radius: 100%;
+  display: flex;
+  height: 40px;
+  width: 40px;
+  img {
+  border-radius: 100%;
+  }
+`
 
 export default Header;
