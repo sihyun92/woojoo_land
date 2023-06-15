@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-import { Dispatch, SetStateAction } from "react";
-import { logout } from "../../lib/API/userAPI";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { logout, check } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
@@ -13,9 +13,15 @@ interface IMainPageProps {
 }
 
 function Header({ username, setUsername }: IMainPageProps) {
-  // useEffect(() => {
-  //   localStorage.getItem(username);
-  // }, [username]);
+  useEffect(() => {
+    getUserInfo();
+  });
+
+  const getUserInfo = async () => {
+    const res = await check();
+    setUsername(res.displayName);
+  };
+
   const onLogout = async () => {
     await logout();
     localStorage.removeItem("Token");
@@ -68,7 +74,11 @@ function Header({ username, setUsername }: IMainPageProps) {
               <button>
                 <MdOutlineShoppingCart />
               </button>
-              <Link to="/user"><UserImg><img src="/images/User.png" alt="프로필" /></UserImg></Link>
+              <Link to="/user">
+                <UserImg>
+                  <img src="/images/User.png" alt="프로필" />
+                </UserImg>
+              </Link>
             </ButtonWrapper>
           </User>
         </HeaderWrapper>
@@ -174,8 +184,8 @@ const UserImg = styled.div`
   height: 40px;
   width: 40px;
   img {
-  border-radius: 100%;
+    border-radius: 100%;
   }
-`
+`;
 
 export default Header;
