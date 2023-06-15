@@ -1,33 +1,52 @@
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
+import AdminTitle from "../../components/admin/AdminTitle";
+import AdminUserItem from "../../components/admin/AdminUserItem";
 
 function UserListPage() {
   return (
     <>
       <UserListContainer>
-        <TitleContainer>
-          <Title>사용자 조회</Title>
-        </TitleContainer>
+        <AdminTitle>사용자 조회</AdminTitle>
+        <UserContainer>
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+          <AdminUserItem />
+        </UserContainer>
       </UserListContainer>
     </>
   );
 }
 
 const UserListContainer = styled.div`
+  flex-direction: column;
   margin: 0 30px;
   display: flex;
 `;
-
-const TitleContainer = styled.div`
-  border-bottom: 1px solid ${theme.colors.gray[3]};
-  height: 68px;
-  width: 100%;
-`;
-
-const Title = styled.div`
-  font-weight: 700;
-  margin-top: 25px;
-  font-size: 28px;
+const UserContainer = styled.div`
+  flex-wrap: wrap;
+  display: flex;
+  
 `;
 
 export default UserListPage;

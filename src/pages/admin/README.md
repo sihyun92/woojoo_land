@@ -31,3 +31,13 @@
 - public 작업
   1. 관리자 페이지용 로고 LogoAdmin.png, LogoAdmin.png 추가
    
+## 23.06.15
+- components 작업
+  1. AdminTitle.tsx 관리자 페이지 상단 타이틀 재사용 컴포넌트 작업
+  2. AdminUserItem.tsx 유저 아이템 임시 사용 데이터 레이아웃 및 스타일 작업
+
+- page 작업
+  1. UserListPage.tsx 유저 리스트 레이아웃 및 스타일 작업
+
+- public 작업
+  1. AdminUser.png 관리자 유저 이미지 추가

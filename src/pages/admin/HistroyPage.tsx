@@ -4,6 +4,7 @@ import { theme } from "../../styles/theme";
 // import { IProduct, salesHistory } from "../../lib/API/adminAPI";
 import HistroyItem from "../../components/admin/AdminHistroyItem";
 import Button from "../../components/common/Button";
+import AdminTitle from "../../components/admin/AdminTitle";
 
 function HistoryPage() {
   // 현재 구매내역이 없어서 리스트 API 불러오기 불가
@@ -24,9 +25,7 @@ function HistoryPage() {
   return (
     <>
       <HistoryContainer>
-        <TitleContainer>
-          <Title>전체 거래내역</Title>
-        </TitleContainer>
+        <AdminTitle>전체 거래내역</AdminTitle>
         <CategoryMenuContainer>
           <ItemBox>
             <ID>거래내역 ID</ID>
@@ -50,18 +49,6 @@ const HistoryContainer = styled.div`
   margin: 0 30px;
   display: flex;
   flex-direction: column;
-`;
-
-const TitleContainer = styled.div`
-  border-bottom: 1px solid ${theme.colors.gray[3]};
-  height: 68px;
-  width: 100%;
-`;
-
-const Title = styled.div`
-  margin-top: 25px;
-  font-weight: 700;
-  font-size: 28px;
 `;
 
 // 카테고리 메뉴 스타일 시작
