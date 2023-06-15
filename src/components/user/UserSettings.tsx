@@ -7,7 +7,11 @@ import Button from "../common/Button";
 
 function Settings() {
   const [email, setEmail] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    displayName: "",
+    oldPassword: "",
+    newPassword: "",
+  });
   const [result, setResult] = useState("");
   const [isError, setIsError] = useState(false);
 
@@ -17,10 +21,14 @@ function Settings() {
 
   // 수정 폼 제출시 마다 result에 '수정'이라는 string이 포함되어 있지 않으면
   // error로 취급하고 아니면 ok로 취급
+  // result가 변하고 2.5초 뒤에 result를 초기화해 메시지가 사라지게 처리
   useEffect(() => {
     if (result) {
       /수정/.test(result) ? setIsError(false) : setIsError(true);
     }
+    setTimeout(() => {
+      setResult("");
+    }, 2500);
   }, [result]);
 
   // email 불러오기
@@ -30,18 +38,33 @@ function Settings() {
   };
 
   // 폼을 제출하면 유저정보를 수정하고 error 여부를 판단한다.
+  // 두 비밀번호 input중 하나만 입력한 경우, 에러 메시지 저장
   // 객체가 반환되면 정상 수정 메시지를 result에 저장
-  // 오류 메시지가 string으로 반환되므로 string이 반환되면 해당 메시지를 저장
+  // 에러 메시지가 string으로 반환되므로 string이 반환되면 해당 메시지를 저장
   // isError에 error 여부를 판단하는 boolean을 할당해 스타일 지정
   const onSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const message = await userUpdate(user);
-    if (typeof message === "string") {
-      setResult(message);
+
+    if (
+      (user.oldPassword && !user.newPassword) ||
+      (!user.oldPassword && user.newPassword)
+    ) {
+      setResult("두 개의 비밀번호를 모두 입력해야 합니다.");
       setIsError(true);
     } else {
-      setResult("정보가 수정되었습니다.");
-      setIsError(false);
+      if (typeof message === "string") {
+        setResult(message);
+        setIsError(true);
+      } else {
+        setResult("정보가 수정되었습니다.");
+        setIsError(false);
+        setUser({
+          displayName: "",
+          oldPassword: "",
+          newPassword: "",
+        });
+      }
     }
   };
 
@@ -79,6 +102,7 @@ function Settings() {
             type="text"
             name="displayName"
             onChange={onChangeForm}
+            value={user.displayName}
             placeholder="변경할 닉네임을 입력하세요"
           />
         </NameInput>
@@ -91,6 +115,7 @@ function Settings() {
             fullWidth
             type="password"
             name="oldPassword"
+            value={user.oldPassword}
             onChange={onChangeForm}
             placeholder="기존 비밀번호를 입력하세요"
           />
@@ -98,6 +123,7 @@ function Settings() {
             fullWidth
             type="password"
             name="newPassword"
+            value={user.newPassword}
             onChange={onChangeForm}
             placeholder="새 비밀번호를 입력하세요"
           />
