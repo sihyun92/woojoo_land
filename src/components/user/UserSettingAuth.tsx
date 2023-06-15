@@ -61,6 +61,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
     typeof res === "string"
       ? setError("잘못된 비밀번호입니다!")
       : setIsChecked(true);
+    setPassword("");
   };
 
   return (
@@ -68,7 +69,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
       <SettingRoute>
         <UserTitle>개인정보 수정 인증</UserTitle>
         <SubTitle>비밀번호를 재확인 합니다</SubTitle>
-        <form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
           <SettingInput
             required
             type="password"
@@ -79,7 +80,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
           <AuthButton orange middleWidth type="submit">
             인증확인
           </AuthButton>
-        </form>
+        </Form>
         <ErrorMessage>{error ? error : ""}</ErrorMessage>
       </SettingRoute>
     </>
@@ -95,6 +96,11 @@ const SubTitle = styled.span`
   display: block;
   font-size: 1.125rem;
   margin-bottom: 1rem;
+`;
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
 `;
 
 const SettingInput = styled(GrayInput)`
