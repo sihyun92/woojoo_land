@@ -46,29 +46,29 @@ const Navigator = styled.nav`
 
 const NavTitle = styled.div`
   display: flex;
-  margin: 20px 0;
+  margin: 17px 0;
   align-items: center;
 `;
 
 const TitleBar = styled.div`
   width: 5px;
-  height: 30px;
+  height: 2.25rem;
   margin-right: 10px;
-  background-color: #ff6113;
+  background-color: ${(props) => props.theme.colors.orange.main};
 `;
 
 const MyPage = styled.h2`
-  font-size: 30px;
   font-weight: 700;
+  font-size: 2.25rem;
 `;
 
 const NavContainer = styled.ul`
   display: grid;
-  border-top: 1px solid #333;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
   grid-template-columns: 285px;
   grid-template-rows: 1fr 1fr 1fr 1fr;
+  border-top: 1px solid ${(props) => props.theme.colors.gray[3]};
+  border-left: 1px solid ${(props) => props.theme.colors.gray[3]};
+  border-right: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
 
 const NavList = styled.li`
@@ -76,16 +76,16 @@ const NavList = styled.li`
   padding: 13px 10px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
 
   .chebronRight {
-    font-size: 25px;
+    font-size: 1.5rem;
   }
 `;
 
 const ListName = styled.span`
-  font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.25rem;
 `;
 
 export default UserNav;
