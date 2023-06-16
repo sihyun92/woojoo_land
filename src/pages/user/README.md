@@ -94,3 +94,7 @@
 
 - 주문 내역 페이지 캘린더 기능을 위한 react-calendar library 설치
 - 캘린더 날짜 범위 설정 기능을 이용해 해당 날짜 범위 배열 생성 후, 주문 내역의 날짜들과 대조
+- 캘린더 내 날짜 미선택시 전체 주문 내역 표시
+- toISOString 사용시 UTC 기준 날짜 변경으로 인해 의도하지 않은 날짜로 선택되는 문제 해결
+  - toISOString대신 toLocaleDateString 메소드 사용
+  - 정규표현식, replace, slice 등을 사용해 하드코딩 하는것보다 훨씬 간결하게 날짜 구성 가능
