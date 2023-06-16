@@ -29,25 +29,30 @@ function OrderListPage() {
   useEffect(() => {
     getOrders();
   }, []);
+  useEffect(() => {
+    filterOrders();
+  });
 
+  const [error, setError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [orders, setOrders] = useState<ITransactionDetail[]>([]);
+  const [filter, setFilter] = useState<ITransactionDetail[]>([]);
   const [value, onChange] = useState<TValuePiece | [TValuePiece, TValuePiece]>(
     new Date(),
   );
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [filter, setFilter] = useState([]);
+
   // 주문 내역 불러오기
   const getOrders = async () => {
     const orderList = await orderDetailsAll();
     typeof orderList === "string" ? setError(orderList) : setOrders(orderList);
   };
+
+  // date를 string으로 만들어 주는 함수
   const getYMD = (date: TValuePiece) => {
-    if (date) {
-      return date.toLocaleDateString();
-    }
+    return date && date.toLocaleDateString();
   };
 
+  // 캘린더 선택에 따라 날짜 렌더링
   const renderDate = () => {
     if (Array.isArray(value)) {
       return `${getYMD(value[0])} ~ ${getYMD(value[1])}`;
@@ -56,38 +61,40 @@ function OrderListPage() {
     }
   };
 
+  // 캘린터 on off 토글
   const onToggle = () => {
     setIsOpen((prev) => !prev);
   };
 
+  // 캘린더 날짜 범위 내의 날짜들을 저장하는 배열 생성
+  // 시작날짜와 끝 날짜를 매개변수로 받아 변수에 저장
+  // 시작날짜가 끝 날짜와 같아질때까지 날짜에 1을 더하면서 string화 한 날짜를 빈 배열에 push
   const getDatesArray = (startDate: TValuePiece, endDate: TValuePiece) => {
     if (startDate && endDate) {
       const dates = [];
       const start = new Date(startDate);
       const end = new Date(endDate);
-      while (start <= end) {
-        dates.push(new Date(start));
-        start.setDate(start.getDate() + 1);
+      for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+        dates.push(date.toLocaleDateString());
       }
-      const updatedDates = dates.map((date) => {
-        return date.toLocaleDateString();
-      });
-      return updatedDates;
+      return dates;
     }
   };
 
+  // getDatesArray함수로 만든 날짜 범위 배열에 날짜가 포함되는 주문 내역을 필터링
+  // 주문내역 전체를 스캔해 해당 주문의 주문 날짜가 상기 배열에 포함되면 남김
+  // 만일 날짜를 제대로 선택하지 않은 경우에는 전체 주문 내역이 표시
   const filterOrders = () => {
-    if (Array.isArray(value)) {
-      const dates = getDatesArray(value[0], value[1]);
-      const filteredOrders = orders.filter((order: ITransactionDetail) => {
-        const orderedDate = new Date(order.timePaid).toLocaleDateString();
-        if (dates) {
-          return dates.includes(orderedDate);
-        }
-      });
-      setFilter(filteredOrders);
-      return filteredOrders;
-    }
+    const dates = Array.isArray(value)
+      ? getDatesArray(value[0], value[1])
+      : undefined;
+    const filteredOrders = dates
+      ? orders.filter((order: ITransactionDetail) => {
+          return dates.includes(new Date(order.timePaid).toLocaleDateString());
+        })
+      : orders;
+    setFilter(filteredOrders);
+    return filteredOrders;
   };
 
   return (
@@ -97,7 +104,7 @@ function OrderListPage() {
         {error ? (
           <ErrorMessage>{error}</ErrorMessage>
         ) : (
-          orders.map((order: ITransactionDetail, index) => {
+          filter.map((order: ITransactionDetail, index) => {
             return (
               <OrderList key={index}>
                 <OrderId>{order.detailId}</OrderId>
