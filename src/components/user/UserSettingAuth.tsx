@@ -111,7 +111,13 @@ const SettingInput = styled(GrayInput)`
 
 const AuthButton = styled(Button)`
   font-weight: 700;
+  transition: 0.5s;
   font-size: 1.125rem;
+
+  &:hover {
+    background: ${(props) => props.theme.colors.orange.hover};
+    color: ${(props) => props.theme.colors.white};
+  }
 `;
 
 const ErrorMessage = styled.span`
