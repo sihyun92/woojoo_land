@@ -9,7 +9,7 @@ export interface IProduct {
   discountRate?: number;
 }
 
-interface IProductEdit extends IProduct {
+export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
 

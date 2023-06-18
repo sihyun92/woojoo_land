@@ -15,8 +15,10 @@ function MainList() {
         console.error("Failed", error);
       }
     }
-    fetchList();
-  }, []);
+    if (list.length === 0) {
+      fetchList();
+    }
+  }, [list]);
 
   return (
     <>

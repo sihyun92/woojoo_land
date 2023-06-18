@@ -5,7 +5,7 @@ import Banner from "../../components/main/MainBanner";
 
 function MainPage() {
   return (
-    <>
+    <Container>
       <Banner />
       <Main>
         <Inner>
@@ -13,10 +13,13 @@ function MainPage() {
           <MainPackage />
         </Inner>
       </Main>
-    </>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  margin-top: -2rem;
+`;
 const Main = styled.main`
   width: 100%;
 `;
