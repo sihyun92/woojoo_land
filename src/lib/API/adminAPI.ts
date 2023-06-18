@@ -8,13 +8,6 @@ export interface IProduct {
   photoBase64?: string;
   discountRate?: number;
   isSoldOut?: boolean;
-  isSoldOut?: boolean;
-}
-
-export interface UserList {
-  email: string;
-  displayName: string;
-  profileImg?: string;
 }
 
 export interface IProductEdit extends IProduct {
