@@ -10,34 +10,28 @@ export interface IProduct {
   isSoldOut?: boolean;
 }
 
-export interface UserList {
-  email: string
-  displayName: string
-  profileImg?: string
-}
-
 export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
 
 export interface RequestBodyEdit {
-  title: string // 제품 이름 (필수!)
-  price: number // 제품 가격 (필수!)
-  description: string // 제품 상세 설명 (필수!)
-  tags?: string[] // 제품 태그
-  thumbnailBase64?: string // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
-  photoBase64?: string // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
-  discountRate?: number // 제품 할인율
+  title: string; // 제품 이름 (필수!)
+  price: number; // 제품 가격 (필수!)
+  description: string; // 제품 상세 설명 (필수!)
+  tags?: string[]; // 제품 태그
+  thumbnailBase64?: string; // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
+  photoBase64?: string; // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
+  discountRate?: number; // 제품 할인율
 }
 
 interface RequestBodyAdd {
-  title: string // 제품 이름 (필수!)
-  price: number // 제품 가격 (필수!)
-  description: string // 제품 상세 설명 (필수!)
-  tags?: string[] // 제품 태그
-  thumbnailBase64?: string // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
-  photoBase64?: string // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
-  discountRate?: number // 제품 할인율
+  title: string; // 제품 이름 (필수!)
+  price: number; // 제품 가격 (필수!)
+  description: string; // 제품 상세 설명 (필수!)
+  tags?: string[]; // 제품 태그
+  thumbnailBase64?: string; // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
+  photoBase64?: string; // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
+  discountRate?: number; // 제품 할인율
 }
 
 interface ISalesManage {
@@ -122,8 +116,11 @@ const salesManage = async (detailID: string, saleManage: ISalesManage) => {
 };
 
 // 제품 추가
-const productPost = async (product: RequestBodyAdd, thumbnailBase64: string) => {
-  const updatedProduct = {...product, thumbnailBase64}
+const productPost = async (
+  product: RequestBodyAdd,
+  thumbnailBase64: string,
+) => {
+  const updatedProduct = { ...product, thumbnailBase64 };
   const res = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
     {
@@ -141,8 +138,12 @@ const productPost = async (product: RequestBodyAdd, thumbnailBase64: string) => 
 };
 
 // 제품 수정
-const productEdit = async (product: RequestBodyEdit, ID: string, thumbnailBase64: string) => {
-  const updatedProduct = {...product, thumbnailBase64}
+const productEdit = async (
+  product: RequestBodyEdit,
+  ID: string,
+  thumbnailBase64: string,
+) => {
+  const updatedProduct = { ...product, thumbnailBase64 };
   //입력값 위주의 product과 Base64로 인코딩된 이미지 데이터는 따로 상태를 받아서 API로 수정 요청
   const res = await fetch(
     `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${ID}`,
