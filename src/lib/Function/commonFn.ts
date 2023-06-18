@@ -11,9 +11,11 @@ const adjustDate = (date: string) => {
 
 // 달러 표기 변환
 // 예) 3000000 -> $3,000,000
-const formatDollar = (dollar: number) => {
-  const formattedDollar = "$" + dollar.toLocaleString("en-US");
-  return formattedDollar;
+const formatDollar = (dollar: number | undefined) => {
+  if (dollar) {
+    const formattedDollar = "$" + dollar.toLocaleString("en-US");
+    return formattedDollar;
+  }
 };
 
 export { adjustDate, formatDollar };
