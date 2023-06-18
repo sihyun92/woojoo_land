@@ -19,7 +19,6 @@ function UserPage() {
 
 const UserContainer = styled.div`
   display: flex;
-  margin-top: 2rem;
 `;
 
 export default UserPage;

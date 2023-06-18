@@ -234,6 +234,12 @@ const SaveButton = styled(Button)`
   font-weight: 700;
   position: absolute;
   font-size: 1.125rem;
+  transition: 0.5s;
+
+  &:hover {
+    background: ${(props) => props.theme.colors.orange.hover};
+    color: ${(props) => props.theme.colors.white};
+  }
 `;
 
 export default Settings;
