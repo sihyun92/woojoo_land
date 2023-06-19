@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
+import { UserList } from "../../lib/API/adminAPI";
 
-function AdminUserItem() {
+function AdminUserItem(props:UserList) {
   return (
     <ItemContainer>
       <ProfileImg>
+        {props.profileImg}
         <img src="/images/AdminUser.png" alt="기본 이미지" />
       </ProfileImg>
-      <UserEmail>dicepted@gmail.com</UserEmail>
-      <UserName>개발중독자</UserName>
+      <UserEmail>{props.email}</UserEmail>
+      <UserName>{props.displayName}</UserName>
     </ItemContainer>
   );
 }
@@ -18,27 +20,29 @@ const ItemContainer = styled.div`
   border: 1px solid ${theme.colors.gray[3]};
   flex-direction: column;
   border-radius: 20px;
-  margin-top: 15px;
   overflow: hidden;
   display: flex;
-  height: 225px;
-  width: 180px;
-  margin-left: 19px;
 `;
+
 const ProfileImg = styled.div`
-  height: 162px;
+  background-color: ${theme.colors.white};
+  justify-content: center;
+  max-height: 120px;
+  display: flex;
   img {
-    width: 100%;
+    max-height: 100%;
   }
 `;
+
 const UserEmail = styled.div`
   margin: 10px auto 0;
   font-size: 12px;
 `;
+
 const UserName = styled.div`
+  margin: 8px auto 10px;
   font-weight: 700;
   font-size: 18px;
-  margin: 8px auto 0;
 `;
 
 export default AdminUserItem;
