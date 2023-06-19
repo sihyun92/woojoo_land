@@ -1,7 +1,10 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
+import { TRootState } from "../../modules";
+import { finishLoading, startLoading } from "../../modules/loading";
 import Button from "../common/Button";
 
 // Interface
@@ -54,6 +57,25 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
 
   // 라우팅
   const navigate = useNavigate();
+
+  const selectStartLoading = useSelector(
+    (state: TRootState) => state.loading.startLoading,
+  );
+  const selectFinishLoading = useSelector(
+    (state: TRootState) => state.loading.finishLoading,
+  );
+
+  // 디스패치
+  const dispatch = useDispatch();
+
+  // 액션을 디스패치하는 함수
+  const onStartLoading = () => {
+    dispatch(startLoading());
+  };
+  
+  const onFinishLoading = () => {
+    dispatch(finishLoading());
+  };
 
   // Function
   const onLoginChange = (event: FormEvent) => {
