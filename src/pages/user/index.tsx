@@ -1,19 +1,48 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserNav from "../../components/user/UserNav";
 import OrderListPage from "./OrderListPage";
 import UserLayout from "../../components/user/UserLayout";
 import styled from "styled-components";
+import { check } from "../../lib/API/userAPI";
+import { useEffect, useState } from "react";
 
 function UserPage() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(true);
+
+  // 유저 인증
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  // state가 false일시 alert와 함께 login페이지로 리디렉션
+  useEffect(() => {
+    if (!isChecked) {
+      alert("로그인이 필요합니다.");
+      navigate("/auth/login");
+    }
+  }, [isChecked, navigate]);
+
+  // 유저 인증함수. 유효한 유저가 아니면 state에 false를 반환
+  const checkUser = async () => {
+    const res = await check();
+    if (typeof res === "string") {
+      setIsChecked(false);
+    }
+  };
 
   return (
-    <UserContainer>
-      <UserNav />
-      <UserLayout>
-        {location.pathname === "/user" ? <OrderListPage /> : <Outlet />}
-      </UserLayout>
-    </UserContainer>
+    <>
+      {isChecked ? (
+        <UserContainer>
+          <UserNav />
+          <UserLayout>
+            {location.pathname === "/user" ? <OrderListPage /> : <Outlet />}
+          </UserLayout>
+        </UserContainer>
+      ) : null}
+    </>
   );
 }
 
