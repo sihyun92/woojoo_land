@@ -9,6 +9,12 @@ export interface IProduct {
   discountRate?: number;
 }
 
+export interface UserList {
+  email: string
+  displayName: string
+  profileImg?: string
+}
+
 interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }

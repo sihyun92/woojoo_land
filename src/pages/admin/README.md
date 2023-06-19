@@ -41,3 +41,14 @@
 
 - public 작업
   1. AdminUser.png 관리자 유저 이미지 추가
+  2. 
+
+## 23.06.16
+- adminAPI.ts 유저 목록 타입 추가
+- 페이지네이션 라이브러리 추가 설치 `npm i react-js-pagination`
+- components 작업
+  1. AdminUserPaging.tsx 페이지네이션 설정 작업
+  2. AdminUserItem.tsx 스타일 작업
+
+- page 작업
+  1. UserListPage.tsx 페이지네이션 사용 페이지 노출 기능 및 레이아웃 작업 + 기능 주석
