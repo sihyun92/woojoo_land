@@ -113,7 +113,8 @@ const CancelBtn = styled(Button)`
 // 카테고리 메뉴 스타일 끝
 
 const ItemContainer = styled.ul`
-  display: flex;
+flex-direction: column;
+display: flex;
 `;
 
 export default HistoryPage;
