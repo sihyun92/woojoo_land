@@ -27,6 +27,7 @@ import SettingPage from "./pages/user/SettingPage";
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
+import Loading from "./components/common/Loading";
 
 function App() {
   const [username, setUsername] = useState(
@@ -40,6 +41,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header username={username} setUsername={setUsername} />
+      <Loading />
       <Main>
         <Inner>
           <Routes>
