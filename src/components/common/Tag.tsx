@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface ITagProps {
   [props: string]: any;
 }
 
 function Tag({ ...props }: ITagProps) {
-  const [select, setSelected] = useState(false);
+  // const [select, setSelected] = useState(false);
   return <StyledTag {...props} />;
 }
 

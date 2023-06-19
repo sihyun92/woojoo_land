@@ -26,6 +26,7 @@ import SettingPage from "./pages/user/SettingPage";
 // main
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
+import CartPage from "./pages/main/CartPage";
 
 function App() {
   const [username, setUsername] = useState(
@@ -46,6 +47,8 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
@@ -84,6 +87,6 @@ const Main = styled.main`
 const Inner = styled.div`
   max-width: 75rem;
   width: 75rem;
-  margin: 0 auto;
+  margin: 2rem auto 0;
 `;
 export default App;

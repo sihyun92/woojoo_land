@@ -67,19 +67,19 @@ function Header({ username, setUsername }: IMainPageProps) {
                 </>
               )}
             </Auth>
-            <ButtonWrapper>
-              <button>
+            <LinkWrapper>
+              <Link to="/like">
                 <IoMdHeartEmpty />
-              </button>
-              <button>
+              </Link>
+              <Link to="/cart">
                 <MdOutlineShoppingCart />
-              </button>
+              </Link>
               <Link to="/user">
                 <UserImg>
                   <img src="/images/User.png" alt="프로필" />
                 </UserImg>
               </Link>
-            </ButtonWrapper>
+            </LinkWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
@@ -153,26 +153,20 @@ const LogoutBtn = styled.button`
   padding: 0;
 `;
 
-const ButtonWrapper = styled.div`
+const LinkWrapper = styled.div`
   justify-content: space-between;
   margin-top: auto;
   display: flex;
+  align-items: center;
 
-  > button {
-    color: ${theme.colors.white};
-    position: relative;
-    background: none;
-    cursor: pointer;
-    height: 2.5rem;
-    width: 2.5rem;
-    border: none;
+  > a {
+    font-size: 30px;
+    margin: auto 0;
+
     > svg {
-      font-size: 1.5625rem;
-      position: absolute;
-      margin: auto 0;
-      bottom: 0;
-      left: 2px;
-      top: 0;
+      color: ${theme.colors.white};
+      font-size: 24px;
+      margin-top: 8px;
     }
   }
 `;
@@ -183,6 +177,7 @@ const UserImg = styled.div`
   display: flex;
   height: 40px;
   width: 40px;
+
   img {
     border-radius: 100%;
   }

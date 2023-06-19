@@ -15,7 +15,7 @@ export interface UserList {
   profileImg?: string
 }
 
-interface IProductEdit extends IProduct {
+export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
 

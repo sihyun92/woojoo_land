@@ -1,24 +1,17 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { productDetail, IProductDetail } from "../../lib/API/commonAPI";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
+import { formatDollar } from "../../lib/Function/commonFn";
+import Button from "../../components/common/Button";
+import MainQtyButton from "../../components/main/MainQtyButton";
+import MainCartBtn from "../../components/main/MainCartBtn";
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<IProductDetail>();
   let [quantity, setQuantity] = useState<number>(1);
-
-  // 구매 수량 증가
-  const onDecrease = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
-
-  // 구매 수량 감소
-  const onIncrease = () => {
-    setQuantity(quantity + 1);
-  };
 
   // 단일 상품 상세 조회
   useEffect(() => {
@@ -43,18 +36,24 @@ function ProductPage() {
       </PhotoWrapper>
       <DetailWrapper>
         <Title>{product.title} 특별분양</Title>
-        <Price>{product.price}$</Price>
+        <Price>{formatDollar(product.price)}</Price>
         <Desc>{product.description}</Desc>
         <hr />
         <PurchaseWrapper>
           <Quantity>
             <span>구매 수량</span>
-            <ButtonWrapper>
-              <BiMinusCircle onClick={onDecrease}>-</BiMinusCircle>
-              <p>{quantity}</p>
-              <BiPlusCircle onClick={onIncrease}>+</BiPlusCircle>
-            </ButtonWrapper>
+            <MainQtyButton quantity={quantity} setQuantity={setQuantity} />
           </Quantity>
+          <PriceAll>
+            <span>총 상품 금액</span>
+            <Price>
+              {product.price ? formatDollar(product.price * quantity) : 0}
+            </Price>
+          </PriceAll>
+          <ButtonWrapper>
+            <MainCartBtn quantity={quantity} />
+            <Button orange="true">구매하기</Button>
+          </ButtonWrapper>
         </PurchaseWrapper>
       </DetailWrapper>
     </Container>
@@ -63,7 +62,6 @@ function ProductPage() {
 
 const Container = styled.div`
   display: flex;
-  margin-top: 5rem;
 `;
 
 const PhotoWrapper = styled.div`
@@ -85,7 +83,6 @@ const Title = styled.h1`
 const Price = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 2rem;
 `;
 
 const Desc = styled.div`
@@ -93,6 +90,7 @@ const Desc = styled.div`
   margin-bottom: 2rem;
   letter-spacing: 1.5%;
   color: ${theme.colors.gray[5]};
+  margin-top: 2rem;
 `;
 
 const PurchaseWrapper = styled.div``;
@@ -101,18 +99,40 @@ const Quantity = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2rem;
+
+  > span {
+    font-size: 24px;
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
+  margin-top: 2rem;
 
-  > svg {
-    font-size: 1.5rem;
-    cursor: pointer;
+  > Button {
+    width: 170px;
+    height: 50px;
+    font-size: 18px;
+
+    &:first-child {
+      background-color: ${theme.colors.white};
+      border: 1px solid ${theme.colors.orange.main};
+      color: ${theme.colors.orange.main};
+      cursor: pointer;
+    }
   }
-  > p {
-    font-size: 1.5rem;
+`;
+
+const PriceAll = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+
+  > span {
+    font-size: 24px;
   }
 `;
 
