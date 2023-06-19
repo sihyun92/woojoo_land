@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { productDetail, IProductDetail } from "../../lib/API/commonAPI";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { formatDollar } from "../../lib/Function/commonFn";
 import Button from "../../components/common/Button";
-import MainQtyButton from "../../components/main/MainQtyButton";
+import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 
 function ProductPage() {
@@ -42,7 +42,7 @@ function ProductPage() {
         <PurchaseWrapper>
           <Quantity>
             <span>구매 수량</span>
-            <MainQtyButton quantity={quantity} setQuantity={setQuantity} />
+            <MainProductBtn quantity={quantity} setQuantity={setQuantity} />
           </Quantity>
           <PriceAll>
             <span>총 상품 금액</span>

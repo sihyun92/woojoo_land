@@ -1,6 +1,6 @@
 import { check } from "../../lib/API/userAPI";
 import { productDetail } from "../../lib/API/commonAPI";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
 
 // 인터페이스 선언
@@ -11,6 +11,7 @@ interface MainCartBtnProps {
 function MainCartBtn({ quantity }: MainCartBtnProps) {
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const findProduct = async () => {
     // 유효한 prdocut일 경우
@@ -47,7 +48,10 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
 
     const item = await findProduct();
     if (item) {
+      // 1. postCart() 실행
       postCart(item);
+      // 2. 장바구니 페이지로 이동
+      navigate("/cart");
     }
   };
 
@@ -58,9 +62,13 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
         onCart(event);
       }}
     >
-      <Link to="/cart">장바구니</Link>
+      장바구니
     </button>
   );
 }
 
 export default MainCartBtn;
+
+// 처음에 Link를 통해 장바구니 페이지를 이동시켰으나, 로컬스토리지에 post하기 전에 장바구니 페이지로 이동되어
+// 장바구니 페이지에 도착했을 땐, 아직 로컬 스토리지가 비어있는 문제가 있었다.
+// useNavigator를 통해, 스토리지에 저장이 완료되면 그 뒤로 navigate를 통해 페이지를 이동 시켜 오류를 해결했다.
