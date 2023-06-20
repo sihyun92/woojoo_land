@@ -6,7 +6,7 @@ interface IQtyButtonProps {
   setQuantity: (value: number) => void;
 }
 
-function MainQtyButton({ quantity, setQuantity }: IQtyButtonProps) {
+function MainProductBtn({ quantity, setQuantity }: IQtyButtonProps) {
   // 구매 수량 증가
   const onDecrease = () => {
     if (quantity > 1) setQuantity(quantity - 1);
@@ -41,4 +41,4 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default MainQtyButton;
+export default MainProductBtn;
