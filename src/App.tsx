@@ -29,6 +29,7 @@ import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
 import Loading from "./components/common/Loading";
 import AdminOrderPage from "./pages/admin/AdminOrderPage";
+import AdminOrderPage from "./pages/admin/AdminOrderPage";
 
 function App() {
   const [username, setUsername] = useState("");

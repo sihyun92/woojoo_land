@@ -8,6 +8,7 @@ export interface IProduct {
   photoBase64?: string;
   discountRate?: number;
   isSoldOut?: boolean;
+  isSoldOut?: boolean;
 }
 
 export interface UserList {
