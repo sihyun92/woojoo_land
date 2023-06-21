@@ -10,6 +10,12 @@ export interface IProduct {
   isSoldOut?: boolean;
 }
 
+export interface UserList {
+  email: string;
+  displayName: string;
+  profileImg?: string;
+}
+
 export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
