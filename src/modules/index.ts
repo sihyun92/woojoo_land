@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import loading from "./loading";
+import cartItem from "./cartItem";
 
 const rootReducer = combineReducers({
   loading,
+  cartItem,
 });
 
 export default rootReducer;
