@@ -110,3 +110,9 @@
 - new Map()과 react-collapsible library를 이용해 구매 내역별 상세 내용 조회 기능 구현
 - 주문 내역에 구매 확정, 취소 기능 추가
 - 필요한 구간에 confirm 모달 추가
+
+## 23.06.21
+
+- UserNav hover 및 active 스타일 추가
+- 각 페이지별 button hover 스타일 추가
+- Header 로그아웃버튼 동작시 alert와 함께 메인 페이지로 리디렉션 처리

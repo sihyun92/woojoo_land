@@ -144,11 +144,11 @@ const AddAccount = styled(Button)`
   font-size: 1rem;
   margin-top: 10px;
   font-weight: 700;
+  transition: 0.2s;
   align-self: flex-end;
-  transition: 0.5s;
+
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
-    color: ${(props) => props.theme.colors.white};
   }
 `;
 

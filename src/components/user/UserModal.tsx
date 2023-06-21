@@ -264,11 +264,10 @@ const AddButton = styled(Button)`
   width: 428px;
   height: 50px;
   font-size: 1.125rem;
-  transition: 0.5s;
+  transition: 0.2s;
 
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
-    color: ${(props) => props.theme.colors.white};
   }
 `;
 
