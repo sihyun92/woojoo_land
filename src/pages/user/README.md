@@ -98,3 +98,15 @@
 - toISOString 사용시 UTC 기준 날짜 변경으로 인해 의도하지 않은 날짜로 선택되는 문제 해결
   - toISOString대신 toLocaleDateString 메소드 사용
   - 정규표현식, replace, slice 등을 사용해 하드코딩 하는것보다 훨씬 간결하게 날짜 구성 가능
+
+## 23.06.19
+
+- 로그인 미확인시 유저페이지 접근 불가
+  - alert로 브라우저 모달 표시
+  - login 페이지로 이동 처리
+
+## 23.06.20
+
+- new Map()과 react-collapsible library를 이용해 구매 내역별 상세 내용 조회 기능 구현
+- 주문 내역에 구매 확정, 취소 기능 추가
+- 필요한 구간에 confirm 모달 추가

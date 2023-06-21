@@ -3,6 +3,7 @@ import { theme } from "../../styles/theme";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IProduct } from "../../lib/API/adminAPI";
 import { Link } from "react-router-dom";
+import { formatDollar } from "../../lib/Function/commonFn";
 
 function MainCommet(props: IProduct) {
   return (
@@ -18,7 +19,7 @@ function MainCommet(props: IProduct) {
             <Py>평당</Py>
             <PriceWrapper>
               <Discount>{props.discountRate}%</Discount>
-              <Price>{props.price}$</Price>
+              <Price>{formatDollar(props.price)}</Price>
             </PriceWrapper>
           </Desc>
         </Container>
@@ -28,8 +29,7 @@ function MainCommet(props: IProduct) {
 }
 
 const Container = styled.div`
-  width: 285px;
-  height: 377px;
+  width: 288px;
 `;
 
 const Commet = styled.div`
@@ -53,7 +53,7 @@ const Commet = styled.div`
 
 const Desc = styled.div`
   display: flex;
-  margin-top: 0.5rem;
+  margin: 0.5rem 1rem 0 0;
   flex-direction: column;
 `;
 
@@ -69,16 +69,17 @@ const Py = styled.div`
 const PriceWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Discount = styled.div`
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: ${theme.colors.orange.main};
 `;
 
 const Price = styled.div`
   margin-top: 4px;
-  font-size: 1.5rem;
+  font-size: 2rem;
 `;
 
 export default MainCommet;

@@ -24,6 +24,7 @@ const ItemContainer = styled.div`
   display: flex;
   height: 70px;
   width: 100%;
+  margin-bottom: 10px;
 `;
 
 const ItemBox = styled.div`

@@ -34,10 +34,15 @@ function AccountPage() {
   const delAccount = async (
     event: React.MouseEvent<HTMLButtonElement>,
     id: string,
+    bank: string,
   ) => {
+    const delConfirm = window.confirm(`${bank} 계좌를 해지하시겠습니까?`);
     event.preventDefault();
-    await accountDisconnect(id, true);
-    getAccounts();
+    if (delConfirm) {
+      await accountDisconnect(id, true);
+      getAccounts();
+      alert(`${bank} 계좌가 해지되었습니다.`);
+    }
   };
 
   //계좌 추가 버튼
@@ -69,7 +74,7 @@ function AccountPage() {
                   </AccountWrapper>
                   <DelAccount
                     onClick={(event) => {
-                      delAccount(event, account.id);
+                      delAccount(event, account.id, account.bankName);
                     }}
                   >
                     <AiOutlineClose size="1.2rem" />

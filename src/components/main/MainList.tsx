@@ -2,6 +2,7 @@ import MainCommet from "./MainCommet";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
+import Carousel from "../common/Carousel";
 
 function MainList() {
   const [list, setList] = useState<IProduct[]>([]);
@@ -24,15 +25,17 @@ function MainList() {
     <>
       <Category>🪐 신상 땅 </Category>
       <Container>
-        {list.map((item) => (
-          <MainCommet
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            price={item.price}
-            discountRate={item.discountRate}
-          />
-        ))}
+        <Carousel>
+          {list.map((item) => (
+            <MainCommet
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              discountRate={item.discountRate}
+            />
+          ))}
+        </Carousel>
       </Container>
     </>
   );
@@ -43,10 +46,23 @@ const Category = styled.h1`
   font-weight: bold;
   margin: 2rem 0;
 `;
+
 const Container = styled.div`
   display: flex;
-  width: 75rem;
-  justify-content: space-between;
+  justify-content: center;
+
+  .slick-slider {
+    width: 75rem;
+  }
+
+  .slick-list {
+  }
+
+  .slick-arrow {
+    width: 50px;
+    height: 50px;
+    top: 150px;
+  }
 `;
 
 export default MainList;
