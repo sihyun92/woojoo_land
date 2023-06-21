@@ -1,18 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { check } from "../../lib/API/userAPI";
+import { setQuantity } from "../../modules/cartItem";
 import { IProductEdit } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";
 import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
+import { TRootState } from "../../modules";
 
 interface ICartQtyBtnProps {
   id?: string;
   quantity: number;
+  price?: number;
+  title?: string;
 }
 
-function MainQtyButton({ id, quantity }: ICartQtyBtnProps) {
-  //
-  const [itemQty, setItemQty] = useState<number>(quantity | 1);
+function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
+  // dispatch 선언
+  const dispatch = useDispatch();
+
+  // props로 받은 수량을 state에 저장 및 관리
+  let [itemQty, setItemQty] = useState<number>(quantity | 0);
+
+  // 최초 렌더링 시, 장바구니 내 상품들의 Id-수량을 dispatch
+  useEffect(() => {
+    const fetchItem = async () => {
+      const item = await findProduct();
+
+      if (item && title && price) {
+        dispatch(
+          setQuantity({ title: title, quantity: itemQty, price: price }),
+        );
+      }
+    };
+    fetchItem();
+  }, []);
+
+  const cartItems = useSelector((state: TRootState) => state.cartItem);
+
+  // Accessing individual items within cartItems
+  const saturnPrice = cartItems["토성"]; // 40000
+  const uranusPrice = cartItems["천왕성"]; // 75000
+  const neptunePrice = cartItems["해왕성"]; // 20000
+
+  console.log(saturnPrice);
+
+  // const sat = test["토성"];
+  // console.log(sat)
 
   // 단일 제품 상세 조회 함수
   const findProduct = async () => {
@@ -65,12 +99,21 @@ function MainQtyButton({ id, quantity }: ICartQtyBtnProps) {
     const removedIdx = cartItems.findIndex((item) => item.id === id);
 
     if (removedIdx !== -1) {
-      cartItems.splice(removedIdx, 1);
+      console.log(itemQty);
+
+      // 수량이 1 이상일 때만 감소 처리
+      if (itemQty > 0) {
+        // setItemQty((prevQuantity) => prevQuantity - 1);
+        cartItems.splice(removedIdx, 1);
+        setItemQty((prevQuantity) => prevQuantity - 1);
+      } else {
+        // 수량이 1 이하일 경우 해당 상품을 장바구니에서 제거
+        setItemQty(0);
+      }
     }
 
     // localStorage에 저장(set)
     localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
-    setItemQty((prevQuantity) => prevQuantity - 1);
   };
 
   // 구매 수량 증가 (post product)
@@ -78,8 +121,11 @@ function MainQtyButton({ id, quantity }: ICartQtyBtnProps) {
     event.preventDefault();
 
     const item = await findProduct();
-    if (item) {
+    if (item && title && price) {
       postCart(item);
+      dispatch(
+        setQuantity({ title: title, quantity: itemQty + 1, price: price }),
+      );
     }
   };
 
@@ -88,7 +134,12 @@ function MainQtyButton({ id, quantity }: ICartQtyBtnProps) {
     event.preventDefault();
 
     const item = await findProduct();
-    if (item && id) removeCart(id);
+    if (id && title && price) {
+      removeCart(id);
+      dispatch(
+        setQuantity({ title: title, quantity: itemQty - 1, price: price }),
+      );
+    }
   };
 
   return (
