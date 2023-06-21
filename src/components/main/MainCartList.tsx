@@ -51,7 +51,12 @@ function MainCartList() {
                   width="100px"
                 />
                 <Title>{cart.title} 특별 분양</Title>
-                <MainCartQtyBtn id={cart.id} quantity={quantity} />
+                <MainCartQtyBtn
+                  id={cart.id}
+                  quantity={quantity}
+                  price={cart.price}
+                  title={cart.title}
+                />
                 <Price>{formatDollar(cart.price)}</Price>
                 <Delete>X</Delete>
               </li>
