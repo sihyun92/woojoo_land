@@ -36,15 +36,8 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
     fetchItem();
   }, []);
 
-  const cartItems = useSelector((state: TRootState) => state.cartItem);
-
-  // Accessing individual items within cartItems
-  const saturnPrice = cartItems["토성"]; // 40000
-  const uranusPrice = cartItems["천왕성"]; // 75000
-  const neptunePrice = cartItems["해왕성"]; // 20000
-
-  console.log(saturnPrice);
-
+  const test = useSelector((state: TRootState) => state.cartItem);
+  console.log(test);
   // const sat = test["토성"];
   // console.log(sat)
 
