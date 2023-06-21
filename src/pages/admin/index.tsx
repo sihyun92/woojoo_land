@@ -3,12 +3,16 @@ import {
   productDel,
   userCheck,
   userCheck,
+  userCheck,
   productEdit,
   productPost,
 } from "../../lib/API/adminAPI";
 import { productsList } from "../../lib/API/adminAPI";
+} from "../../lib/API/adminAPI";
+import { productsList } from "../../lib/API/adminAPI";
 import styled from "styled-components";
 
+//응답 타입
 //응답 타입
 //응답 타입
 interface IProduct {
@@ -37,6 +41,8 @@ function AdminPage() {
     getUsers();
   }, []);
 
+  // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
+  const [ProfileImg, setProfileImg] = useState("");
   // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
   const [ProfileImg, setProfileImg] = useState("");
 
@@ -297,7 +303,9 @@ function AdminPage() {
             onChange={onChange2}
           />
           <input type="file" onChange={uploadImage} />
+          <input type="file" onChange={uploadImage} />
           {/* 상품 이미지 썸네일 영역 */}
+          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
           {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
           <button type="submit">수정</button>
         </form>
