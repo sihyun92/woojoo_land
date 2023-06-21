@@ -1,16 +1,26 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
-import { TRootState } from "../../modules";
-import { finishLoading, startLoading } from "../../modules/loading";
 import Button from "../common/Button";
 
 // Interface
 interface IAuthFormProps {
   type: string;
   setUsername: Dispatch<SetStateAction<string>>;
+  onSubmit: (event: ChangeEvent<HTMLFormElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  form: {
+    email: string;
+    password: string;
+    passwordConfirm: string;
+  };
 }
 
 interface ITextMap {
@@ -30,7 +40,13 @@ const PARAMS = {
   register: "/auth/register",
 };
 
-function AuthForm({ type, setUsername }: IAuthFormProps) {
+function AuthForm({
+  type,
+  setUsername,
+  form,
+  onChange,
+  onSubmit,
+}: IAuthFormProps) {
   // 컴포넌트 타입에 따른 제목
   const text = textMap[type];
 
@@ -57,25 +73,6 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
 
   // 라우팅
   const navigate = useNavigate();
-
-  const selectStartLoading = useSelector(
-    (state: TRootState) => state.loading.startLoading,
-  );
-  const selectFinishLoading = useSelector(
-    (state: TRootState) => state.loading.finishLoading,
-  );
-
-  // 디스패치
-  const dispatch = useDispatch();
-
-  // 액션을 디스패치하는 함수
-  const onStartLoading = () => {
-    dispatch(startLoading());
-  };
-  
-  const onFinishLoading = () => {
-    dispatch(finishLoading());
-  };
 
   // Function
   const onLoginChange = (event: FormEvent) => {
