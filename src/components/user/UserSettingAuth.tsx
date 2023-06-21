@@ -113,10 +113,10 @@ const AuthButton = styled(Button)`
   font-weight: 700;
   transition: 0.5s;
   font-size: 1.125rem;
+  transition: 0.2s;
 
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
-    color: ${(props) => props.theme.colors.white};
   }
 `;
 
