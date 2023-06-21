@@ -28,6 +28,7 @@ import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
 import Loading from "./components/common/Loading";
+import AdminOrderPage from "./pages/admin/AdminOrderPage";
 
 function App() {
   const [username, setUsername] = useState(
@@ -41,7 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header username={username} setUsername={setUsername} />
-      <Loading />
+      {/* <Loading /> */}
       <Main>
         <Inner>
           <Routes>
@@ -55,7 +56,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
             <Route path="/admins" element={<AdminPages />}>
-              <Route path="products" element={<ProductsPage />} />
+              <Route path="products" element={<AdminOrderPage/>} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
             </Route>

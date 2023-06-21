@@ -18,6 +18,7 @@ function HistroyItem() {
 }
 
 const ItemContainer = styled.div`
+  background-color: ${theme.colors.gray[2]};
   border: 1px solid ${theme.colors.gray[3]};
   border-radius: 5px;
   font-size: 18px;
