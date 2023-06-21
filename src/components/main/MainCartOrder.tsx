@@ -1,11 +1,7 @@
-import styled from "styled-components";
 import { formatDollar } from "../../lib/Function/commonFn";
-// import { useState } from "react";
+import styled from "styled-components";
 
 function MainCartOrder() {
-  // const [price, setPrice] = useState<number>();
-  // const [totalPrice, setTotalPrice] = useState<number>();
-
   return (
     <Container>
       <PaymentPrice>
@@ -18,11 +14,10 @@ function MainCartOrder() {
         </div>
         <div>
           <span>할인 금액</span>
-          $0
         </div>
         <div>
           <span>로켓배송비</span>
-          {formatDollar(3000)}
+          <span>{formatDollar(3000)}</span>
         </div>
       </Calculator>
       <hr />
@@ -67,4 +62,5 @@ const TotalPrice = styled.div`
   margin-top: 2rem;
   font-size: 20px;
 `;
+
 export default MainCartOrder;
