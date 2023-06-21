@@ -2,7 +2,6 @@ import { check } from "../../lib/API/userAPI";
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
-
 // 인터페이스 선언
 interface MainCartBtnProps {
   quantity: number;
@@ -31,6 +30,7 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);
     let cartItems: IProductEdit[] = [];
+
     if (existingCart) {
       cartItems = JSON.parse(existingCart);
     }
@@ -39,8 +39,10 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     if (cartItems) {
       cartItems.push(...updatedCarts);
     }
+
     // localStorage에 저장(set)
     localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
+    navigate("/cart");
   };
 
   const onCart = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,8 +52,6 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     if (item) {
       // 1. postCart() 실행
       postCart(item);
-      // 2. 장바구니 페이지로 이동
-      navigate("/cart");
     }
   };
 

@@ -30,3 +30,9 @@ MainBanner 컴포넌트 가안 완성
 Router 병합
 MainPage에서만 출력하도록 SubHeader 수정
 상품 상세 페이지를 담당할 ProductPage 컴포넌트 생성
+
+### 23.06.19
+
+CartPage 내 Order 기능 추가
+장바구니 내 수량 변경 기능 추가
+메인페이지 내 상품 Carousel 기능 추가 ( 4개씩 출력 )

@@ -10,9 +10,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./modules";
 
 const store = configureStore({
-  reducer: {
-    root: rootReducer,
-  },
+  reducer: rootReducer,
   middleware: [thunk],
   devTools: true,
 });

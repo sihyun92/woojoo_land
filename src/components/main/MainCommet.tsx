@@ -79,7 +79,7 @@ const Discount = styled.div`
 
 const Price = styled.div`
   margin-top: 4px;
-  font-size: 1.5rem;
+  font-size: 2rem;
 `;
 
 export default MainCommet;

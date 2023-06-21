@@ -10,9 +10,9 @@ export interface IProduct {
 }
 
 export interface UserList {
-  email: string
-  displayName: string
-  profileImg?: string
+  email: string;
+  displayName: string;
+  profileImg?: string;
 }
 
 export interface IProductEdit extends IProduct {

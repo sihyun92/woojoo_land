@@ -52,11 +52,10 @@ const Container = styled.div`
   justify-content: center;
 
   .slick-slider {
-    width: 76rem;
+    width: 75rem;
   }
 
   .slick-list {
-    margin-left: 0.5rem;
   }
 
   .slick-arrow {
