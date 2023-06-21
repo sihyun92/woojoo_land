@@ -13,7 +13,7 @@ function LoginPage({ setUsername }: ILoginPageProps) {
   return (
     <>
       <AuthTemplate>
-        <LoginForm />
+        <LoginForm setUsername={setUsername} />
       </AuthTemplate>
     </>
   );

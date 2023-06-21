@@ -8,16 +8,16 @@ interface ILoginFormProps {
   setUsername: Dispatch<SetStateAction<string>>;
 }
 
-function LoginForm({ setUsername }: ILoginFormProps) {
+function RegisterForm({ setUsername }: ILoginFormProps) {
   const dispatch = useDispatch();
   const { form } = useSelector(({ auth }: TRootState) => ({
-    form: auth.login,
+    form: auth.register,
   }));
   const onChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     dispatch(
       changeField({
-        form: "login",
+        form: "register",
         key: name,
         value,
       }),
@@ -29,13 +29,13 @@ function LoginForm({ setUsername }: ILoginFormProps) {
   };
 
   useEffect(() => {
-    dispatch(initializeForm("login"));
+    dispatch(initializeForm("register"));
   }, [dispatch]);
 
   return (
     <AuthForm
       setUsername={setUsername}
-      type="login"
+      type="register"
       form={form}
       onChange={onChange}
       onSubmit={onSubmit}
@@ -43,4 +43,4 @@ function LoginForm({ setUsername }: ILoginFormProps) {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

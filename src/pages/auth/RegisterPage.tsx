@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import AuthForm from "../../components/auth/AuthForm";
 import AuthTemplate from "../../components/auth/AuthTemplate";
+import RegisterForm from "../../containers/auth/RegisterForm";
 
 // interface
 interface IRegisterPageProps {
@@ -13,7 +13,7 @@ function RegisterPage({ setUsername }: IRegisterPageProps) {
   return (
     <>
       <AuthTemplate>
-        <AuthForm type="register" setUsername={setUsername} />
+        <RegisterForm setUsername={setUsername} />
       </AuthTemplate>
     </>
   );
