@@ -16,6 +16,7 @@ const StyledButton = styled.button<{
   login?: boolean;
   register?: boolean;
   orange?: boolean;
+  reverse?: boolean;
   adminlogout?: boolean;
   admin?: boolean;
 }>`
@@ -25,7 +26,6 @@ const StyledButton = styled.button<{
   border-radius: 5px;
   background: #707070;
   color: #fff;
-  padding: 0.5rem 1rem;
   &:disabled {
     background: #ccc;
     color: #707070;
@@ -71,6 +71,13 @@ const StyledButton = styled.button<{
     css`
       background: ${theme.colors.orange.main};
     `}
+    ${(rest) =>
+    rest.reverse &&
+    css`
+      background: ${theme.colors.white};
+      color: ${theme.colors.orange.main};
+      border: 1px solid ${theme.colors.orange.main};
+    `}
       ${(rest) =>
     rest.adminlogout &&
     css`
@@ -81,7 +88,7 @@ const StyledButton = styled.button<{
       background: none;
       width: 8.125rem;
       font-size: 1rem;
-      &:hover{
+      &:hover {
         background: ${theme.colors.orange.main};
         color: ${theme.colors.white};
       }
@@ -96,7 +103,7 @@ const StyledButton = styled.button<{
       width: 134px;
       height: 40px;
       font-size: 1rem;
-      &:hover{
+      &:hover {
         background: ${theme.colors.orange.hover};
         color: ${theme.colors.white};
       }

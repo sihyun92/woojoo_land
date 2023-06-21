@@ -4,6 +4,7 @@ import { userUpdate, check } from "../../lib/API/userAPI";
 import UserTitle from "./UserTitle";
 import GrayInput from "../common/GrayInput";
 import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
 
 function Settings() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ function Settings() {
   });
   const [result, setResult] = useState("");
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEmail();
@@ -64,6 +66,7 @@ function Settings() {
           oldPassword: "",
           newPassword: "",
         });
+        setTimeout(() => navigate("/user"), 1200);
       }
     }
   };

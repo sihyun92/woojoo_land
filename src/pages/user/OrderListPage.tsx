@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { orderDetailsAll } from "../../lib/API/userAPI";
+import {
+  orderCancle,
+  orderConfirm,
+  orderDetail,
+  orderDetailsAll,
+} from "../../lib/API/userAPI";
 import styled from "styled-components";
 import UserTitle from "../../components/user/UserTitle";
 import { adjustDate, formatDollar } from "../../lib/Function/commonFn";
@@ -7,6 +12,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { theme } from "../../styles/theme";
+import Button from "../../components/common/Button";
+import Collapsible from "react-collapsible";
 
 interface ITransactionDetail {
   detailId: string;
@@ -16,12 +23,30 @@ interface ITransactionDetail {
     price: number;
     description: string;
     tags: string[];
-    thumbnail: string | null;
+    thumbnail: string | undefined;
     discountRate: number;
   };
   timePaid: string;
   isCanceled: boolean;
   done: boolean;
+}
+
+interface ITransactionDetailExtend extends ITransactionDetail {
+  account: {
+    bankName: string;
+    bankCode: string;
+    accountNumber: string;
+  };
+  product: {
+    productId: string;
+    title: string;
+    price: number;
+    description: string;
+    tags: string[];
+    thumbnail: string | undefined;
+    photo: string | null;
+    discountRate: number;
+  };
 }
 
 type TValuePiece = Date | null;
@@ -36,6 +61,9 @@ function OrderListPage() {
 
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [detailsMap, setDetailsMap] = useState<
+    Map<string, ITransactionDetailExtend>
+  >(new Map());
   const [orders, setOrders] = useState<ITransactionDetail[]>([]);
   const [filter, setFilter] = useState<ITransactionDetail[]>([]);
   const [value, onChange] = useState<TValuePiece | [TValuePiece, TValuePiece]>(
@@ -85,6 +113,7 @@ function OrderListPage() {
   // getDatesArray함수로 만든 날짜 범위 배열에 날짜가 포함되는 주문 내역을 필터링
   // 주문내역 전체를 스캔해 해당 주문의 주문 날짜가 상기 배열에 포함되면 남김
   // 만일 날짜를 제대로 선택하지 않은 경우에는 전체 주문 내역이 표시
+  // 최종적으로 날짜순으로 정렬
   const filterOrders = () => {
     const dates = Array.isArray(value)
       ? getDatesArray(value[0], value[1])
@@ -94,8 +123,63 @@ function OrderListPage() {
           return dates.includes(new Date(order.timePaid).toLocaleDateString());
         })
       : orders;
-    setFilter(filteredOrders);
-    return filteredOrders;
+    setFilter(
+      filteredOrders.sort(
+        (a, b) =>
+          new Date(b.timePaid).getTime() - new Date(a.timePaid).getTime(),
+      ),
+    );
+    return filteredOrders.sort(
+      (a, b) => new Date(b.timePaid).getTime() - new Date(a.timePaid).getTime(),
+    );
+  };
+
+  // 구매 확정 버튼
+  // 확인 모달 등장 후 구매 확정 처리
+  const onConfirm = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const confirmModal = window.confirm(
+      "주문 확정 이후에는 취소할 수 없습니다. 확정하시겠습니까?",
+    );
+    if (confirmModal) {
+      await orderConfirm(id);
+      alert("주문 확정되었습니다.");
+      window.location.reload();
+    }
+  };
+
+  // 구매 취소 버튼
+  // 확인 모달 등장 후 구매 취소 처리
+  const onCancle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const CanclemModal = window.confirm(
+      "주문 취소시 주문 금액이 환불됩니다. 취소하시겠습니까?",
+    );
+    if (CanclemModal) {
+      await orderCancle(id);
+      alert("주문 취소되었습니다.");
+      window.location.reload();
+    }
+  };
+
+  // new Map 을 이용한 아코이던 정보 처리
+  // id로 된 key를 포함한 객체가 존재하면 해당 객체를 삭제 (아코디언 닫기)
+  // 없으면 key가 id이고 value가 res 객체인 객체를 detailsMap으로 전달
+  const onAccordion = async (id: string) => {
+    if (detailsMap.has(id)) {
+      detailsMap.delete(id);
+    } else {
+      const res = await orderDetail(id);
+      setDetailsMap(new Map(detailsMap.set(id, res)));
+    }
   };
 
   return (
@@ -106,14 +190,88 @@ function OrderListPage() {
           <ErrorMessage>{error}</ErrorMessage>
         ) : (
           filter.map((order: ITransactionDetail, index) => {
+            const isAccordionOpen = detailsMap.has(order.detailId);
+            const accordionDetails = detailsMap.get(order.detailId);
             return (
-              <OrderList key={index}>
-                <OrderId>{order.detailId}</OrderId>
-                <Title>{order.product.title}</Title>
-                <Time>{adjustDate(order.timePaid)}</Time>
-                <PriceTitle>총 주문 금액</PriceTitle>
-                <Price>{formatDollar(order.product.price)}</Price>
-              </OrderList>
+              <Collapsible
+                key={index}
+                easing="ease-in-out"
+                transitionTime={200}
+                onOpen={() => onAccordion(order.detailId)}
+                trigger={
+                  <OrderList>
+                    <Title>{order.product.title}</Title>
+                    <Time>{adjustDate(order.timePaid)}</Time>
+                    <PriceTitle>총 주문 금액</PriceTitle>
+                    <Price>{formatDollar(order.product.price)}</Price>
+                    <OrderButton>
+                      {!order.done && !order.isCanceled ? (
+                        <>
+                          <ConfirmButton
+                            onClick={(
+                              event: React.MouseEvent<HTMLButtonElement>,
+                            ) => {
+                              onConfirm(event, order.detailId);
+                            }}
+                            reverse
+                          >
+                            확정
+                          </ConfirmButton>
+                          <CancleButton
+                            onClick={(
+                              event: React.MouseEvent<HTMLButtonElement>,
+                            ) => {
+                              onCancle(event, order.detailId);
+                            }}
+                            orange
+                          >
+                            취소
+                          </CancleButton>
+                        </>
+                      ) : order.done ? (
+                        <OrderText>주문 확정</OrderText>
+                      ) : (
+                        <OrderText>주문 취소</OrderText>
+                      )}
+                    </OrderButton>
+                  </OrderList>
+                }
+              >
+                <DetailBox>
+                  {isAccordionOpen && accordionDetails && (
+                    <DetailContent>
+                      <DetailImg
+                        src={accordionDetails.product.thumbnail}
+                        alt="Thumnail"
+                      />
+                      <DetailText>
+                        <DetailTitle>상세 주문 정보</DetailTitle>
+                        <DetailList>
+                          <h3>주문 번호</h3>
+                          <span>{accordionDetails.detailId}</span>
+                        </DetailList>
+                        <DetailList>
+                          <h3>제품명</h3>
+                          <span>{accordionDetails.product.title}</span>
+                        </DetailList>
+                        <DetailList>
+                          <h3>가격</h3>
+                          <span>
+                            {formatDollar(accordionDetails.product.price)}
+                          </span>
+                        </DetailList>
+                        <DetailList>
+                          <h3>거래계좌</h3>
+                          <span>
+                            {accordionDetails.account.bankName} :{" "}
+                            {accordionDetails.account.accountNumber}
+                          </span>
+                        </DetailList>
+                      </DetailText>
+                    </DetailContent>
+                  )}
+                </DetailBox>
+              </Collapsible>
             );
           })
         )}
@@ -167,10 +325,7 @@ const OrderList = styled.li`
   justify-content: space-between;
   border: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
-const OrderId = styled.span`
-  width: 30%;
-  color: ${(props) => props.theme.colors.orange.main};
-`;
+
 const Title = styled.span`
   width: 20%;
   font-weight: 700;
@@ -183,19 +338,97 @@ const PriceTitle = styled.span``;
 
 const Price = styled.span``;
 
+const OrderButton = styled.div`
+  gap: 1rem;
+  width: 136px;
+  display: flex;
+  justify-content: center;
+`;
+
+const OrderText = styled.span`
+  font-weight: 700;
+  color: ${(props) => props.theme.colors.orange.main};
+`;
+
+const ConfirmButton = styled(Button)`
+  height: 2.5rem;
+  width: 3.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+`;
+
+const CancleButton = styled(Button)`
+  height: 2.5rem;
+  width: 3.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+`;
+const DetailBox = styled.div`
+  height: 250px;
+  display: flex;
+  justify-content: center;
+`;
+const DetailContent = styled.div`
+  gap: 1.5rem;
+  width: 870px;
+  display: flex;
+  padding: 1.7rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f8f8;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid ${(props) => props.theme.colors.gray[3]};
+`;
+
+const DetailImg = styled.img`
+  width: 187px;
+  height: 187px;
+`;
+
+const DetailTitle = styled.h2`
+  height: 2.2rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: ${(props) => props.theme.colors.orange.main};
+`;
+
+const DetailText = styled.div`
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  div {
+    border-bottom: 1px solid;
+  }
+`;
+const DetailList = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    color: ${(props) => props.theme.colors.orange.main};
+  }
+`;
+
 const CalendarBox = styled.div`
   display: flex;
   align-items: end;
   margin-top: 1.25rem;
   flex-direction: column;
-  
+
   .react-calendar {
     width: 300px;
     border-radius: 5px;
     height: 310px;
     padding: 20px;
   }
-  .react-calendar__tile--range {}
+  .react-calendar__tile--range {
+  }
 
   .react-calendar__month-view__days__day {
   }
@@ -260,14 +493,16 @@ const CalendarBox = styled.div`
     color: #fff;
   }
 
-  .react-calendar--selectRange {color:red;}
+  .react-calendar--selectRange {
+    color: red;
+  }
 
   .react-calendar__tile--hover {
     // 범위 선택 중간 날짜들
     background-color: ${theme.colors.gray[3]};
     color: ${(props) => props.theme.colors.white};
   }
-  
+
   .react-calendar__tile--hoverStart {
     /* background-color: #3d0000; */
   }
