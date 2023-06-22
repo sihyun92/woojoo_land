@@ -1,6 +1,6 @@
 import { theme } from "../../styles/theme";
 import styled from "styled-components";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -10,9 +10,15 @@ import SubHeader from "./SubHeader";
 interface IMainPageProps {
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
+  selectedTag: string;
+  handleTagClick: any;
 }
-
-function Header({ username, setUsername }: IMainPageProps) {
+function Header({
+  username,
+  setUsername,
+  selectedTag,
+  handleTagClick,
+}: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,7 +48,9 @@ function Header({ username, setUsername }: IMainPageProps) {
 
   const getSubHeader = () => {
     if (location.pathname === "/") {
-      return <SubHeader />;
+      return (
+        <SubHeader selectedTag={selectedTag} handleTagClick={handleTagClick} />
+      );
     } else {
       return null;
     }
@@ -87,7 +95,7 @@ function Header({ username, setUsername }: IMainPageProps) {
             </Auth>
             <LinkWrapper>
               <Link to="/like">
-                <IoMdHeartEmpty />
+                <IoMdHeart />
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
