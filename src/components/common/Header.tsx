@@ -13,8 +13,12 @@ interface IMainPageProps {
   selectedTag: string;
   handleTagClick: any;
 }
-
-function Header({ username, setUsername }: IMainPageProps) {
+function Header({
+  username,
+  setUsername,
+  selectedTag,
+  handleTagClick,
+}: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
