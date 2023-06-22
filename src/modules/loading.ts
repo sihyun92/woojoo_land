@@ -27,14 +27,10 @@ const actions = { startLoading, finishLoading }; // 모든 액션 생성함수�
 type TLoadingAction = ActionType<typeof actions>; // ActionType을 사용하여 모든 액션 객체 타입 준비
 
 // 관리할 상태의 타입
-type TLoadingState = {
-  loading: boolean;
-};
+type TLoadingState = {};
 
 // 초기 상태
-const initialState: TLoadingState = {
-  loading: false,
-};
+const initialState: TLoadingState = {};
 
 // 리듀서
 const loading = createReducer<TLoadingState, TLoadingAction>(initialState)

@@ -42,7 +42,6 @@ const PARAMS = {
 
 function AuthForm({
   type,
-  setUsername,
   form,
   onChange,
   onSubmit,

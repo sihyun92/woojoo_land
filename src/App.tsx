@@ -41,7 +41,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header username={username} setUsername={setUsername} />
-      <Loading />
+      {/* <Loading /> */}
       <Main>
         <Inner>
           <Routes>

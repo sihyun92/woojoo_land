@@ -1,13 +1,18 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import loading from "./loading";
-import auth from "./auth";
+import auth, { userSaga } from "./auth";
 import cartItem from "./cartItem";
+import { all } from "redux-saga/effects";
 
 const rootReducer = combineReducers({
   loading,
   auth,
   cartItem,
 });
+
+export function* rootSaga() {
+  yield all([userSaga()]);
+}
 
 export default rootReducer;
 

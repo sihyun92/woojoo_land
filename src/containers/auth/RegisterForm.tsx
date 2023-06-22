@@ -8,10 +8,12 @@ interface ILoginFormProps {
   setUsername: Dispatch<SetStateAction<string>>;
 }
 
-function RegisterForm({ setUsername }: ILoginFormProps) {
+function RegisterForm() {
   const dispatch = useDispatch();
-  const { form } = useSelector(({ auth }: TRootState) => ({
-    form: auth.register,
+  const { form, auth, authError } = useSelector(({ auth }: TRootState) => ({
+    form: auth.form,
+    auth: auth.auth,
+    authError: auth.authError,
   }));
   const onChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
@@ -34,7 +36,6 @@ function RegisterForm({ setUsername }: ILoginFormProps) {
 
   return (
     <AuthForm
-      setUsername={setUsername}
       type="register"
       form={form}
       onChange={onChange}
