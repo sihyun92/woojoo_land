@@ -28,8 +28,14 @@ import SettingPage from "./pages/user/SettingPage";
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
-import Loading from "./components/common/Loading";
-import AdminOrderPage from "./pages/admin/AdminOrderPage";
+import PaymentPage from "./pages/main/PaymentPage";
+import AllPage from "./pages/main/tagged/AllPage";
+import Solar from "./pages/main/tagged/Solar";
+import Andromeda from "./pages/main/tagged/Andromeda";
+import SpaceFood from "./pages/main/tagged/SpaceFood";
+import SpaceShip from "./pages/main/tagged/SpaceShip";
+import SpaceSuit from "./pages/main/tagged/SpaceSuit";
+import HorizonZero from "./pages/main/tagged/HorizonZero";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -45,7 +51,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header username={username} setUsername={setUsername} />
+      <Header
+        username={username}
+        setUsername={setUsername}
+        selectedTag={selectedTag}
+        handleTagClick={handleTagClick}
+      />
       {/* <Loading /> */}
       <Main>
         <Inner>
@@ -82,7 +93,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
             <Route path="/admins" element={<AdminPages />}>
-              <Route path="products" element={<AdminOrderPage />} />
+              <Route path="products" element={<ProductsPage />} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
             </Route>
