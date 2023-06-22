@@ -4,14 +4,16 @@ import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, register } from "../../modules/auth";
 import { check } from "../../modules/user";
 
+interface ILoginFormProps {
+  setUsername: Dispatch<SetStateAction<string>>;
+}
+
 function RegisterForm() {
-  // hooks
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
-    form: auth.register,
+  const { form, auth, authError } = useSelector(({ auth }: TRootState) => ({
+    form: auth.form,
     auth: auth.auth,
     authError: auth.authError,
-    user: user.user,
   }));
 
   // 함수
