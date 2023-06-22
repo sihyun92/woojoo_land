@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
-import { productsList } from "../../lib/API/adminAPI";
-import { check } from "../../lib/API/userAPI";
+import { productsList } from "../../lib/api/adminAPI";
+import { check } from "../../lib/api/userAPI";
 
 interface IProduct {
   id: string;

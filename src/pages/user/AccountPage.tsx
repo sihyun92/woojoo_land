@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { accountDisconnect, myAccount } from "../../lib/API/userAPI";
+import { accountDisconnect, myAccount } from "../../lib/api/userAPI";
 import styled from "styled-components";
 import UserTitle from "../../components/user/UserTitle";
 import UserModal from "../../components/user/UserModal";

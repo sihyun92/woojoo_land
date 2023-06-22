@@ -7,7 +7,7 @@ import {
 } from "react";
 import GrayInput from "../common/GrayInput";
 import UserTitle from "./UserTitle";
-import { check } from "../../lib/API/userAPI";
+import { check } from "../../lib/api/userAPI";
 import styled from "styled-components";
 import Button from "../common/Button";
 

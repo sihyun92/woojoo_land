@@ -1,20 +1,18 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
-import { TRootState } from "../../modules";
-import { changeField, initializeForm } from "../../modules/auth";
-
-interface ILoginFormProps {
-  setUsername: Dispatch<SetStateAction<string>>;
-}
+import { changeField, initializeForm, register } from "../../modules/auth";
 
 function RegisterForm() {
+  // hooks
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(({ auth }: TRootState) => ({
-    form: auth.form,
+  const { form, auth, authError } = useSelector(({ auth }) => ({
+    form: auth.register,
     auth: auth.auth,
     authError: auth.authError,
   }));
+
+  // 함수
   const onChange = (event: FormEvent) => {
     const { name, value } = event.target as HTMLInputElement;
     dispatch(
@@ -28,11 +26,26 @@ function RegisterForm() {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+    const { email, password, passwordConfirm } = form;
+    if (password !== passwordConfirm) {
+      return;
+    }
+    dispatch(register({ email, password }));
   };
 
   useEffect(() => {
     dispatch(initializeForm("register"));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (authError) {
+      console.log("오류 발생!", authError);
+      return;
+    }
+    if (auth) {
+      console.log("회원가입 성공!", auth);
+    }
+  }, [auth, authError]);
 
   return (
     <AuthForm

@@ -4,8 +4,8 @@ import {
   userCheck,
   productEdit,
   productPost,
-} from "../../lib/API/adminAPI";
-import { productsList } from "../../lib/API/adminAPI";
+} from "../../lib/api/adminAPI";
+import { productsList } from "../../lib/api/adminAPI";
 import styled from "styled-components";
 
 //응답 타입
@@ -157,7 +157,7 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
     await productDel(ID);
     getProducts();
   };
-  
+
   return (
     <div>
       <h2>관리자 페이지</h2>
@@ -241,7 +241,7 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
           <input
           type="file"
           onChange={uploadImage}
-          /> 
+          />
           {/* 상품 이미지 썸네일 영역 */}
           {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
           <button type="submit">추가</button>
@@ -288,7 +288,7 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
           <input
           type="file"
           onChange={uploadImage}
-          /> 
+          />
           {/* 상품 이미지 썸네일 영역 */}
           {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
           <button type="submit">수정</button>

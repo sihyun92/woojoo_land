@@ -3,7 +3,7 @@ import { ActionType, createAction, createReducer } from "typesafe-actions";
 import createRequestSaga, {
   createRequestActionTypes,
 } from "../lib/createRequestSaga";
-import * as userAPI from "../lib/API/userAPI";
+import * as userAPI from "../lib/api/userAPI";
 import { takeLatest } from "@redux-saga/core/effects";
 
 const CHANGE_FIELD = "auth/CHANGE_FIELD" as const;
@@ -23,11 +23,15 @@ export const changeField = createAction(
   }),
 )();
 export const initializeForm = createAction(INITIALIZE_FORM, (form) => form)();
-export const register = createAction(REGISTER, ({ email, password, passwordConfirm }) => ({
-  email,
-  password,
-  passwordConfirm,
-}))();
+export const register = createAction(
+  REGISTER,
+  ({ email, password, displayName, profileImgBase64 }) => ({
+    email,
+    password,
+    displayName,
+    profileImgBase64,
+  }),
+)();
 export const login = createAction(REGISTER, ({ email, password }) => ({
   email,
   password,
@@ -52,7 +56,8 @@ const initialState: TAuthState = {
   register: {
     email: "",
     password: "",
-    passwordConfirm: "",
+    displayName: "",
+    profileImgBase64: "",
   },
   login: {
     email: "",

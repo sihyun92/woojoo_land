@@ -3,7 +3,7 @@ import AdminTitle from "../../components/admin/AdminTitle";
 import AdminUserItem from "../../components/admin/AdminUserItem";
 import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
-import { userCheck, UserList } from "../../lib/API/adminAPI";
+import { userCheck, UserList } from "../../lib/api/adminAPI";
 import AdminUserPaging from "../../components/admin/AdminUserPaging";
 
 function UserListPage() {
@@ -96,7 +96,7 @@ const UserData = styled.div`
   right: 0;
   left: 0;
   top: 0;
-`
+`;
 
 const PageNation = styled.div`
   background-color: ${theme.colors.white};

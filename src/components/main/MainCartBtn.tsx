@@ -1,7 +1,7 @@
-import { check } from "../../lib/API/userAPI";
-import { productDetail } from "../../lib/API/commonAPI";
+import { check } from "../../lib/api/userAPI";
+import { productDetail } from "../../lib/api/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
-import { IProductEdit } from "../../lib/API/adminAPI";
+import { IProductEdit } from "../../lib/api/adminAPI";
 // 인터페이스 선언
 interface MainCartBtnProps {
   quantity: number;

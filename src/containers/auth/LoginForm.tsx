@@ -1,14 +1,10 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
 import { TRootState } from "../../modules";
 import { changeField, initializeForm } from "../../modules/auth";
 
-interface ILoginFormProps {
-  setUsername: Dispatch<SetStateAction<string>>;
-}
-
-function LoginForm({ setUsername }: ILoginFormProps) {
+function LoginForm() {
   const dispatch = useDispatch();
   const { form } = useSelector(({ auth }: TRootState) => ({
     form: auth.login,
@@ -26,6 +22,7 @@ function LoginForm({ setUsername }: ILoginFormProps) {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+    // 구현 예정
   };
 
   useEffect(() => {
@@ -34,7 +31,6 @@ function LoginForm({ setUsername }: ILoginFormProps) {
 
   return (
     <AuthForm
-      setUsername={setUsername}
       type="login"
       form={form}
       onChange={onChange}

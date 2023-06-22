@@ -4,7 +4,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import { logout, check } from "../../lib/API/userAPI";
+import { logout, check } from "../../lib/api/userAPI";
 import SubHeader from "./SubHeader";
 
 interface IMainPageProps {

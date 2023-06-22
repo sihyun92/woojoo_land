@@ -1,25 +1,21 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { login, register } from "../../lib/API/userAPI";
+import { login, register } from "../../lib/api/userAPI";
 import Button from "../common/Button";
 
 // Interface
 interface IAuthFormProps {
   type: string;
-  setUsername: Dispatch<SetStateAction<string>>;
+  // setUsername: Dispatch<SetStateAction<string>>;
   onSubmit: (event: ChangeEvent<HTMLFormElement>) => void;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   form: {
     email: string;
     password: string;
     passwordConfirm: string;
+    displayName: string;
+    profileImgBase64: string;
   };
 }
 
@@ -40,137 +36,132 @@ const PARAMS = {
   register: "/auth/register",
 };
 
-function AuthForm({
-  type,
-  form,
-  onChange,
-  onSubmit,
-}: IAuthFormProps) {
+function AuthForm({ type, form, onChange, onSubmit }: IAuthFormProps) {
   // 컴포넌트 타입에 따른 제목
   const text = textMap[type];
 
-  // Hooks
-  // 입력 / 출력
-  const [email, setEmail] = useState("");
-  const [displayNameMessage, setDisplayNameMessage] = useState("");
-  const [password, setPassword] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [profileImgBase64, setProfileImgBase64] = useState("");
+  // // Hooks
+  // // 입력 / 출력
+  // const [email, setEmail] = useState("");
+  // const [displayNameMessage, setDisplayNameMessage] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [displayName, setDisplayName] = useState("");
+  // const [profileImgBase64, setProfileImgBase64] = useState("");
 
-  // 메시지
-  const [loginMessage, setLoginMessage] = useState("");
-  const [registerMessage, setRegisterMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+  // // 메시지
+  // const [loginMessage, setLoginMessage] = useState("");
+  // const [registerMessage, setRegisterMessage] = useState("");
+  // const [emailMessage, setEmailMessage] = useState("");
+  // const [passwordMessage, setPasswordMessage] = useState("");
+  // const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
-  // 유효성
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isDisplayName, setIsDisplayName] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  // // 유효성
+  // const [isEmail, setIsEmail] = useState(false);
+  // const [isPassword, setIsPassword] = useState(false);
+  // const [isDisplayName, setIsDisplayName] = useState(false);
+  // const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
-  // 라우팅
+  // // 라우팅
   const navigate = useNavigate();
 
-  // Function
-  const onLoginChange = (event: FormEvent) => {
-    const { name, value } = event.target as HTMLInputElement;
-    if (name === "email") {
-      setEmail(value);
-    } else if (name === "password") {
-      setPassword(value);
-    }
-  };
+  // // Function
+  // const onLoginChange = (event: FormEvent) => {
+  //   const { name, value } = event.target as HTMLInputElement;
+  //   if (name === "email") {
+  //     setEmail(value);
+  //   } else if (name === "password") {
+  //     setPassword(value);
+  //   }
+  // };
 
-  const onRegisterChange = (event: FormEvent) => {
-    const { name, value } = event.target as HTMLInputElement;
-    if (name === "email") {
-      // 이메일 유효성 검사
-      const rEmail =
-        /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-      if (!rEmail.test(value)) {
-        setEmailMessage("이메일 형식으로 적어주세요.");
-        setIsEmail(false);
-      } else {
-        setEmailMessage("");
-        setEmail(value);
-        setIsEmail(true);
-      }
-    } else if (name === "password") {
-      // 패스워드 유효성 검사
-      const rPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-      if (!rPassword.test(value)) {
-        setPasswordMessage(
-          "숫자 + 영문 + 특수문자 조합으로 8자리 이상 입력해주세요.",
-        );
-        setIsPassword(false);
-      } else {
-        setPasswordMessage("");
-        setPassword(value);
-        setIsPassword(true);
-      }
-    } else if (name === "displayName") {
-      // 닉네임 유효성 검사
-      if (value.length < 2 || value.length > 5) {
-        setDisplayName(value);
-        setIsDisplayName(true);
-      } else {
-        setDisplayNameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
-        setIsDisplayName(false);
-      }
-    } else if (name === "passwordConfirm") {
-      // 비밀번호 일치 유효성 검사
-      if (password === value) {
-        setPasswordConfirmMessage("비밀번호가 일치합니다.");
-        setIsPasswordConfirm(true);
-      } else {
-        setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
-        setIsPasswordConfirm(false);
-      }
-    }
-  };
+  // const onRegisterChange = (event: FormEvent) => {
+  //   const { name, value } = event.target as HTMLInputElement;
+  //   if (name === "email") {
+  //     // 이메일 유효성 검사
+  //     const rEmail =
+  //       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  //     if (!rEmail.test(value)) {
+  //       setEmailMessage("이메일 형식으로 적어주세요.");
+  //       setIsEmail(false);
+  //     } else {
+  //       setEmailMessage("");
+  //       setEmail(value);
+  //       setIsEmail(true);
+  //     }
+  //   } else if (name === "password") {
+  //     // 패스워드 유효성 검사
+  //     const rPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+  //     if (!rPassword.test(value)) {
+  //       setPasswordMessage(
+  //         "숫자 + 영문 + 특수문자 조합으로 8자리 이상 입력해주세요.",
+  //       );
+  //       setIsPassword(false);
+  //     } else {
+  //       setPasswordMessage("");
+  //       setPassword(value);
+  //       setIsPassword(true);
+  //     }
+  //   } else if (name === "displayName") {
+  //     // 닉네임 유효성 검사
+  //     if (value.length < 2 || value.length > 5) {
+  //       setDisplayName(value);
+  //       setIsDisplayName(true);
+  //     } else {
+  //       setDisplayNameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
+  //       setIsDisplayName(false);
+  //     }
+  //   } else if (name === "passwordConfirm") {
+  //     // 비밀번호 일치 유효성 검사
+  //     if (password === value) {
+  //       setPasswordConfirmMessage("비밀번호가 일치합니다.");
+  //       setIsPasswordConfirm(true);
+  //     } else {
+  //       setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
+  //       setIsPasswordConfirm(false);
+  //     }
+  //   }
+  // };
 
-  const onRegister = async (event: FormEvent) => {
-    event.preventDefault();
-    if (email === "" || password === "" || displayName === "") {
-      // 입력값이 하나라도 없을 때 메시지 출력
-      setRegisterMessage("필수 입력 사항입니다!");
-    } else {
-      // 입력값이 제대로 들어갔을 때 회원가입 요청
-      await register(email, password, displayName, profileImgBase64);
-      const username = localStorage.getItem("username");
-      setUsername(username || "");
-      setEmail("");
-      setPassword("");
-      setProfileImgBase64("");
-      navigate("/");
-    }
-  };
+  // const onRegister = async (event: FormEvent) => {
+  //   event.preventDefault();
+  //   if (email === "" || password === "" || displayName === "") {
+  //     // 입력값이 하나라도 없을 때 메시지 출력
+  //     setRegisterMessage("필수 입력 사항입니다!");
+  //   } else {
+  //     // 입력값이 제대로 들어갔을 때 회원가입 요청
+  //     await register(email, password, displayName, profileImgBase64);
+  //     const username = localStorage.getItem("username");
+  //     setUsername(username || "");
+  //     setEmail("");
+  //     setPassword("");
+  //     setProfileImgBase64("");
+  //     navigate("/");
+  //   }
+  // };
 
-  const onLogin = async (event: FormEvent) => {
-    event.preventDefault();
-    if (email === "" || password === "") {
-      // 입력값이 하나라도 없을 때 메시지 출력
-      setLoginMessage("아이디와 비밀번호를 확인해주세요!");
-    } else {
-      // 입력값이 제대로 들어갔을 때 로그인 요청
-      const username = localStorage.getItem("username");
-      await login(email, password).then((response) => {
-        if (response === undefined) {
-          setLoginMessage("아이디와 비밀번호를 확인해주세요!");
-        } else {
-          event.preventDefault();
-          setUsername(username || "");
-          setEmail("");
-          setPassword("");
-          navigate("/", {
-            state: { name: localStorage.getItem("username") },
-          });
-        }
-      });
-    }
-  };
+  // const onLogin = async (event: FormEvent) => {
+  //   event.preventDefault();
+  //   if (email === "" || password === "") {
+  //     // 입력값이 하나라도 없을 때 메시지 출력
+  //     setLoginMessage("아이디와 비밀번호를 확인해주세요!");
+  //   } else {
+  //     // 입력값이 제대로 들어갔을 때 로그인 요청
+  //     const username = localStorage.getItem("username");
+  //     await login(email, password).then((response) => {
+  //       if (response === undefined) {
+  //         setLoginMessage("아이디와 비밀번호를 확인해주세요!");
+  //       } else {
+  //         event.preventDefault();
+  //         setUsername(username || "");
+  //         setEmail("");
+  //         setPassword("");
+  //         navigate("/", {
+  //           state: { name: localStorage.getItem("username") },
+  //         });
+  //       }
+  //     });
+  //   }
+  // };
 
   // Render
   return (
@@ -181,7 +172,7 @@ function AuthForm({
         <TabButton to={PARAMS.register}>회원가입</TabButton>
       </Tab>
       <h3>{text}</h3>
-      <StyledForm onSubmit={type === "login" ? onLogin : onRegister}>
+      <StyledForm onSubmit={onSubmit}>
         {/* Login */}
         {type === "login" && (
           <>
@@ -191,21 +182,21 @@ function AuthForm({
                   autoComplete="email"
                   name="email"
                   placeholder="이메일 입력"
-                  onChange={onLoginChange}
+                  onChange={onChange}
+                  value={form.email}
                 />
                 <StyledInput
                   type="password"
                   autoComplete="new-password"
                   name="password"
                   placeholder="비밀번호 입력"
-                  onChange={onLoginChange}
+                  onChange={onChange}
+                  value={form.password}
                 />
               </LoginInputWrapper>
-              <LoginButton disabled={!email} login>
-                로그인
-              </LoginButton>
+              <LoginButton login>로그인</LoginButton>
             </LoginForm>
-            <LoginError>{loginMessage}</LoginError>
+            {/* <LoginError>{loginMessage}</LoginError> */}
           </>
         )}
         {/* Register */}
@@ -219,22 +210,24 @@ function AuthForm({
                   autoComplete="displayName"
                   name="displayName"
                   placeholder="닉네임"
-                  onChange={onRegisterChange}
+                  onChange={onChange}
+                  value={form.displayName}
                 />
               </RegisterInputBlock>
-              {isDisplayName && (
+              {/* {isDisplayName && (
                 <ErrorMessage>{displayNameMessage}</ErrorMessage>
-              )}
+              )} */}
               <RegisterInputBlock>
                 <RegisterLabel>이메일</RegisterLabel>
                 <StyledInput
                   autoComplete="email"
                   name="email"
                   placeholder="이메일"
-                  onChange={onRegisterChange}
+                  onChange={onChange}
+                  value={form.email}
                 />
               </RegisterInputBlock>
-              {emailMessage && <ErrorMessage>{emailMessage}</ErrorMessage>}
+              {/* {emailMessage && <ErrorMessage>{emailMessage}</ErrorMessage>} */}
               <RegisterInputBlock>
                 <RegisterLabel>비밀번호</RegisterLabel>
                 <StyledInput
@@ -242,12 +235,13 @@ function AuthForm({
                   autoComplete="new-password"
                   name="password"
                   placeholder="패스워드"
-                  onChange={onRegisterChange}
+                  onChange={onChange}
+                  value={form.password}
                 />
               </RegisterInputBlock>
-              {passwordMessage && (
+              {/* {passwordMessage && (
                 <ErrorMessage>{passwordMessage}</ErrorMessage>
-              )}
+              )} */}
               <RegisterInputBlock>
                 <RegisterLabel>비밀번호 확인</RegisterLabel>
                 <StyledInput
@@ -255,28 +249,29 @@ function AuthForm({
                   autoComplete="new-password"
                   name="passwordConfirm"
                   placeholder="패스워드 확인"
-                  onChange={onRegisterChange}
+                  onChange={onChange}
+                  value={form.passwordConfirm}
                 />
               </RegisterInputBlock>
-              {passwordConfirmMessage && (
+              {/* {passwordConfirmMessage && (
                 <ErrorMessage
                   className={isPasswordConfirm ? "success" : "failure"}
                 >
                   {passwordConfirmMessage}
                 </ErrorMessage>
-              )}
+              )} */}
               <RegisterButton
                 type="submit"
                 register
                 fullWidth
-                disabled={
-                  !(isEmail && isDisplayName && isPassword && isPasswordConfirm)
-                }
+                // disabled={
+                //   !(isEmail && isDisplayName && isPassword && isPasswordConfirm)
+                // }
               >
                 회원가입
               </RegisterButton>
             </RegisterForm>
-            <RegisterErrorMessage>{registerMessage}</RegisterErrorMessage>
+            {/* <RegisterErrorMessage>{registerMessage}</RegisterErrorMessage> */}
           </>
         )}
       </StyledForm>

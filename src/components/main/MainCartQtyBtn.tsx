@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { check } from "../../lib/API/userAPI";
+import { check } from "../../lib/api/userAPI";
 import { setQuantity } from "../../modules/cartItem";
-import { IProductEdit } from "../../lib/API/adminAPI";
-import { productDetail } from "../../lib/API/commonAPI";
+import { IProductEdit } from "../../lib/api/adminAPI";
+import { productDetail } from "../../lib/api/commonAPI";
 import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
 import { TRootState } from "../../modules";
 
