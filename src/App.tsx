@@ -28,14 +28,14 @@ import SettingPage from "./pages/user/SettingPage";
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
-import PaymentPage from "./pages/main/PaymentPage";
+// import PaymentPage from "./pages/main/PaymentPage";
 import AllPage from "./pages/main/tagged/AllPage";
-import Solar from "./pages/main/tagged/Solar";
-import Andromeda from "./pages/main/tagged/Andromeda";
-import SpaceFood from "./pages/main/tagged/SpaceFood";
-import SpaceShip from "./pages/main/tagged/SpaceShip";
-import SpaceSuit from "./pages/main/tagged/SpaceSuit";
-import HorizonZero from "./pages/main/tagged/HorizonZero";
+import SolarPage from "./pages/main/tagged/SolarPage";
+import AndromedaPage from "./pages/main/tagged/AndromedaPage";
+import FoodPage from "./pages/main/tagged/FoodPage";
+import ShipPage from "./pages/main/tagged/ShipPage";
+import SuitPage from "./pages/main/tagged/SuitPage";
+import HorizonPage from "./pages/main/tagged/HorizonPagePage";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -70,24 +70,24 @@ function App() {
                 ) : selectedTag === "ALL" ? (
                   <AllPage />
                 ) : selectedTag === "#태양계 부동산" ? (
-                  <Solar />
+                  <SolarPage />
                 ) : selectedTag === "#안드로메다 부동산" ? (
-                  <Andromeda />
+                  <AndromedaPage />
                 ) : selectedTag === "#우주복" ? (
-                  <SpaceSuit />
+                  <SuitPage />
                 ) : selectedTag === "#우주식량" ? (
-                  <SpaceFood />
+                  <FoodPage />
                 ) : selectedTag === "#우주선" ? (
-                  <SpaceShip />
+                  <ShipPage />
                 ) : (
-                  <HorizonZero />
+                  <HorizonPage />
                 )
               }
             />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
+            {/* <Route path="/payment" element={<PaymentPage />} /> */}
 
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
