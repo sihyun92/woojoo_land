@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { logout, check } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 
@@ -13,6 +13,7 @@ interface IMainPageProps {
 }
 
 function Header({ username, setUsername }: IMainPageProps) {
+  const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ function Header({ username, setUsername }: IMainPageProps) {
   const getUserInfo = async () => {
     const res = await check();
     setUsername(res.displayName);
+    setUserImg(res.profileImg);
   };
 
   const onLogout = async () => {
@@ -81,6 +83,11 @@ function Header({ username, setUsername }: IMainPageProps) {
               </Link>
               <Link to="/user">
                 <UserImg>
+                  {userImg ? (
+                    <img src={userImg} alt="프로필" />
+                  ) : (
+                    <img src="/images/User.png" alt="프로필" />
+                  )}
                   <img src="/images/User.png" alt="프로필" />
                 </UserImg>
               </Link>
@@ -160,7 +167,7 @@ const LogoutBtn = styled.button`
 
 const LinkWrapper = styled.div`
   justify-content: space-between;
-  margin-top: auto;
+  margin-top: 1.25rem;
   display: flex;
   align-items: center;
 
@@ -171,7 +178,6 @@ const LinkWrapper = styled.div`
     > svg {
       color: ${theme.colors.white};
       font-size: 24px;
-      margin-top: 8px;
     }
   }
 `;
