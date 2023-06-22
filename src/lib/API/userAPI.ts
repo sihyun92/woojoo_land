@@ -9,6 +9,8 @@
 //   masterKey?: boolean;
 // }
 
+import client from "./client";
+
 interface IUserUpdate {
   displayName?: string;
   profileImgBase64?: string;
@@ -24,68 +26,41 @@ const headers = {
 };
 
 // 로그인
-const login = async (email: string, password?: string) => {
-  try {
-    const response = await fetch(
-      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      },
-    );
-    const result = await response.json();
-    localStorage.setItem("Token", result.accessToken);
-    localStorage.setItem("username", result.user.displayName);
-    return result;
-  } catch (e) {
-    console.error(e, "로그인에 실패했습니다!");
-  }
+interface ILogin {
+  email: string;
+  password: string;
+}
+const login = ({ email, password }: ILogin) => {
+  client.post(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
+    { email, password },
+  );
 };
 
 // 회원가입
-const register = async (
-  email: string,
-  password: string,
-  displayName: string,
-  profileImgBase64: string,
-) => {
-  const response = await fetch(
+interface IRegister {
+  email: string;
+  password: string;
+  displayName: string;
+  profileImgBase64: string;
+}
+const register = ({
+  email,
+  displayName,
+  password,
+  profileImgBase64,
+}: IRegister) => {
+  client.post(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        email,
-        password,
-        displayName,
-        profileImgBase64,
-      }),
-    },
+    { email, password, displayName, profileImgBase64 },
   );
-  const result = await response.json();
-  console.log(result);
-  return result;
 };
 
 // 인증확인
-const check = async () => {
-  const response = await fetch(
+const check = () => {
+  client.get(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
-      },
-    },
   );
-  const result = await response.json();
-  console.log(result);
-  return result;
 };
 
 // 로그아웃

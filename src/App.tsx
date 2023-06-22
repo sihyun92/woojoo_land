@@ -56,19 +56,13 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
             <Route path="/admins" element={<AdminPages />}>
-              <Route path="products" element={<AdminOrderPage/>} />
+              <Route path="products" element={<AdminOrderPage />} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
             </Route>
             {/* Auth 페이지 */}
-            <Route
-              path="/auth/login"
-              element={<LoginPage setUsername={setUsername} />}
-            />
-            <Route
-              path="/auth/register"
-              element={<RegisterPage setUsername={setUsername} />}
-            />
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/register" element={<RegisterPage />} />
             {/* 유저 페이지 */}
             <Route path="/user" element={<UserPage />}>
               <Route path="account" element={<AccountPage />} />

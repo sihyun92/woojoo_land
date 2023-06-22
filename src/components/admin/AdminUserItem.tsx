@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { UserList } from "../../lib/API/adminAPI";
+import { UserList } from "../../lib/api/adminAPI";
 
-function AdminUserItem(props:UserList) {
+function AdminUserItem(props: UserList) {
   return (
     <ItemContainer>
       <ProfileImg>

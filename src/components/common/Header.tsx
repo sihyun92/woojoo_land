@@ -88,7 +88,6 @@ function Header({ username, setUsername }: IMainPageProps) {
                   ) : (
                     <img src="/images/User.png" alt="프로필" />
                   )}
-                  <img src="/images/User.png" alt="프로필" />
                 </UserImg>
               </Link>
             </LinkWrapper>

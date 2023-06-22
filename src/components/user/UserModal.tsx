@@ -10,7 +10,7 @@ import {
   ChangeEvent,
   FormEvent,
 } from "react";
-import { accountConnect, accountList } from "../../lib/API/userAPI";
+import { accountConnect, accountList } from "../../lib/api/userAPI";
 import { AiOutlineClose } from "react-icons/ai";
 
 interface IModalProps {

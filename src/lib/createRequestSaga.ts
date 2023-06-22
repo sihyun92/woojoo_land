@@ -1,4 +1,5 @@
 import { call, put } from "@redux-saga/core/effects";
+import { AxiosResponse } from "axios";
 import { finishLoading, startLoading } from "../modules/loading";
 
 export const createRequestActionTypes = (type: string) => {
@@ -14,11 +15,11 @@ export default function createRequestSaga(type: string, request: any) {
   return function* (action: any) {
     yield put(startLoading(type));
     try {
-      const response: ResponseType = yield call(request, action.payload);
+      const response: AxiosResponse = yield call(request, action.payload);
       console.log(response);
       yield put({
         type: SUCCESS,
-        payload: response,
+        payload: response.data,
       });
     } catch (e) {
       yield put({
