@@ -5,11 +5,6 @@ import createRequestSaga, {
 } from "../lib/createRequestSaga";
 import * as userAPI from "../lib/API/userAPI";
 import { takeLatest } from "@redux-saga/core/effects";
-import createRequestSaga, {
-  createRequestActionTypes,
-} from "../lib/createRequestSaga";
-import * as userAPI from "../lib/API/userAPI";
-import { takeLatest } from "@redux-saga/core/effects";
 
 // 액션
 const CHANGE_FIELD = "auth/CHANGE_FIELD" as const;

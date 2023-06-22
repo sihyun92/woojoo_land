@@ -51,12 +51,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header
-        username={username}
-        setUsername={setUsername}
-        selectedTag={selectedTag}
-        handleTagClick={handleTagClick}
-      />
+      <Header username={username} setUsername={setUsername} />
       {/* <Loading /> */}
       <Main>
         <Inner>

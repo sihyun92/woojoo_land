@@ -8,6 +8,10 @@ interface ILoginFormProps {
   setUsername: Dispatch<SetStateAction<string>>;
 }
 
+interface ILoginFormProps {
+  setUsername: Dispatch<SetStateAction<string>>;
+}
+
 function RegisterForm() {
   const dispatch = useDispatch();
   const { form, auth, authError } = useSelector(({ auth }: TRootState) => ({
