@@ -1,13 +1,14 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
   productDel,
+  userCheck,
   productEdit,
   productPost,
-  userCheck,
 } from "../../lib/API/adminAPI";
 import { productsList } from "../../lib/API/adminAPI";
 import styled from "styled-components";
 
+//응답 타입
 interface IProduct {
   id: string;
   title: string;
@@ -20,6 +21,7 @@ interface IProduct {
   discountRate: number;
 }
 
+//응답 타입
 interface IUser {
   email: string;
   displayName: string;
@@ -33,24 +35,41 @@ function AdminPage() {
     getUsers();
   }, []);
 
-const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
+// const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
+const [ProfileImg, setProfileImg] = useState("")
 
-  const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
+  //상품 추가의 정보 상태
   const [productform, setProductForm] = useState({
     title: "",
     price: 0,
+    tags: [],
     description: "",
-    thumbnail: "",
+    thumbnailBase64: "",
   });
 
-  const [updateform, setUpdateForm] = useState({
-    title: "",
-    price: 0,
-    description: "",
-    thumbnail: "",
-  });
+    //상품 수정의 정보 상태
+    const [updateform, setUpdateForm] = useState({
+      title: "",
+      price: 0,
+      tags: [],
+      description: "",
+      thumbnailBase64: ""
+    });
 
+//제품 이미지 랜더링
+function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
+  const files = event.target.files as FileList
+  for(const file of files) {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.addEventListener('load', e => {
+      setProfileImg((e.target as FileReader).result as string)
+    })
+  }
+}
+
+  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [productid, setProductId] = useState("");
 
   // 사용자 목록 서버에서 가져오기
@@ -101,13 +120,14 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
   // 제품 추가 폼 입력 후 제출시 API로 값을 전달해 제품 등록
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await productPost(productform);
+    await productPost(productform, ProfileImg);
     // input 초기화
     setProductForm({
       title: "",
       price: 0,
+      tags: [],
       description: "",
-      thumbnail: "",
+      thumbnailBase64: ""
     });
     getProducts();
   };
@@ -115,16 +135,16 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
   // // 제품 수정 폼 입력 후 제출시 API로 값을 전달해 제품 수정
   const onSubmit2 = async (event: FormEvent) => {
     event.preventDefault();
-    await productEdit(updateform, productid);
+    await productEdit(updateform, productid, ProfileImg);
     // input 초기화
     setProductId("");
     setUpdateForm({
       title: "",
       price: 0,
+      tags: [],
       description: "",
-      thumbnail: thumbnail,
+      thumbnailBase64: ""
     });
-    console.log(thumbnail)
     getProducts();
   };
 
@@ -137,35 +157,7 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
     await productDel(ID);
     getProducts();
   };
-
-  // 이미지 선택 기능
-    
-    
-    // 파일이 선택되었을 때 썸네일 생성
-    const handleChange = (event:any) => {
-      const file = event.target.files[0]; //선택된 첫번째 파일을 'file' 변수 선언
-      if (file) { //만약 'file'이 true면
-        handleChangeThumbnail(file) // 'handleChangeThumbnail'에 'file'을 넣어 실행한다.
-          .then((ImgUrl:any) => { 
-            setThumbnail(ImgUrl); //'setThumbnail'에 'ImgUrl'을 보낸다.
-            console.log(thumbnail)
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    };
   
-  // 제품 사진 랜더링
-    const handleChangeThumbnail = (image:File) => {
-      return new Promise((res, rej) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(image);  //이미지 문자열로 받기
-        reader.onload = (event:any) => res(event.target.result); //파일 읽기 성공하면 resolve를 호출하여 값을 반환
-        reader.onerror = (error) => rej(error); // 읽기 오류시 호출
-      });
-    };
-
   return (
     <div>
       <h2>관리자 페이지</h2>
@@ -196,7 +188,8 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
                       <span>이름 : {product.title}</span>
                       <span>가격 : {product.price}</span>
                       <span>설명 : {product.description}</span>
-                      <span>썸네일이미지 : {product.thumbnail}</span>
+                      <span>태그 : {product.tags}</span>
+                      <span>썸네일이미지 : {product.thumbnail && <img src={product.thumbnail} alt="Thumbnail" width={120}/>}</span>
                     </div>
                     <button
                       onClick={(event) => {
@@ -238,36 +231,19 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
             onChange={onChange}
           />
           <input
-          type="file"
-          />
-          {/* <input
             type="text"
             name="tags"
-            value={}
+            required
+            value={productform.tags}
             placeholder="태그"
             onChange={onChange}
           />
           <input
-            type="text"
-            name="thumbnailBase64"
-            value={}
-            placeholder="썸네일"
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            name="photoBase64"
-            value={}
-            placeholder="상세 사진"
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            name="discountRate"
-            value={}
-            placeholder="할인율"
-            onChange={onChange}
-          /> */}
+          type="file"
+          onChange={uploadImage}
+          /> 
+          {/* 상품 이미지 썸네일 영역 */}
+          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
           <button type="submit">추가</button>
         </form>
       </Post>
@@ -302,17 +278,19 @@ const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미
             onChange={onChange2}
           />
           <input
+            type="text"
+            name="tags[]"
+            required
+            value={updateform.tags}
+            placeholder="태그"
+            onChange={onChange2}
+          />
+          <input
           type="file"
-          accept=".jpg, .jpeg, .webp, .png, .gif, .svg"
-          onChange={handleChange}
+          onChange={uploadImage}
           /> 
           {/* 상품 이미지 썸네일 영역 */}
-          {thumbnail && <img src={thumbnail} alt="Thumbnail" width={120}/>}
-
-          {/* <input type="text" name="" value={} placeholder="" onChange={} />
-          <input type="text" name="" value={} placeholder="" onChange={} />
-          <input type="text" name="" value={} placeholder="" onChange={} /> */}
-
+          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
           <button type="submit">수정</button>
         </form>
       </Edit>

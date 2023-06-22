@@ -2,7 +2,7 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { logout, check } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
@@ -13,6 +13,8 @@ interface IMainPageProps {
 }
 
 function Header({ username, setUsername }: IMainPageProps) {
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUserInfo();
   });
@@ -28,6 +30,8 @@ function Header({ username, setUsername }: IMainPageProps) {
     localStorage.removeItem("username");
     localStorage.clear();
     setUsername("");
+    alert("로그아웃 되었습니다.");
+    navigate("/");
   };
 
   // MainPage에서만 SubHeader 컴포넌트 출력
@@ -40,6 +44,7 @@ function Header({ username, setUsername }: IMainPageProps) {
       return null;
     }
   };
+
   return (
     <>
       <HeaderContainer>

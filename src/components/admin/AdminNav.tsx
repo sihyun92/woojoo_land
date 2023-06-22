@@ -6,7 +6,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 function AdminNav() {
   return (
     <AdminNavigator>
-      <Link to="products">
+      <Link to="dashboard">
         <LogoAdminImg>
           <img src="/images/LogoAdmin.svg" alt="우주부동산 관리자" width={210} />
         </LogoAdminImg>

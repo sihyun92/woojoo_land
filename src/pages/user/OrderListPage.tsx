@@ -5,17 +5,17 @@ import {
   orderDetail,
   orderDetailsAll,
 } from "../../lib/API/userAPI";
-import styled from "styled-components";
-import UserTitle from "../../components/user/UserTitle";
-import { adjustDate, formatDollar } from "../../lib/Function/commonFn";
 import Calendar from "react-calendar";
+import styled from "styled-components";
 import "react-calendar/dist/Calendar.css";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { theme } from "../../styles/theme";
-import Button from "../../components/common/Button";
 import Collapsible from "react-collapsible";
+import Button from "../../components/common/Button";
+import UserTitle from "../../components/user/UserTitle";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { adjustDate, formatDollar } from "../../lib/Function/commonFn";
 
-interface ITransactionDetail {
+interface IOrdersDetail {
   detailId: string;
   product: {
     productId: string;
@@ -31,7 +31,7 @@ interface ITransactionDetail {
   done: boolean;
 }
 
-interface ITransactionDetailExtend extends ITransactionDetail {
+interface IOrdersDetailExtend extends IOrdersDetail {
   account: {
     bankName: string;
     bankCode: string;
@@ -62,10 +62,10 @@ function OrderListPage() {
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [detailsMap, setDetailsMap] = useState<
-    Map<string, ITransactionDetailExtend>
+    Map<string, IOrdersDetailExtend>
   >(new Map());
-  const [orders, setOrders] = useState<ITransactionDetail[]>([]);
-  const [filter, setFilter] = useState<ITransactionDetail[]>([]);
+  const [orders, setOrders] = useState<IOrdersDetail[]>([]);
+  const [filter, setFilter] = useState<IOrdersDetail[]>([]);
   const [value, onChange] = useState<TValuePiece | [TValuePiece, TValuePiece]>(
     new Date(),
   );
@@ -119,7 +119,7 @@ function OrderListPage() {
       ? getDatesArray(value[0], value[1])
       : undefined;
     const filteredOrders = dates
-      ? orders.filter((order: ITransactionDetail) => {
+      ? orders.filter((order: IOrdersDetail) => {
           return dates.includes(new Date(order.timePaid).toLocaleDateString());
         })
       : orders;
@@ -189,7 +189,7 @@ function OrderListPage() {
         {error ? (
           <ErrorMessage>{error}</ErrorMessage>
         ) : (
-          filter.map((order: ITransactionDetail, index) => {
+          filter.map((order: IOrdersDetail, index) => {
             const isAccordionOpen = detailsMap.has(order.detailId);
             const accordionDetails = detailsMap.get(order.detailId);
             return (
@@ -277,7 +277,9 @@ function OrderListPage() {
         )}
       </OrderListBox>
       <CalendarBox>
-        <ToggleButton onClick={onToggle}>{renderDate()}</ToggleButton>
+        <ToggleButton isOpen={isOpen} onClick={onToggle}>
+          {renderDate()}
+        </ToggleButton>
         {isOpen ? (
           <Calendar
             onChange={onChange}
@@ -316,14 +318,21 @@ const ErrorMessage = styled.span`
   font-size: 1.125rem;
   color: ${(props) => props.theme.colors.orange.main};
 `;
+
 const OrderList = styled.li`
   width: 100%;
   height: 70px;
   display: flex;
+  transition: 0.2s;
   padding: 0 1.25rem;
   align-items: center;
   justify-content: space-between;
   border: 1px solid ${(props) => props.theme.colors.gray[3]};
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.colors.gray[2]};
+  }
 `;
 
 const Title = styled.span`
@@ -331,9 +340,11 @@ const Title = styled.span`
   font-weight: 700;
   font-size: 1.125rem;
 `;
+
 const Time = styled.span`
   width: 30%;
 `;
+
 const PriceTitle = styled.span``;
 
 const Price = styled.span``;
@@ -355,6 +366,12 @@ const ConfirmButton = styled(Button)`
   width: 3.75rem;
   font-size: 1rem;
   font-weight: 700;
+  transition: 0.2s;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.white};
+    background: ${(props) => props.theme.colors.orange.main};
+  }
 `;
 
 const CancleButton = styled(Button)`
@@ -362,12 +379,19 @@ const CancleButton = styled(Button)`
   width: 3.75rem;
   font-size: 1rem;
   font-weight: 700;
+  transition: 0.2s;
+
+  &:hover {
+    background: ${(props) => props.theme.colors.orange.hover};
+  }
 `;
+
 const DetailBox = styled.div`
   height: 250px;
   display: flex;
   justify-content: center;
 `;
+
 const DetailContent = styled.div`
   gap: 1.5rem;
   width: 870px;
@@ -401,9 +425,10 @@ const DetailText = styled.div`
   justify-content: space-between;
 
   div {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
   }
 `;
+
 const DetailList = styled.div`
   flex-grow: 1;
   display: flex;
@@ -423,10 +448,11 @@ const CalendarBox = styled.div`
 
   .react-calendar {
     width: 300px;
-    border-radius: 5px;
     height: 310px;
     padding: 20px;
+    border-radius: 5px;
   }
+
   .react-calendar__tile--range {
   }
 
@@ -519,17 +545,26 @@ const CalendarBox = styled.div`
     background-color: #ff8871;
   }
 `;
-const ToggleButton = styled.button`
-  height: 24px;
+
+const ToggleButton = styled.button<{
+  isOpen?: boolean;
+}>`
   width: 190px;
-  border: none;
+  height: 24px;
+  display: flex;
   cursor: pointer;
+  transition: 0.2s;
   font-weight: 700;
   font-size: 0.75rem;
+  align-items: center;
   border-radius: 1rem;
   margin-bottom: 0.75rem;
-  color: ${(props) => props.theme.colors.white};
-  background-color: ${(props) => props.theme.colors.orange.main};
+  justify-content: center;
+  color: ${({ isOpen, theme }) =>
+    isOpen ? theme.colors.white : theme.colors.orange.main};
+  background-color: ${({ isOpen, theme }) =>
+    isOpen ? theme.colors.orange.main : theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.orange.main};
 `;
 
 export default OrderListPage;

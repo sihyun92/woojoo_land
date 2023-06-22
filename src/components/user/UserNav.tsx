@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { BiChevronRight } from "react-icons/bi";
 
 function UserNav() {
+  const location = useLocation();
+
   return (
     <Navigator>
       <NavTitle>
@@ -11,25 +13,25 @@ function UserNav() {
       </NavTitle>
       <NavContainer>
         <Link to="/user">
-          <NavList>
+          <NavList isOpen={location.pathname === "/user"}>
             <ListName>주문 내역</ListName>
             <BiChevronRight className="chebronRight" />
           </NavList>
         </Link>
         <Link to="account">
-          <NavList>
+          <NavList isOpen={location.pathname === "/user/account"}>
             <ListName>계좌 관리</ListName>
             <BiChevronRight className="chebronRight" />
           </NavList>
         </Link>
         <Link to="like">
-          <NavList>
+          <NavList isOpen={location.pathname === "/user/like"}>
             <ListName>찜한 상품</ListName>
             <BiChevronRight className="chebronRight" />
           </NavList>
         </Link>
         <Link to="settings">
-          <NavList>
+          <NavList isOpen={location.pathname === "/user/settings"}>
             <ListName>개인정보 수정</ListName>
             <BiChevronRight className="chebronRight" />
           </NavList>
@@ -71,15 +73,23 @@ const NavContainer = styled.ul`
   border-right: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
 
-const NavList = styled.li`
+const NavList = styled.li<{
+  isOpen?: boolean;
+}>`
   display: flex;
   padding: 13px 10px;
   align-items: center;
+  transition: 0.2s;
   justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
+  background-color: ${({ isOpen, theme }) => isOpen && theme.colors.gray[2]};
 
   .chebronRight {
     font-size: 1.5rem;
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.gray[2]};
   }
 `;
 
