@@ -2,9 +2,9 @@ import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
-import { Dispatch, SetStateAction } from "react";
-import { logout } from "../../lib/API/userAPI";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { logout, check } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
@@ -21,10 +21,10 @@ function Header({ username, setUsername }: IMainPageProps) {
     getUserInfo();
   });
 
-  const getUserInfo = () => {
-    dispatch(check());
-    // setUsername(res.displayName);
-    // setUserImg(res.profileImg);
+  const getUserInfo = async () => {
+    const res = await check();
+    setUsername(res.displayName);
+    setUserImg(res.profileImg);
   };
 
   const onLogout = async () => {
@@ -91,9 +91,18 @@ function Header({ username, setUsername }: IMainPageProps) {
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
-              </button>
-              <Link to="/user">프로필</Link>
-            </ButtonWrapper>
+              </Link>
+              <Link to="/user">
+                <UserImg>
+                  {userImg ? (
+                    <img src={userImg} alt="프로필" />
+                  ) : (
+                    <img src="/images/User.png" alt="프로필" />
+                  )}
+                  <img src="/images/User.png" alt="프로필" />
+                </UserImg>
+              </Link>
+            </LinkWrapper>
           </User>
         </HeaderWrapper>
       </HeaderContainer>
