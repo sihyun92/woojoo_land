@@ -4,7 +4,7 @@ import AdminTitle from "../../components/admin/AdminTitle";
 import AdminProductItem from "../../components/admin/AdminProductItem";
 import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
-import { productsList, IProduct } from "../../lib/api/adminAPI";
+import { productsList, IProduct } from "../../lib/API/adminAPI";
 import AdminUserPaging from "../../components/admin/AdminUserPaging";
 
 //기능 : 모달 제품 추가

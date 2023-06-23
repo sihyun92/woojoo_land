@@ -2,7 +2,7 @@ import { ActionType, createAction, createReducer } from "typesafe-actions";
 import createRequestSaga, {
   createRequestActionTypes,
 } from "../lib/createRequestSaga";
-import * as userAPI from "../lib/api/userAPI";
+import * as userAPI from "../lib/API/userAPI";
 import { takeLatest } from "redux-saga/effects";
 
 const TEMP_SET_USER = "user/TEMP_SET_USER" as const;
@@ -11,7 +11,7 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] =
   createRequestActionTypes("user/CHECK");
 
 export const tempSetUser = createAction(TEMP_SET_USER, (user) => user)();
-export const check = createAction(CHECK)();
+export const check = createAction(CHECK, () => null)();
 
 const actions = { tempSetUser, check };
 type TUserAction = ActionType<typeof actions>;
@@ -21,7 +21,7 @@ type TUserState = {
 };
 
 const checkSaga = createRequestSaga(CHECK, userAPI.check);
-export function* userSaga() {
+export function* userCheckSaga() {
   yield takeLatest(CHECK, checkSaga);
 }
 
@@ -31,7 +31,7 @@ const initialState: TUserState = {
 };
 
 const user = createReducer<TUserState, TUserAction>(initialState, {
-  [TEMP_SET_USER]: (state, { payload: user }) => ({
+  [TEMP_SET_USER]: (state, user) => ({
     ...state,
     user,
   }),

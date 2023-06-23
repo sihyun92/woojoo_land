@@ -2,14 +2,16 @@ import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, register } from "../../modules/auth";
+import { check } from "../../modules/user";
 
 function RegisterForm() {
   // hooks
   const dispatch = useDispatch();
-  const { form, auth, authError } = useSelector(({ auth }) => ({
+  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
     form: auth.register,
     auth: auth.auth,
     authError: auth.authError,
+    user: user.user,
   }));
 
   // 함수
@@ -44,8 +46,16 @@ function RegisterForm() {
     }
     if (auth) {
       console.log("회원가입 성공!", auth);
+      dispatch(check());
     }
-  }, [auth, authError]);
+  }, [auth, authError, dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      console.log("check 성공");
+      console.log(user);
+    }
+  }, [user]);
 
   return (
     <AuthForm

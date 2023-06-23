@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { check } from "../../lib/api/userAPI";
-import { IProduct } from "../../lib/api/adminAPI";
+import { check } from "../../lib/API/userAPI";
+import { IProduct } from "../../lib/API/adminAPI";
 import MainCartQtyBtn from "./MainCartQtyBtn";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";

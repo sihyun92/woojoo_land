@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { IProduct } from "../../lib/api/adminAPI";
+import { IProduct } from "../../lib/API/adminAPI";
 import { Link } from "react-router-dom";
 import { formatDollar } from "../../lib/Function/commonFn";
 

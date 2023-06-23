@@ -4,8 +4,10 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { logout, check } from "../../lib/API/userAPI";
+import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
+import { useDispatch } from "react-redux";
+import { check } from "../../modules/user";
 
 interface IMainPageProps {
   username: string;
@@ -15,15 +17,16 @@ interface IMainPageProps {
 function Header({ username, setUsername }: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserInfo();
   });
 
-  const getUserInfo = async () => {
-    const res = await check();
-    setUsername(res.displayName);
-    setUserImg(res.profileImg);
+  const getUserInfo = () => {
+    dispatch(check());
+    // setUsername(res.displayName);
+    // setUserImg(res.profileImg);
   };
 
   const onLogout = async () => {

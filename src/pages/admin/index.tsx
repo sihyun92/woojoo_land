@@ -4,8 +4,8 @@ import {
   userCheck,
   productEdit,
   productPost,
-} from "../../lib/api/adminAPI";
-import { productsList } from "../../lib/api/adminAPI";
+} from "../../lib/API/adminAPI";
+import { productsList } from "../../lib/API/adminAPI";
 import styled from "styled-components";
 
 //응답 타입
@@ -35,8 +35,8 @@ function AdminPage() {
     getUsers();
   }, []);
 
-// const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
-const [ProfileImg, setProfileImg] = useState("")
+  // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
+  const [ProfileImg, setProfileImg] = useState("");
 
   //상품 추가의 정보 상태
   const [productform, setProductForm] = useState({
@@ -47,26 +47,26 @@ const [ProfileImg, setProfileImg] = useState("")
     thumbnailBase64: "",
   });
 
-    //상품 수정의 정보 상태
-    const [updateform, setUpdateForm] = useState({
-      title: "",
-      price: 0,
-      tags: [],
-      description: "",
-      thumbnailBase64: ""
-    });
+  //상품 수정의 정보 상태
+  const [updateform, setUpdateForm] = useState({
+    title: "",
+    price: 0,
+    tags: [],
+    description: "",
+    thumbnailBase64: "",
+  });
 
-//제품 이미지 랜더링
-function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
-  const files = event.target.files as FileList
-  for(const file of files) {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.addEventListener('load', e => {
-      setProfileImg((e.target as FileReader).result as string)
-    })
+  //제품 이미지 랜더링
+  function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files as FileList;
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener("load", (e) => {
+        setProfileImg((e.target as FileReader).result as string);
+      });
+    }
   }
-}
 
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
@@ -127,7 +127,7 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
       price: 0,
       tags: [],
       description: "",
-      thumbnailBase64: ""
+      thumbnailBase64: "",
     });
     getProducts();
   };
@@ -143,7 +143,7 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
       price: 0,
       tags: [],
       description: "",
-      thumbnailBase64: ""
+      thumbnailBase64: "",
     });
     getProducts();
   };
@@ -189,7 +189,16 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
                       <span>가격 : {product.price}</span>
                       <span>설명 : {product.description}</span>
                       <span>태그 : {product.tags}</span>
-                      <span>썸네일이미지 : {product.thumbnail && <img src={product.thumbnail} alt="Thumbnail" width={120}/>}</span>
+                      <span>
+                        썸네일이미지 :{" "}
+                        {product.thumbnail && (
+                          <img
+                            src={product.thumbnail}
+                            alt="Thumbnail"
+                            width={120}
+                          />
+                        )}
+                      </span>
                     </div>
                     <button
                       onClick={(event) => {
@@ -238,12 +247,9 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
             placeholder="태그"
             onChange={onChange}
           />
-          <input
-          type="file"
-          onChange={uploadImage}
-          />
+          <input type="file" onChange={uploadImage} />
           {/* 상품 이미지 썸네일 영역 */}
-          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
+          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
           <button type="submit">추가</button>
         </form>
       </Post>
@@ -285,12 +291,9 @@ function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
             placeholder="태그"
             onChange={onChange2}
           />
-          <input
-          type="file"
-          onChange={uploadImage}
-          />
+          <input type="file" onChange={uploadImage} />
           {/* 상품 이미지 썸네일 영역 */}
-          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120}/>}
+          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
           <button type="submit">수정</button>
         </form>
       </Edit>

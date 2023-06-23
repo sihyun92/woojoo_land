@@ -31,10 +31,7 @@ import Loading from "./components/common/Loading";
 import AdminOrderPage from "./pages/admin/AdminOrderPage";
 
 function App() {
-  const [username, setUsername] = useState(
-    // localStorage.getItem("username" || ""),
-    "",
-  );
+  const [username, setUsername] = useState("");
   useEffect(() => {
     console.log(typeof localStorage.getItem("username"));
     localStorage.getItem("username");
