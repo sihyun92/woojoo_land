@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 const tags = [
   { key: 0, tag: "ALL" },
   { key: 1, tag: "#태양계 부동산" },
-  { key: 2, tag: "#안드로메다 부동산" },
+  { key: 2, tag: "#사건의 지평선" },
   { key: 3, tag: "#우주복" },
-  { key: 4, tag: "#우주식량" },
+  { key: 4, tag: "#우주 식량" },
   { key: 5, tag: "#우주선" },
-  { key: 6, tag: "#사건의 지평선" },
+  { key: 6, tag: "#우주 정거장" },
 ];
 
 interface ISubHeaderProps {
