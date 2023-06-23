@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { userUpdate, check } from "../../lib/API/userAPI";
+import { userUpdate, check2 } from "../../lib/API/userAPI";
 import UserTitle from "./UserTitle";
 import GrayInput from "../common/GrayInput";
 import Button from "../common/Button";
@@ -39,7 +39,7 @@ function Settings() {
 
   // emailr과 프로필 이미지 불러오기
   const getEmailAndImg = async () => {
-    const res = await check();
+    const res = await check2();
     setEmail(res.email);
     setOriginalImg(res.profileImg);
   };
