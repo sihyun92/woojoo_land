@@ -1,7 +1,12 @@
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
+import { check } from "../../modules/user";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { check2 } from "../../lib/API/userAPI";
+
 // 인터페이스 선언
 interface MainCartBtnProps {
   quantity: number;
@@ -11,6 +16,11 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getUserInfo();
+  });
 
   const findProduct = async () => {
     // 유효한 prdocut일 경우
@@ -24,10 +34,15 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     return null;
   };
 
+  const getUserInfo = () => {
+    dispatch(check());
+  };
+
   const postCart = async (updatedCarts: IProductEdit[]) => {
     // 인증 확인
-    const res = await check2();
+    const res = await check();
     // 기존의 로컬 스토리지에 저장된 product get
+    const res = await check2();
     const existingCart = localStorage.getItem(`cart_${res.email}`);
     let cartItems: IProductEdit[] = [];
 
@@ -42,7 +57,6 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
 
     // localStorage에 저장(set)
     localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
-    navigate("/cart");
   };
 
   const onCart = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,6 +66,16 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     if (item) {
       // 1. postCart() 실행
       postCart(item);
+    }
+
+    // 2. 장바구니 추가 후, CartPage로 이동할 지에 대한 여부
+    const confirm = window.confirm(
+      "장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?",
+    );
+
+    if (confirm) {
+      navigate("/cart");
+    } else {
     }
   };
 
