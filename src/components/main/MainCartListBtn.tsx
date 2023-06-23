@@ -15,7 +15,7 @@ interface ICartQtyBtnProps {
   title?: string;
 }
 
-function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
+function MainCartListBtn({ id, quantity, price, title }: ICartQtyBtnProps) {
   // dispatch 선언
   const dispatch = useDispatch();
 
@@ -216,4 +216,4 @@ const Delete = styled.button`
   cursor: pointer;
 `;
 
-export default MainQtyButton;
+export default MainCartListBtn;

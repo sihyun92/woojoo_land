@@ -2,14 +2,11 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import {
   productDel,
   userCheck,
-  userCheck,
-  userCheck,
   productEdit,
   productPost,
 } from "../../lib/API/adminAPI";
 import { productsList } from "../../lib/API/adminAPI";
-} from "../../lib/API/adminAPI";
-import { productsList } from "../../lib/API/adminAPI";
+} 
 import styled from "styled-components";
 
 //응답 타입
@@ -41,8 +38,6 @@ function AdminPage() {
     getUsers();
   }, []);
 
-  // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
-  const [ProfileImg, setProfileImg] = useState("");
   // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
   const [ProfileImg, setProfileImg] = useState("");
 
@@ -251,8 +246,6 @@ function AdminPage() {
           <input
             type="text"
             name="tags"
-            required
-            value={productform.tags}
             required
             value={productform.tags}
             placeholder="태그"

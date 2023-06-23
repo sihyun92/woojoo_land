@@ -1,18 +1,21 @@
 import { theme } from "../../styles/theme";
 import styled from "styled-components";
-import { IoMdHeart } from "react-icons/io";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { logout, check } from "../../lib/API/userAPI";
+import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
+import { useDispatch } from "react-redux";
+import { check } from "../../modules/user";
 
 interface IMainPageProps {
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
   selectedTag: string;
-  handleTagClick: any;
+  handleTagClick: (tag: string) => void;
 }
+
 function Header({
   username,
   setUsername,
@@ -27,10 +30,10 @@ function Header({
     getUserInfo();
   });
 
-  const getUserInfo = async () => {
-    const res = await check();
-    setUsername(res.displayName);
-    setUserImg(res.profileImg);
+  const getUserInfo = () => {
+    dispatch(check());
+    // setUsername(res.displayName);
+    // setUserImg(res.profileImg);
   };
 
   const onLogout = async () => {
@@ -56,22 +59,11 @@ function Header({
     }
   };
 
-  // MainPage에서만 SubHeader 컴포넌트 출력
-  const location = useLocation();
-
-  const getSubHeader = () => {
-    if (location.pathname === "/") {
-      return <SubHeader />;
-    } else {
-      return null;
-    }
-  };
   return (
     <>
       <HeaderContainer>
         <HeaderWrapper>
           <Link to="/">
-            <img src="/images/Logo.svg" alt="우주부동산" width={250} />
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
           </Link>
           <Search>
@@ -96,7 +88,7 @@ function Header({
             </Auth>
             <LinkWrapper>
               <Link to="/like">
-                <IoMdHeart />
+                <IoMdHeartEmpty />
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
@@ -108,7 +100,6 @@ function Header({
                   ) : (
                     <img src="/images/User.png" alt="프로필" />
                   )}
-                  <img src="/images/User.png" alt="프로필" />
                 </UserImg>
               </Link>
             </LinkWrapper>

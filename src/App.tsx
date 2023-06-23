@@ -35,7 +35,7 @@ import AndromedaPage from "./pages/main/tagged/AndromedaPage";
 import FoodPage from "./pages/main/tagged/FoodPage";
 import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
-import HorizonPage from "./pages/main/tagged/HorizonPagePage";
+import HorizonPage from "./pages/main/tagged/HorizonPage";
 
 function App() {
   const [username, setUsername] = useState("");
