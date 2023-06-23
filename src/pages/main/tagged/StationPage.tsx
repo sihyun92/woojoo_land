@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import MainTaggedCard from "../../../components/main/MainTaggedCard";
 import { IProduct, productsList } from "../../../lib/API/adminAPI";
 
-function Foodage() {
-  const title = "우주 식량";
+function StationPage() {
+  const title = "우주 정거장";
   const [list, setList] = useState<IProduct[]>([]);
-  const foodList = list.filter((value) => value.tags?.includes("우주식량"));
+  const stationList = list.filter((value) =>
+    value.tags?.includes("우주정거장"),
+  );
 
   useEffect(() => {
     async function fetchList() {
@@ -19,7 +21,7 @@ function Foodage() {
     fetchList();
   }, []);
 
-  return <MainTaggedCard title={title} list={foodList}></MainTaggedCard>;
+  return <MainTaggedCard title={title} list={stationList}></MainTaggedCard>;
 }
 
-export default Foodage;
+export default StationPage;
