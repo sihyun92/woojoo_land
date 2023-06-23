@@ -1,10 +1,10 @@
 export interface IProduct {
   id?: string;
   title?: string;
-  price?: number;
+  price: number;
   description?: string;
   tags?: string[];
-  thumbnailBase64?: string;
+  thumbnail?: string;
   photoBase64?: string;
   discountRate?: number;
   isSoldOut?: boolean;

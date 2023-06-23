@@ -8,14 +8,14 @@ import { productDetail } from "../../lib/API/commonAPI";
 import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
 import { formatDollar } from "../../lib/Function/commonFn";
 
-interface ICartQtyBtnProps {
+interface ICartListBtnProps {
   id?: string;
   quantity: number;
   price: number;
   title?: string;
 }
 
-function MainCartListBtn({ id, quantity, price, title }: ICartQtyBtnProps) {
+function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
   // dispatch 선언
   const dispatch = useDispatch();
 
