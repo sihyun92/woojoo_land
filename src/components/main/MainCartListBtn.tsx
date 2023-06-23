@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
 import { setQuantity } from "../../modules/cartItem";
 import { IProductEdit } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";
@@ -49,7 +49,7 @@ function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
 
   // LocalStorage에 장바구니 상품을 post
   const increaseItem = async (updatedCarts: IProductEdit[]) => {
-    const res = await check();
+    const res = await check2();
 
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);
@@ -71,7 +71,7 @@ function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
 
   // LocalStorage에 장바구니 상품을 decrease
   const decreaseItem = async (id: string) => {
-    const res = await check();
+    const res = await check2();
 
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);
@@ -104,7 +104,7 @@ function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
 
   // 장바구니 내 특정 상품 일괄 삭제
   const removeItem = async (id: string) => {
-    const res = await check();
+    const res = await check2();
 
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);

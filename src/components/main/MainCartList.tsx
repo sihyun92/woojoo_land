@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
 import { IProduct } from "../../lib/API/adminAPI";
 import MainCartListBtn from "./MainCartListBtn";
 import styled from "styled-components";
@@ -16,7 +16,7 @@ function MainCartList() {
 
   // 로컬스토리지에 접근하여 장바구니 목록에 접근하는 함수
   const getCart = async () => {
-    const res = await check();
+    const res = await check2();
     const getCartItems = localStorage.getItem(`cart_${res.email}`);
     if (getCartItems) {
       setCarts(JSON.parse(getCartItems));
@@ -43,7 +43,7 @@ function MainCartList() {
 
             return (
               <li key={index}>
-                <input type="checkbox" />
+                <input type="check2box" />
                 <img src={cart.thumbnail} alt="Thumbnail" width="100px" />
                 <Title>{cart.title} 특별 분양</Title>
                 <MainCartListBtn

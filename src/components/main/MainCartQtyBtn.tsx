@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
 import { setQuantity } from "../../modules/cartItem";
 import { IProductEdit } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";
@@ -54,7 +54,7 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
 
   // LocalStorage에 장바구니 상품을 post
   const postCart = async (updatedCarts: IProductEdit[]) => {
-    const res = await check();
+    const res = await check2();
 
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);
@@ -76,7 +76,7 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
 
   // LocalStorage에 장바구니 상품을 remove
   const removeCart = async (id: string) => {
-    const res = await check();
+    const res = await check2();
 
     // 기존의 로컬 스토리지에 저장된 product get
     const existingCart = localStorage.getItem(`cart_${res.email}`);

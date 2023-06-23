@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
-import { productsList } from "../../lib/API/adminAPI";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
+import styled from "styled-components";
+import { formatDollar } from "../../lib/Function/commonFn";
+import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 interface IProduct {
   id: string;
@@ -16,144 +19,194 @@ interface IProduct {
 }
 
 function LikePage() {
-  // 실시간 렌더링
+  // 초기값 렌더링
   useEffect(() => {
-    getProducts();
+    // getProducts();
     getLike();
     getCart();
   }, []);
 
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [likes, setLikes] = useState<IProduct[]>([]);
   const [carts, setCarts] = useState<IProduct[]>([]);
+  const navigate = useNavigate();
 
-  // 로컬스토리지
-  // 사용자: [{ 이름: 머머, 가격: 머머 }, { 이름: 머머, 가격: 머머 }]
-
-  const getProducts = async () => {
-    const productList = await productsList();
-    setProducts(productList);
-  };
-
+  // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (updatedLikes: IProduct[]) => {
-    const res = await check();
+    const res = await check2();
     localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
   };
 
+  // 장바구니 목록을 로컬스토리지로 보냄
   const postCart = async (updatedCarts: IProduct[]) => {
-    const res = await check();
+    const res = await check2();
     localStorage.setItem(`cart_${res.email}`, JSON.stringify(updatedCarts));
   };
 
+  // 찜 목록을 로컬 스토리지에서 받아옴
   const getLike = async () => {
-    const res = await check();
+    const res = await check2();
     const getLikeItems = localStorage.getItem(`like_${res.email}`);
     if (getLikeItems) {
       setLikes(JSON.parse(getLikeItems));
     }
   };
 
+  // 장바구니 목록을 로컬스토리지에서 받아옴
   const getCart = async () => {
-    const res = await check();
+    const res = await check2();
     const getCartItems = localStorage.getItem(`cart_${res.email}`);
     if (getCartItems) {
       setCarts(JSON.parse(getCartItems));
     }
   };
 
-  const onLike = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    product: IProduct,
-  ) => {
-    event.preventDefault();
-    if (likes) {
-      const updatedLikes = [...likes, product];
-      setLikes(updatedLikes);
-      postLike(updatedLikes);
-    }
-  };
-
+  // 장바구니로 상품을 전달하는 함수
   const onCart = (
     event: React.MouseEvent<HTMLButtonElement>,
     like: IProduct,
   ) => {
     event.preventDefault();
-    if (carts) {
-      const updatedCarts = [...carts, like];
-      setCarts(updatedCarts);
-      postCart(updatedCarts);
+    const updatedCarts = [...carts, like];
+    setCarts(updatedCarts);
+    postCart(updatedCarts);
+    const confirm = window.confirm(
+      "장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?",
+    );
+    if (confirm) {
+      navigate("/cart");
+    }
+  };
+
+  // 찜한 상품을 삭제하는 함수
+  // 선택한 상품을 제외한 다른 찜 목록 상품들로 이루어진 배열을 로컬스토리지로 전달
+  const onDelete = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    selectedLike: IProduct,
+  ) => {
+    event.preventDefault();
+    const confirm = window.confirm("찜 목록에서 삭제하시겠습니까?");
+    if (confirm) {
+      const updatedLikes = likes.filter((like) => like.id !== selectedLike.id);
+      setLikes(updatedLikes);
+      postLike(updatedLikes);
     }
   };
 
   return (
-    <div>
+    <LikeRoute>
       <UserTitle>찜한 상품</UserTitle>
-      <h3>모든 제품</h3>
-      <ul>
-        {products.length
-          ? products.map((product: IProduct, index) => {
-              return (
-                <li key={index}>
-                  <div>
-                    <span>id : {product.id}</span>
-                    <span>이름 : {product.title}</span>
-                    <span>가격 : {product.price}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      onLike(event, product);
-                    }}
-                  >
-                    찜
-                  </button>
-                </li>
-              );
-            })
-          : "제품이 없습니다"}
-      </ul>
-
-      <h3>찜한 상품 리스트</h3>
-      <ul>
+      <LikeBox>
         {likes
           ? likes.map((like: IProduct, index) => {
               return (
-                <li key={index}>
-                  <div>
-                    <span>{like.title}</span>
-                    <span>{like.price}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      onCart(event, like);
-                    }}
-                  >
-                    장바구니에 넣기
-                  </button>
-                </li>
+                <Likelist key={index}>
+                  <ListInfo>
+                    <img src={like.thumbnail as string} alt="Thumnail" />
+                    <ListText>
+                      <LikeName>{like.title}</LikeName>
+                      <LikePrice>{formatDollar(like.price)}</LikePrice>
+                    </ListText>
+                  </ListInfo>
+                  <Buttons>
+                    <OnCartButton
+                      type="button"
+                      onClick={(event) => {
+                        onCart(event, like);
+                      }}
+                    >
+                      장바구니 담기
+                    </OnCartButton>
+                    <DeleteLikeButton
+                      type="button"
+                      onClick={(event) => {
+                        onDelete(event, like);
+                      }}
+                    >
+                      <AiOutlineClose size="1.2rem" />
+                    </DeleteLikeButton>
+                  </Buttons>
+                </Likelist>
               );
             })
           : "찜한 상품이 없습니다"}
-      </ul>
-
-      <h3>장바구니 리스트</h3>
-      <ul>
-        {carts
-          ? carts.map((cart: IProduct, index) => {
-              return (
-                <li key={index}>
-                  <div>
-                    <span>{cart.title}</span>
-                    <span>{cart.price}</span>
-                  </div>
-                </li>
-              );
-            })
-          : "장바구니에 상품이 없습니다"}
-      </ul>
-    </div>
+      </LikeBox>
+    </LikeRoute>
   );
 }
+
+const LikeRoute = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const LikeBox = styled.ul`
+  gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Likelist = styled.li`
+  padding: 0 1rem;
+  flex-grow: 1;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid ${(props) => props.theme.colors.gray[3]};
+`;
+
+const ListInfo = styled.div`
+  gap: 1.2rem;
+  display: flex;
+
+  img {
+    width: 6.25rem;
+    height: 6.25rem;
+  }
+`;
+
+const ListText = styled.div`
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const LikeName = styled.span`
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
+
+const LikePrice = styled.span`
+  font-size: 1.125rem;
+`;
+
+const Buttons = styled.div`
+  gap: 20px;
+  display: flex;
+`;
+
+const OnCartButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.gray[5]};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const DeleteLikeButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.gray[5]};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default LikePage;

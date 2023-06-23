@@ -7,7 +7,7 @@ import {
 } from "react";
 import GrayInput from "../common/GrayInput";
 import UserTitle from "./UserTitle";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import Button from "../common/Button";
 
@@ -36,7 +36,7 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
   // 로그인 인증 함수인 check를 사용해 현재 로그인 된 토큰에서 email 정보를 추출
   // 로그인용 엔드포인트에 추출한 email을 전달하고 비밀번호는 사용자가 직접 입력
   const getAuth = async (password: string) => {
-    const userInfo = await check();
+    const userInfo = await check2();
     const response = await fetch(
       "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
       {
