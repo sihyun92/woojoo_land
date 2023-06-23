@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { userUpdate, check } from "../../lib/api/userAPI";
+import { userUpdate, check } from "../../lib/API/userAPI";
 import UserTitle from "./UserTitle";
 import GrayInput from "../common/GrayInput";
 import Button from "../common/Button";

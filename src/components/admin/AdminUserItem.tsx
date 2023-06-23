@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { UserList } from "../../lib/api/adminAPI";
+import { UserList } from "../../lib/API/adminAPI";
 
 function AdminUserItem(props: UserList) {
   return (

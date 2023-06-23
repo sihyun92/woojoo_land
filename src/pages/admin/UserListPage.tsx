@@ -3,7 +3,7 @@ import AdminTitle from "../../components/admin/AdminTitle";
 import AdminUserItem from "../../components/admin/AdminUserItem";
 import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
-import { userCheck, UserList } from "../../lib/api/adminAPI";
+import { userCheck, UserList } from "../../lib/API/adminAPI";
 import AdminUserPaging from "../../components/admin/AdminUserPaging";
 
 function UserListPage() {

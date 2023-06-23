@@ -4,7 +4,7 @@ import {
   orderConfirm,
   orderDetail,
   orderDetailsAll,
-} from "../../lib/api/userAPI";
+} from "../../lib/API/userAPI";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import "react-calendar/dist/Calendar.css";

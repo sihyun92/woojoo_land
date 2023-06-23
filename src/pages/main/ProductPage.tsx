@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { productDetail, IProductDetail } from "../../lib/api/commonAPI";
+import { productDetail, IProductDetail } from "../../lib/API/commonAPI";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { formatDollar } from "../../lib/Function/commonFn";

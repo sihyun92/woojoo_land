@@ -1,7 +1,7 @@
 import MainCommet from "./MainCommet";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { productsList, IProduct } from "../../lib/api/adminAPI";
+import { productsList, IProduct } from "../../lib/API/adminAPI";
 import Carousel from "../common/Carousel";
 
 function MainList() {
