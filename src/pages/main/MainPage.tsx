@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import MainList from "../../components/main/MainList";
 import MainPackage from "../../components/main/MainPackage";
-import Banner from "../../components/main/MainBanner";
 
 function MainPage() {
   return (
     <Container>
-      <Banner />
       <Main>
         <Inner>
           <MainList />
@@ -18,7 +16,7 @@ function MainPage() {
 }
 
 const Container = styled.div`
-  margin-top: -2rem;
+  padding-top: 2rem;
 `;
 const Main = styled.main`
   width: 100%;
