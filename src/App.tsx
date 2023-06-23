@@ -31,7 +31,7 @@ import CartPage from "./pages/main/CartPage";
 // import PaymentPage from "./pages/main/PaymentPage";
 import AllPage from "./pages/main/tagged/AllPage";
 import SolarPage from "./pages/main/tagged/SolarPage";
-import AndromedaPage from "./pages/main/tagged/AndromedaPage";
+import StationPage from "./pages/main/tagged/StationPage";
 import FoodPage from "./pages/main/tagged/FoodPage";
 import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
@@ -71,11 +71,11 @@ function App() {
                   <AllPage />
                 ) : selectedTag === "#태양계 부동산" ? (
                   <SolarPage />
-                ) : selectedTag === "#안드로메다 부동산" ? (
-                  <AndromedaPage />
+                ) : selectedTag === "#우주 정거장" ? (
+                  <StationPage />
                 ) : selectedTag === "#우주복" ? (
                   <SuitPage />
-                ) : selectedTag === "#우주식량" ? (
+                ) : selectedTag === "#우주 식량" ? (
                   <FoodPage />
                 ) : selectedTag === "#우주선" ? (
                   <ShipPage />
@@ -121,6 +121,6 @@ const Main = styled.main`
 const Inner = styled.div`
   max-width: 75rem;
   width: 75rem;
-  margin: 2rem auto 0;
+  margin: 3.5rem auto 0rem;
 `;
 export default App;
