@@ -1,22 +1,37 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { IoMdHeartEmpty } from "react-icons/io";
 import { IProduct } from "../../lib/API/adminAPI";
 import { Link } from "react-router-dom";
 import { formatDollar } from "../../lib/Function/commonFn";
 
 function MainCommet(props: IProduct) {
+  const formatUnit = (tags: string[]) => {
+    if (tags) {
+      if (tags.includes("태양계") || tags.includes("사건의지평선")) {
+        return "평당";
+      } else if (tags.includes("우주복")) {
+        return "한 벌당";
+      } else if (tags.includes("우주선")) {
+        return "한 대당";
+      } else if (tags.includes("우주정거장")) {
+        return "시간 당";
+      } else {
+        return "개당";
+      }
+    }
+  };
   return (
     <>
       <Link to={`/product/${props.id}`}>
         <Container>
           <Commet>
-            <img src="/images/Thumbnail.png" alt="Thumbnail" />
-            <IoMdHeartEmpty />
+            <img src={props.thumbnail} alt="Thumbnail" />
           </Commet>
           <Desc>
             <Title>{props.title}</Title>
-            <Py>평당</Py>
+            <Py>
+              {typeof props.tags === "object" ? formatUnit(props.tags) : "개당"}
+            </Py>
             <PriceWrapper>
               <Discount>{props.discountRate}%</Discount>
               <Price>{formatDollar(props.price)}</Price>
@@ -38,7 +53,7 @@ const Commet = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  border-radius: 1.25rem;
+  border-radius: 20px;
   justify-content: center;
   background-color: ${theme.colors.black};
 
@@ -48,6 +63,10 @@ const Commet = styled.div`
     position: absolute;
     font-size: 1.25rem;
     color: ${theme.colors.white};
+  }
+  > img {
+    width: 288px;
+    border-radius: 20px;
   }
 `;
 

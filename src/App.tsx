@@ -5,6 +5,7 @@ import styled from "styled-components";
 // common
 import Header from "./components/common/Header";
 // import Footer from "./components/common/Footer";
+import Loading from "./components/common/Loading";
 
 // admin
 import AdminPage from "./pages/admin";
@@ -27,33 +28,72 @@ import SettingPage from "./pages/user/SettingPage";
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
-import Loading from "./components/common/Loading";
-import AdminOrderPage from "./pages/admin/AdminOrderPage";
+// import PaymentPage from "./pages/main/PaymentPage";
+import AllPage from "./pages/main/tagged/AllPage";
+import SolarPage from "./pages/main/tagged/SolarPage";
+import StationPage from "./pages/main/tagged/StationPage";
+import FoodPage from "./pages/main/tagged/FoodPage";
+import ShipPage from "./pages/main/tagged/ShipPage";
+import SuitPage from "./pages/main/tagged/SuitPage";
+import HorizonPage from "./pages/main/tagged/HorizonPage";
 
 function App() {
   const [username, setUsername] = useState("");
   useEffect(() => {
-    console.log(typeof localStorage.getItem("username"));
     localStorage.getItem("username");
   }, []);
+
+  const [selectedTag, setSelectedTag] = useState("");
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTag((value) => (value === tag ? "" : tag));
+  };
+
   return (
     <BrowserRouter>
-      <Header username={username} setUsername={setUsername} />
+      <Header
+        username={username}
+        setUsername={setUsername}
+        selectedTag={selectedTag}
+        handleTagClick={handleTagClick}
+      />
       {/* <Loading /> */}
       <Main>
         <Inner>
           <Routes>
             {/* 메인 */}
-            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/"
+              element={
+                selectedTag === "" ? (
+                  <MainPage />
+                ) : selectedTag === "ALL" ? (
+                  <AllPage />
+                ) : selectedTag === "#태양계 부동산" ? (
+                  <SolarPage />
+                ) : selectedTag === "#우주 정거장" ? (
+                  <StationPage />
+                ) : selectedTag === "#우주복" ? (
+                  <SuitPage />
+                ) : selectedTag === "#우주 식량" ? (
+                  <FoodPage />
+                ) : selectedTag === "#우주선" ? (
+                  <ShipPage />
+                ) : (
+                  <HorizonPage />
+                )
+              }
+            />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
+            {/* <Route path="/payment" element={<PaymentPage />} /> */}
 
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />} />
             {/* 관리자 디자인 테스트 페이지 */}
             <Route path="/admins" element={<AdminPages />}>
-              <Route path="products" element={<AdminOrderPage />} />
+              <Route path="products" element={<ProductsPage />} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
             </Route>
@@ -81,6 +121,6 @@ const Main = styled.main`
 const Inner = styled.div`
   max-width: 75rem;
   width: 75rem;
-  margin: 2rem auto 0;
+  margin: 3.5rem auto 0rem;
 `;
 export default App;

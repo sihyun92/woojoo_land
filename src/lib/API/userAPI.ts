@@ -63,6 +63,23 @@ const check = () => {
   );
 };
 
+// 인증확인(fetch)
+const check2 = async () => {
+  const response = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+    {
+      method: "GET",
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result);
+  return result;
+};
+
 // 로그아웃
 const logout = async () => {
   const response = await fetch(
@@ -262,6 +279,7 @@ export {
   login,
   register,
   check,
+  check2,
   logout,
   userUpdate,
   accountList,

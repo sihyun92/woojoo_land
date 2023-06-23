@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { check } from "../../lib/API/userAPI";
+import { check2 } from "../../lib/API/userAPI";
 import { IProduct } from "../../lib/API/adminAPI";
-import MainCartQtyBtn from "./MainCartQtyBtn";
+import MainCartListBtn from "./MainCartListBtn";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { formatDollar } from "../../lib/Function/commonFn";
 
 function MainCartList() {
   const [carts, setCarts] = useState<IProduct[]>([]);
@@ -17,7 +16,7 @@ function MainCartList() {
 
   // 로컬스토리지에 접근하여 장바구니 목록에 접근하는 함수
   const getCart = async () => {
-    const res = await check();
+    const res = await check2();
     const getCartItems = localStorage.getItem(`cart_${res.email}`);
     if (getCartItems) {
       setCarts(JSON.parse(getCartItems));
@@ -44,21 +43,15 @@ function MainCartList() {
 
             return (
               <li key={index}>
-                <input type="checkbox" />
-                <img
-                  src="/images/Thumbnail.png"
-                  alt="Thumbnail"
-                  width="100px"
-                />
+                <input type="check2box" />
+                <img src={cart.thumbnail} alt="Thumbnail" width="100px" />
                 <Title>{cart.title} 특별 분양</Title>
-                <MainCartQtyBtn
+                <MainCartListBtn
                   id={cart.id}
                   quantity={quantity}
                   price={cart.price}
                   title={cart.title}
                 />
-                <Price>{formatDollar(cart.price)}</Price>
-                <Delete>X</Delete>
               </li>
             );
           })
@@ -80,19 +73,16 @@ const Ul = styled.ul`
     align-items: center;
     border-radius: 5px;
     border: 1px solid ${theme.colors.gray[3]};
+
+    > img {
+      border-radius: 5px;
+    }
   }
 `;
 
 const Title = styled.div`
   min-width: 275px;
   width: 275px;
-`;
-
-const Price = styled.span``;
-
-const Delete = styled.button`
-  background: none;
-  border: none;
 `;
 
 export default MainCartList;

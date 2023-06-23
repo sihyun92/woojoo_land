@@ -1,7 +1,10 @@
+import { useDispatch, useSelector } from "react-redux";
 import { formatDollar } from "../../lib/Function/commonFn";
 import styled from "styled-components";
+import { TRootState } from "../../modules";
 
 function MainCartOrder() {
+  const cartItem = useSelector((state: TRootState) => state);
   return (
     <Container>
       <PaymentPrice>
