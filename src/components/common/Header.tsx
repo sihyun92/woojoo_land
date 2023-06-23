@@ -12,9 +12,16 @@ import { check } from "../../modules/user";
 interface IMainPageProps {
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
+  selectedTag: string;
+  handleTagClick: (tag: string) => void;
 }
 
-function Header({ username, setUsername }: IMainPageProps) {
+function Header({
+  username,
+  setUsername,
+  selectedTag,
+  handleTagClick,
+}: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,7 +51,9 @@ function Header({ username, setUsername }: IMainPageProps) {
 
   const getSubHeader = () => {
     if (location.pathname === "/") {
-      return <SubHeader />;
+      return (
+        <SubHeader selectedTag={selectedTag} handleTagClick={handleTagClick} />
+      );
     } else {
       return null;
     }
@@ -128,6 +137,8 @@ const Search = styled.div`
   svg {
     color: ${theme.colors.orange.main};
     font-size: 1.75rem;
+    color: ${theme.colors.orange.main};
+    font-size: 1.75rem;
     position: absolute;
     right: 0.75rem;
     top: calc((3rem - 1.8rem) / 2);
@@ -138,7 +149,7 @@ const Search = styled.div`
 const SearchInput = styled.input`
   width: 26.25rem;
   height: 3rem;
-  border: none; // 검색바 선 제거
+  border: none; // 검색바 선 삭제
   border-radius: 0.625rem;
   padding-left: 0.5rem;
   &:focus {

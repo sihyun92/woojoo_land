@@ -25,7 +25,6 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-spinners": "^0.13.8",
-    "react-virtualized": "^9.22.5",
     "redux-saga": "^1.2.3",
     "redux-thunk": "^2.4.2",
     "slick-carousel": "^1.8.1",

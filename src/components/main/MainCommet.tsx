@@ -11,8 +11,7 @@ function MainCommet(props: IProduct) {
       <Link to={`/product/${props.id}`}>
         <Container>
           <Commet>
-            <img src="/images/Thumbnail.png" alt="Thumbnail" />
-            <IoMdHeartEmpty />
+            <img src={props.thumbnail} alt="Thumbnail" />
           </Commet>
           <Desc>
             <Title>{props.title}</Title>
@@ -38,7 +37,7 @@ const Commet = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  border-radius: 1.25rem;
+  border-radius: 20px;
   justify-content: center;
   background-color: ${theme.colors.black};
 
@@ -48,6 +47,10 @@ const Commet = styled.div`
     position: absolute;
     font-size: 1.25rem;
     color: ${theme.colors.white};
+  }
+  > img {
+    width: 288px;
+    border-radius: 20px;
   }
 `;
 
