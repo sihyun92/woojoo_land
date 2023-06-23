@@ -122,8 +122,8 @@ const salesManage = async (detailID: string, saleManage: ISalesManage) => {
 };
 
 // 제품 추가
-const productPost = async (product: RequestBodyAdd, thumbnailBase64: string) => {
-  const updatedProduct = {...product, thumbnailBase64}
+const productPost = async (product: RequestBodyAdd, thumbnailBase64: string, photoBase64: string) => {
+  const updatedProduct = {...product, thumbnailBase64, photoBase64}
   const res = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
     {

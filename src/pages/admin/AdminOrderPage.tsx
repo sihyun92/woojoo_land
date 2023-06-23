@@ -1,11 +1,13 @@
-import Button from "../../components/common/Button";
 import styled from "styled-components";
-import AdminTitle from "../../components/admin/AdminTitle";
-import AdminProductItem from "../../components/admin/AdminProductItem";
 import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
+import Button from "../../components/common/Button";
+import AdminTitle from "../../components/admin/AdminTitle";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
 import AdminUserPaging from "../../components/admin/AdminUserPaging";
+import AdminProductItem from "../../components/admin/AdminProductItem";
+import AdminModalTemplate from "../../components/admin/AdminModalTemplate";
+import AdminProductItemAdd from "../../components/admin/AdminProductItemAdd";
 
 //기능 : 모달 제품 추가
 //기능 : 모달 제품 수정
@@ -20,6 +22,20 @@ function AdminOrderPage() {
   const [indexOfLastPost, setIndexOfLastPost] = useState(0); //현재 페이지의 마지막 아이템 인덱스
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); //현재 페이지의 첫번째 아이템 인덱스
   const [currentPosts, setCurrentPosts] = useState<IProduct[]>([]); //현재 페이지에서 보여지는 아이템
+
+  //모달 상태 기본값 false다 true로 바뀌면 modalOpen의 값이되며 이 값은 return문의 AdminModal 컴포넌트 요청에 사용된다.
+  const [modalOpen, setModalOpen] = useState(false);
+
+  //모달 요청 setModalOpen()에 true 값을 보낸다.
+  const addModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setModalOpen(true);
+  };
+
+  const ModalClose = () => {
+    // setModalOpen(false) 또는 다른 원하는 동작을 수행합니다.
+    setModalOpen(false);
+  };
 
   const setPage = (error: any) => {
     setCurrentPage(error);
@@ -58,7 +74,10 @@ function AdminOrderPage() {
             <IsSoldOut>재고</IsSoldOut>
             <DiscountRate>할인율</DiscountRate>
           </ItemBox>
-          <AddBtn admin>추가하기</AddBtn>
+          <AddBtn onClick={addModal} admin>
+            추가하기
+          </AddBtn>
+          {modalOpen && <AdminModalTemplate><AdminProductItemAdd setModalOpen={ModalClose} /></AdminModalTemplate>}
         </CategoryMenuContainer>
         <ItemContainer>
           {currentPosts && currentPosts.length > 0 ? (
@@ -78,7 +97,7 @@ function AdminOrderPage() {
               />
             ))
           ) : (
-            <UserData>제품이 없습니다.</UserData> // 데이터가 없는 상태는 해당 문구를 출력한다.
+            <UserData>제품이 없습니다.</UserData> //데이터가 없는 상태는 해당 문구를 출력한다.
           )}
         </ItemContainer>
         <PageNation>
@@ -90,120 +109,119 @@ function AdminOrderPage() {
 }
 
 const ItemContainer = styled.div`
-  grid-template-columns: repeat(0, 1fr);
-  grid-template-rows: repeat(0, 1fr);
-  /* margin-top: 15px; */
-  flex-wrap: wrap;
-  gap: 10px 10px;
-  display: grid;
   width: 100%;
+  display: grid;
+  gap: 10px 10px;
+  flex-wrap: wrap;
+  grid-template-rows: repeat(0, 1fr);
+  grid-template-columns: repeat(0, 1fr);
 `;
 
 const UserData = styled.div`
-  color: ${theme.colors.gray[3]};
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin: 0 auto;
-  display: flex;
-  bottom: 0;
-  right: 0;
-  left: 0;
   top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  margin: 0 auto;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.gray[3]};
 `;
 
 const PageNation = styled.div`
-  background-color: ${theme.colors.white};
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  display: flex;
-  height: 70px;
-  width: 100%;
-  bottom: 0;
-  right: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.white};
 `;
 
 const AdminOrderContainer = styled.div`
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  margin: 0 30px;
-  display: flex;
-  height: 90%;
   bottom: 0;
+  height: 90%;
+  display: flex;
+  margin: 0 30px;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
 `;
 
 const CategoryMenuContainer = styled.div`
-  display: flex;
   width: 100%;
   height: 90px;
+  display: flex;
   font-size: 18px;
   font-weight: 700;
-  align-items: center;
   padding-right: 1px;
+  align-items: center;
 `;
 
 const ItemBox = styled.div`
-  display: flex;
   width: 100%;
+  display: flex;
 `;
 
 const Thumbnail = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 15%;
   height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const Title = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const ProductId = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const Price = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const Tags = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const IsSoldOut = styled.div`
-  border-right: 1px solid ${theme.colors.gray[5]};
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid ${theme.colors.gray[5]};
 `;
 
 const DiscountRate = styled.div`
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AddBtn = styled(Button)`
