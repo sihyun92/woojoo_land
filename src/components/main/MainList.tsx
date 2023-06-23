@@ -35,6 +35,7 @@ function MainList() {
               price={item.price}
               discountRate={item.discountRate}
               thumbnail={item.thumbnail}
+              tags={item.tags}
             />
           ))}
         </Carousel>
@@ -46,7 +47,7 @@ function MainList() {
 const Category = styled.h1`
   font-size: 2.625rem;
   font-weight: bold;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 `;
 
 const Container = styled.div`
