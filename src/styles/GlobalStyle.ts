@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import GmarketSansTTFBold from "../fonts/GmarketSansTTFBold.ttf"
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -52,6 +53,12 @@ const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: inherit;
+  }
+  @font-face {
+    font-family: 'GmarketSansTTFBold';
+    src: local('GmarketSansTTFBold');
+    font-style: normal;
+    src: url(${GmarketSansTTFBold}) format('truetype');
   }
 `;
 

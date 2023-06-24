@@ -19,6 +19,9 @@ const StyledButton = styled.button<{
   reverse?: boolean;
   adminlogout?: boolean;
   admin?: boolean;
+  admindel?: boolean;
+  adminedit?: boolean;
+  adminadd?: boolean;
 }>`
   border: none;
   outline: none;
@@ -60,25 +63,25 @@ const StyledButton = styled.button<{
       font-size: 1rem;
       font-weight: 700;
     `}
-      ${(rest) =>
+  ${(rest) =>
     rest.register &&
     css`
       background: ${theme.colors.orange.main};
       width: 100%;
     `}
-      ${(rest) =>
+  ${(rest) =>
     rest.orange &&
     css`
       background: ${theme.colors.orange.main};
     `}
-    ${(rest) =>
+  ${(rest) =>
     rest.reverse &&
     css`
       background: ${theme.colors.white};
       color: ${theme.colors.orange.main};
       border: 1px solid ${theme.colors.orange.main};
     `}
-      ${(rest) =>
+  ${(rest) =>
     rest.adminlogout &&
     css`
       border: 1px solid ${theme.colors.orange.main};
@@ -93,7 +96,7 @@ const StyledButton = styled.button<{
         color: ${theme.colors.white};
       }
     `}
-      ${(rest) =>
+  ${(rest) =>
     rest.admin &&
     css`
       color: ${theme.colors.white};
@@ -101,6 +104,52 @@ const StyledButton = styled.button<{
       border-radius: 5px;
       transition: 0.3s;
       width: 134px;
+      height: 40px;
+      font-size: 1rem;
+      &:hover {
+        background: ${theme.colors.orange.hover};
+        color: ${theme.colors.white};
+      }
+    `}
+  ${(rest) =>
+    rest.admindel &&
+    css`
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange.main};
+      border-radius: 5px;
+      transition: 0.3s;
+      width: 60px;
+      height: 40px;
+      font-size: 1rem;
+      &:hover {
+        background: ${theme.colors.orange.hover};
+        color: ${theme.colors.white};
+      }
+    `}
+  ${(rest) =>
+    rest.adminedit &&
+    css`
+      border: 1px solid ${theme.colors.orange.main};
+      color: ${theme.colors.orange.main};
+      border-radius: 5px;
+      background: none;
+      transition: 0.3s;
+      width: 60px;
+      height: 40px;
+      font-size: 1rem;
+      &:hover {
+        background: ${theme.colors.orange.main};
+        color: ${theme.colors.white};
+      }
+    `}
+  ${(rest) =>
+    rest.adminadd &&
+    css`
+      background-color: ${theme.colors.orange.main};
+      color: ${theme.colors.white};
+      border-radius: 5px;
+      transition: 0.3s;
+      width: 100%;
       height: 40px;
       font-size: 1rem;
       &:hover {
