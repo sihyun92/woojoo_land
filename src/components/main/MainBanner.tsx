@@ -1,9 +1,11 @@
-// Carousel? Slide?
-
 import styled from "styled-components";
 
 function Banner() {
-  return <Container>프리미엄 뷰...</Container>;
+  return (
+    <Container>
+      <div>Banner</div>
+    </Container>
+  );
 }
 
 const Container = styled.div`
@@ -12,6 +14,9 @@ const Container = styled.div`
   background: black;
   color: white;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default Banner;
