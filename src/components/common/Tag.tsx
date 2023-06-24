@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 
@@ -9,6 +9,7 @@ interface ITagProps {
 function Tag({ ...props }: ITagProps) {
   const [isSelected, setSelected] = useState<boolean>(false);
 
+  // Tag 토글화
   const handleClick = () => {
     setSelected((prevState) => !prevState);
   };
