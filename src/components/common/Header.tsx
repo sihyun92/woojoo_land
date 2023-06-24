@@ -3,7 +3,13 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 import { useDispatch } from "react-redux";
@@ -12,15 +18,19 @@ import { check } from "../../modules/user";
 interface IMainPageProps {
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
-  selectedTag: string;
-  handleTagClick: (tag: string) => void;
+  clickedTag: string;
+  inputText: string;
+  clickTagHandler: (tag: string) => void;
+  searchHandler: ChangeEventHandler<HTMLInputElement>;
 }
 
 function Header({
   username,
   setUsername,
-  selectedTag,
-  handleTagClick,
+  clickedTag,
+  inputText,
+  clickTagHandler,
+  searchHandler,
 }: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
@@ -52,7 +62,11 @@ function Header({
   const getSubHeader = () => {
     if (location.pathname === "/") {
       return (
-        <SubHeader selectedTag={selectedTag} handleTagClick={handleTagClick} />
+        <SubHeader
+          clickedTag={clickedTag}
+          clickTagHandler={clickTagHandler}
+          inputText={inputText}
+        />
       );
     } else {
       return null;
@@ -67,7 +81,11 @@ function Header({
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
           </a>
           <Search>
-            <SearchInput type="text" />
+            <SearchInput
+              type="text"
+              value={inputText}
+              onChange={searchHandler}
+            ></SearchInput>
             <MdSearch />
           </Search>
           <User>
@@ -151,7 +169,7 @@ const SearchInput = styled.input`
   height: 3rem;
   border: none; // 검색바 선 삭제
   border-radius: 0.625rem;
-  padding-left: 0.5rem;
+  padding-left: 1rem;
   &:focus {
     outline: none;
   }
