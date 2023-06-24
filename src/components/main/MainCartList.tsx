@@ -49,7 +49,7 @@ function MainCartList() {
                 <MainCartListBtn
                   id={cart.id}
                   quantity={quantity}
-                  price={cart.price}
+                  price={cart.price as number}
                   title={cart.title}
                 />
               </li>
