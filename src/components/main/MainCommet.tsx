@@ -30,7 +30,7 @@ function MainCommet(props: IProduct) {
           <Desc>
             <Title>{props.title}</Title>
             <Py>
-              {typeof props.tags === "object" ? formatUnit(props.tags) : "개당"}
+              {typeof props.tags === "object" ? formatUnit(props.tags) : ""}
             </Py>
             <PriceWrapper>
               <Discount>{props.discountRate}%</Discount>

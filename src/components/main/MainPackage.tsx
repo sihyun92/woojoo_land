@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
-import { IoMdHeartEmpty } from "react-icons/io";
 
 function MainPackage() {
   return (
@@ -8,16 +7,10 @@ function MainPackage() {
       <Category>🌕 패키지 특가 상품</Category>
       <Container>
         <Wrapper>
-          <Package>
-            이주 패키지 🛸
-            <IoMdHeartEmpty />
-          </Package>
+          <Package>이주 패키지 🛸</Package>
         </Wrapper>
         <Wrapper>
-          <Package>
-            왕복권 🚀
-            <IoMdHeartEmpty />
-          </Package>
+          <Package>왕복권 🚀</Package>
         </Wrapper>
       </Container>
     </>

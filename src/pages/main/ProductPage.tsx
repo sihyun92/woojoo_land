@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { productDetail, IProductDetail } from "../../lib/API/commonAPI";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { formatDollar } from "../../lib/Function/commonFn";
 import Button from "../../components/common/Button";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<IProductDetail>();
+  const [like, setLike] = useState(false);
   let [quantity, setQuantity] = useState<number>(1);
 
   // 단일 상품 상세 조회
@@ -26,6 +28,10 @@ function ProductPage() {
     fetchDetail();
   }, [id]);
 
+  const clickHandler = () => {
+    setLike(!like);
+  };
+
   // product 타입에 따른 로딩 중 표시
   if (!product) return <div>로딩중입니다!</div>;
 
@@ -35,7 +41,12 @@ function ProductPage() {
         <img src="/images/Detailed.png" alt="Detailed" />
       </PhotoWrapper>
       <DetailWrapper>
-        <Title>{product.title} 특별분양</Title>
+        <TitleWrapper>
+          <Title>{product.title} 특별분양</Title>
+          <LikeButton onClick={clickHandler} selected={like}>
+            {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
+          </LikeButton>
+        </TitleWrapper>
         <Price>{formatDollar(product.price)}</Price>
         <Desc>{product.description}</Desc>
         <hr />
@@ -74,10 +85,33 @@ const DetailWrapper = styled.div`
   border: 1px solid ${theme.colors.gray[5]};
 `;
 
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+`;
+
+const LikeButton = styled.button<{
+  selected: boolean;
+}>`
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  ${(props) =>
+    props.selected &&
+    css`
+      color: ${theme.colors.pink};
+    `}
+
+  > svg {
+    font-size: 3rem;
+  }
 `;
 
 const Price = styled.div`

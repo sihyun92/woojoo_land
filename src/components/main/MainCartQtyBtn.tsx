@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { check2 } from "../../lib/API/userAPI";
+import { check, check2 } from "../../lib/API/userAPI";
 import { setQuantity } from "../../modules/cartItem";
 import { IProductEdit } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";

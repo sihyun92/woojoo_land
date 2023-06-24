@@ -2,8 +2,6 @@ import Tag from "./Tag";
 import styled from "styled-components";
 import Banner from "../main/MainBanner";
 import { theme } from "../../styles/theme";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const tags = [
   { key: 0, tag: "ALL" },
@@ -16,11 +14,18 @@ const tags = [
 ];
 
 interface ISubHeaderProps {
-  selectedTag: string;
-  handleTagClick: (tag: string) => void;
+  clickedTag: string;
+  inputText: string;
+  clickTagHandler: (tag: string) => void;
 }
 
-function SubHeader({ selectedTag, handleTagClick }: ISubHeaderProps) {
+// Tag 컴포넌트의 selected에 선택 여부를 boolean으로 전달
+// 태그가 선택됐거나, 검색창에 검색어를 입력 시, Banner를 출력하지 않는다.
+function SubHeader({
+  clickedTag,
+  clickTagHandler,
+  inputText,
+}: ISubHeaderProps) {
   return (
     <>
       <TagContainer>
@@ -28,15 +33,15 @@ function SubHeader({ selectedTag, handleTagClick }: ISubHeaderProps) {
           {tags.map((value) => (
             <Tag
               key={value.key}
-              selected={value.tag === selectedTag}
-              onClick={() => handleTagClick(value.tag)}
+              selected={value.tag === clickedTag}
+              onClick={() => clickTagHandler(value.tag)}
             >
               {value.tag}
             </Tag>
           ))}
         </TagWrapper>
       </TagContainer>
-      {selectedTag.length > 0 ? "" : <Banner />}
+      {clickedTag.length > 0 || inputText.length > 0 ? "" : <Banner />}
     </>
   );
 }
