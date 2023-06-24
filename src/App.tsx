@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 // common
 import Header from "./components/common/Header";
-// import Footer from "./components/common/Footer";
+import Footer from "./components/common/Footer";
 import Loading from "./components/common/Loading";
 
 // admin
@@ -36,17 +36,25 @@ import FoodPage from "./pages/main/tagged/FoodPage";
 import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
 import HorizonPage from "./pages/main/tagged/HorizonPage";
+import MainSearched from "./components/main/MainSearched";
 
 function App() {
   const [username, setUsername] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [clickedTag, setClickedTag] = useState("");
+
   useEffect(() => {
     localStorage.getItem("username");
   }, []);
 
-  const [selectedTag, setSelectedTag] = useState("");
+  // Tag 선택 여부 관리
+  const clickTagHandler = (tag: string) => {
+    setClickedTag((value) => (value === tag ? "" : tag));
+  };
 
-  const handleTagClick = (tag: string) => {
-    setSelectedTag((value) => (value === tag ? "" : tag));
+  // 검색어 state 관리
+  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(event.target.value);
   };
 
   return (
@@ -54,33 +62,38 @@ function App() {
       <Header
         username={username}
         setUsername={setUsername}
-        selectedTag={selectedTag}
-        handleTagClick={handleTagClick}
+        clickedTag={clickedTag}
+        inputText={inputText}
+        clickTagHandler={clickTagHandler}
+        searchHandler={searchHandler}
       />
       {/* <Loading /> */}
       <Main>
         <Inner>
           <Routes>
-            {/* 메인 */}
+            {/* 메인 */
+            /* 선택된 태그와, 검색어에 따라 조건부 라우팅 */}
             <Route
               path="/"
               element={
-                selectedTag === "" ? (
-                  <MainPage />
-                ) : selectedTag === "ALL" ? (
+                clickedTag === "ALL" ? (
                   <AllPage />
-                ) : selectedTag === "#태양계 부동산" ? (
+                ) : clickedTag === "#태양계 부동산" ? (
                   <SolarPage />
-                ) : selectedTag === "#우주 정거장" ? (
+                ) : clickedTag === "#우주 정거장" ? (
                   <StationPage />
-                ) : selectedTag === "#우주복" ? (
+                ) : clickedTag === "#우주복" ? (
                   <SuitPage />
-                ) : selectedTag === "#우주 식량" ? (
+                ) : clickedTag === "#우주 식량" ? (
                   <FoodPage />
-                ) : selectedTag === "#우주선" ? (
+                ) : clickedTag === "#우주선" ? (
                   <ShipPage />
-                ) : (
+                ) : clickedTag === "#사건의 지평선" ? (
                   <HorizonPage />
+                ) : inputText.length > 0 ? (
+                  <MainSearched inputText={inputText} />
+                ) : (
+                  <MainPage />
                 )
               }
             />
@@ -109,7 +122,7 @@ function App() {
           </Routes>
         </Inner>
       </Main>
-      {/* <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 }
