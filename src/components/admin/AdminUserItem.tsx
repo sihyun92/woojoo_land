@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { UserList } from "../../lib/API/adminAPI";
 
-function AdminUserItem(props: UserList) {
+function AdminUserItem(props:UserList) {
   return (
     <ItemContainer>
       <ProfileImg>
-        {props.profileImg}
-        <img src="/images/AdminUser.png" alt="기본 이미지" />
+        {props.profileImg && <img src={props.profileImg} alt="profileImg" />} 
+        {!props.profileImg && <img src="/images/AdminUser.png" alt="기본 이미지" />}
       </ProfileImg>
       <UserEmail>{props.email}</UserEmail>
       <UserName>{props.displayName}</UserName>

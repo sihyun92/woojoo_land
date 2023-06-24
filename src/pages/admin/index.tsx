@@ -13,12 +13,12 @@ interface IProduct {
   id: string;
   title: string;
   price: number;
-  description: string;
   tags: string[];
-  thumbnail: string | null;
-  photo: string | null;
   isSoldOut: boolean;
+  description: string;
   discountRate: number;
+  photo: string | null;
+  thumbnail: string | null;
 }
 
 //응답 타입
@@ -29,14 +29,14 @@ interface IUser {
 }
 
 function AdminPage() {
+  const [ThumbnailImg, setThumbnailImg] = useState("");
+  const [PhotoImg, setPhotoImg] = useState("");
+
   // 실시간 렌더링
   useEffect(() => {
     getProducts();
     getUsers();
   }, []);
-
-  // const [thumbnail, setThumbnail] = useState(""); //받은 문자열 변환 이미지 주소를 상태 관리 기본값은 'null'이다.
-  const [ProfileImg, setProfileImg] = useState("");
 
   //상품 추가의 정보 상태
   const [productform, setProductForm] = useState({
@@ -45,6 +45,9 @@ function AdminPage() {
     tags: [],
     description: "",
     thumbnailBase64: "",
+    photoBase64: "",
+    isSoldOut: 0,
+    discountRate: 0,
   });
 
   //상품 수정의 정보 상태
@@ -63,7 +66,19 @@ function AdminPage() {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.addEventListener("load", (e) => {
-        setProfileImg((e.target as FileReader).result as string);
+        setThumbnailImg((e.target as FileReader).result as string);
+      });
+    }
+  }
+
+  //제품 상세 이미지 랜더링
+  function PhotoUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files as FileList;
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener("load", (e) => {
+        setPhotoImg((e.target as FileReader).result as string);
       });
     }
   }
@@ -120,13 +135,16 @@ function AdminPage() {
   // 제품 추가 폼 입력 후 제출시 API로 값을 전달해 제품 등록
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await productPost(productform, ProfileImg);
+    await productPost(productform, ThumbnailImg, PhotoImg);
     // input 초기화
     setProductForm({
-      title: "",
-      price: 0,
       tags: [],
+      price: 0,
+      title: "",
+      isSoldOut: 0,
+      discountRate: 0,
       description: "",
+      photoBase64: "",
       thumbnailBase64: "",
     });
     getProducts();
@@ -135,7 +153,7 @@ function AdminPage() {
   // // 제품 수정 폼 입력 후 제출시 API로 값을 전달해 제품 수정
   const onSubmit2 = async (event: FormEvent) => {
     event.preventDefault();
-    await productEdit(updateform, productid, ProfileImg);
+    await productEdit(updateform, productid, PhotoImg);
     // input 초기화
     setProductId("");
     setUpdateForm({
@@ -201,6 +219,7 @@ function AdminPage() {
                       </span>
                     </div>
                     <button
+                      //alrt로 삭제, 취소 구현하기
                       onClick={(event) => {
                         onDelete(event, product.id);
                       }}
@@ -247,9 +266,16 @@ function AdminPage() {
             placeholder="태그"
             onChange={onChange}
           />
-          <input type="file" onChange={uploadImage} />
+          <input
+            type="file"
+            onChange={(event) => {
+              PhotoUpload(event);
+            }}
+          />
           {/* 상품 이미지 썸네일 영역 */}
-          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
+          {ThumbnailImg && (
+            <img src={ThumbnailImg} alt="Thumbnail" width={120} />
+          )}
           <button type="submit">추가</button>
         </form>
       </Post>
@@ -293,7 +319,9 @@ function AdminPage() {
           />
           <input type="file" onChange={uploadImage} />
           {/* 상품 이미지 썸네일 영역 */}
-          {ProfileImg && <img src={ProfileImg} alt="Thumbnail" width={120} />}
+          {ThumbnailImg && (
+            <img src={ThumbnailImg} alt="Thumbnail" width={120} />
+          )}
           <button type="submit">수정</button>
         </form>
       </Edit>
