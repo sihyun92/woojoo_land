@@ -13,7 +13,7 @@ interface ITaggedCard {
 function MainTaggedCard({ title, list }: ITaggedCard) {
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{list.length > 0 ? title : `👽 ${title}가 없습니다.`}</Title>
       <Wrapper>
         {list.map((item) => (
           <MainCommet
@@ -52,6 +52,11 @@ const Wrapper = styled.div`
   > a:nth-child(4n + 0) {
     margin-right: 0;
   }
+`;
+
+const NoAnswer = styled.div`
+  width: 100%;
+  text-align: center;
 `;
 
 export default MainTaggedCard;
