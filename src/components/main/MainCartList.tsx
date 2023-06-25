@@ -43,7 +43,7 @@ function MainCartList() {
 
             return (
               <li key={index}>
-                <input type="check2box" />
+                <input type="checkbox" />
                 <img src={cart.thumbnail} alt="Thumbnail" width="100px" />
                 <Title>{cart.title} 특별 분양</Title>
                 <MainCartListBtn
