@@ -8,8 +8,7 @@ import Footer from "./components/common/Footer";
 import Loading from "./components/common/Loading";
 
 // admin
-import AdminPage from "./pages/admin";
-import AdminPages from "./pages/admin/AdminPages";
+import AdminPage from "./pages/admin/AdminPage";
 import ProductsPage from "./pages/admin/ProductsPage";
 import HistoryPage from "./pages/admin/HistroyPage";
 import UserListPage from "./pages/admin/UserListPage";
@@ -37,6 +36,7 @@ import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
 import HorizonPage from "./pages/main/tagged/HorizonPage";
 import MainSearched from "./components/main/MainSearched";
+import DashboardPage from "./pages/admin/DashboardPage";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -103,9 +103,8 @@ function App() {
             {/* <Route path="/payment" element={<PaymentPage />} /> */}
 
             {/* 관리자 페이지 */}
-            <Route path="/admin" element={<AdminPage />} />
-            {/* 관리자 디자인 테스트 페이지 */}
-            <Route path="/admins" element={<AdminPages />}>
+            <Route path="/admin" element={<AdminPage />}>
+              <Route path="dashboard" element={<DashboardPage />} />
               <Route path="products" element={<ProductsPage />} />
               <Route path="history" element={<HistoryPage />} />
               <Route path="userlist" element={<UserListPage />} />
