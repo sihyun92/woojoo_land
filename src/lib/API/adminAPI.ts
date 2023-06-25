@@ -20,6 +20,10 @@ export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
 
+export interface IProductLike extends IProduct {
+  like?: boolean;
+}
+
 export interface RequestBodyEdit {
   title: string; // 제품 이름 (필수!)
   price: number; // 제품 가격 (필수!)

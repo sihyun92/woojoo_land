@@ -10,10 +10,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { logout } from "../../lib/API/userAPI";
+import { check2, logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
-import { useDispatch } from "react-redux";
-import { check } from "../../modules/user";
 
 interface IMainPageProps {
   username: string;
@@ -34,16 +32,15 @@ function Header({
 }: IMainPageProps) {
   const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserInfo();
   });
 
-  const getUserInfo = () => {
-    dispatch(check());
-    // setUsername(res.displayName);
-    // setUserImg(res.profileImg);
+  const getUserInfo = async () => {
+    const res = await check2();
+    setUsername(res.displayName);
+    setUserImg(res.profileImg);
   };
 
   const onLogout = async () => {
@@ -105,7 +102,7 @@ function Header({
               )}
             </Auth>
             <LinkWrapper>
-              <Link to="/like">
+              <Link to="/user/like">
                 <IoMdHeartEmpty />
               </Link>
               <Link to="/cart">

@@ -58,22 +58,9 @@ const register = ({
 
 // 인증확인
 const check = () => {
-  return;
-};
-
-export const check2 = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorizaion: `Bearer ${localStorage.getItem("Token")}`,
-      },
-    },
-  );
-  const result = await response.json();
-  return result;
+  // client.post(
+  //   "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+  // );
 };
 
 // 인증확인(fetch)
@@ -81,7 +68,7 @@ const check2 = async () => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
     {
-      method: "GET",
+      method: "POST",
       headers: {
         ...headers,
         Authorization: `Bearer ${localStorage.getItem("Token")}`,
