@@ -1,4 +1,3 @@
-import { check } from "../../lib/API/userAPI";
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
@@ -40,14 +39,13 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
 
   const postCart = async (updatedCarts: IProductEdit[]) => {
     // 인증 확인
-    const res = await check();
     // 기존의 로컬 스토리지에 저장된 product get
     const res = await check2();
-    const existingCart = localStorage.getItem(`cart_${res.email}`);
+    const getCartItems = localStorage.getItem(`cart_${res.email}`);
     let cartItems: IProductEdit[] = [];
 
-    if (existingCart) {
-      cartItems = JSON.parse(existingCart);
+    if (getCartItems) {
+      cartItems = JSON.parse(getCartItems);
     }
 
     // props로 받은 상품들을 push
