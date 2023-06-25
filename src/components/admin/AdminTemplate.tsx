@@ -11,15 +11,15 @@ function AdminTemplate({children}: PropsWithChildren) {
 
 //관리자 페이지 배경 페이지 상단에 위치하여 화면 표시
 const AdminContainer = styled.div`
-    background-color: #fff;
-    position: absolute;
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    bottom: 0;
-    right: 0;
-    left: 0;
     top: 0;
-`
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    background-color: #fff;
+    `
 
 export default AdminTemplate;

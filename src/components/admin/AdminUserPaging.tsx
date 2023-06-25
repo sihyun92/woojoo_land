@@ -14,7 +14,7 @@ const AdminUserPaging: React.FC<AdminUserPagingProps> = ({page, count, setPage})
     <PageStyles>
       <Pagination
         activePage={page} //현재 페이지
-        itemsCountPerPage={3} //한페이지에 보이는 아이템 개수
+        itemsCountPerPage={6} //한페이지에 보이는 아이템 개수
         totalItemsCount={count} //아이템 총 개수
         pageRangeDisplayed={3} //페이지네이션에서 보여줄 페이지 범위
         prevPageText={"<"} //이전 텍스트

@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { AiOutlineClose } from "react-icons/ai";
-import { productPost } from "../../lib/API/adminAPI";
-import { FormEvent, useState } from "react";
-import GlobalStyle from "../../styles/GlobalStyle";
 import Button from "../common/Button";
+import styled from "styled-components";
 import { theme } from "../../styles/theme";
+import { FormEvent, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import GlobalStyle from "../../styles/GlobalStyle";
+import { productPost } from "../../lib/API/adminAPI";
 
 function AdminProductItemAdd({ setModalOpen }: any) {
   const [ThumbnailImg, setThumbnailImg] = useState("");
@@ -40,17 +40,29 @@ function AdminProductItemAdd({ setModalOpen }: any) {
   const onChange = (event: any) => {
     const { name, value } = event.target;
     let updatedValue: string | number = value;
-    let updatedTags: never[] = [];
+
     if (name === "price") {
       updatedValue = value === "" || isNaN(Number(value)) ? 0 : Number(value);
     }
-    if (name === "tags") {
-      updatedTags = value.split(",").map((tags: string) => tags);
-      console.log(updatedTags);
-    }
+
     setProductForm((prev: any) => ({
       ...prev,
       [name]: updatedValue,
+    }));
+  };
+
+  //제품 추가 input에 입력되는 tags값을 state에 저장하하고 쉽표 기준으로 잘라 setProductForm에 내보내는 함수
+  const onChangeTags = (event: any) => {
+    const { name, value } = event.target;
+    let updatedTags: never[] = [];
+
+    if (name === "tags") {
+      updatedTags = value.split(",");
+      console.log(updatedTags);
+    }
+
+    setProductForm((prev: any) => ({
+      ...prev,
       tags: updatedTags,
     }));
   };
@@ -82,21 +94,23 @@ function AdminProductItemAdd({ setModalOpen }: any) {
       photoBase64: "",
       thumbnailBase64: "",
     });
+    //창 닫기 요청
+    setModalOpen(false);
   };
 
-  //모달 창 닫기 기능
+  //모달 창 닫기 함수
   const ModalBoxClose = (event: any) => {
     event.preventDefault();
     setModalOpen(false); //setModalOpen 함수를 호출하여 값을 전달합니다.
   };
 
-  //제품 썸네일 파일명 표시 기능
+  //제품 썸네일 파일명 표시 함수
   const ThumbnailFileChange = (event: any) => {
     const file = event.target.files[0];
     setThumbnailFile(file ? file.name : null);
   };
 
-  //상세 이미지 썸네일 파일명 표시 기능
+  //상세 이미지 썸네일 파일명 표시 함수
   const PhotoFileChange = (event: any) => {
     const file = event.target.files[0];
     setPhotoFile(file ? file.name : null);
@@ -147,7 +161,7 @@ function AdminProductItemAdd({ setModalOpen }: any) {
               required
               type="text"
               name="title"
-              placeholder="이름"
+              placeholder="제품명을 입력해주세요"
               onChange={onChange}
               value={productform.title}
             />
@@ -164,12 +178,11 @@ function AdminProductItemAdd({ setModalOpen }: any) {
           </PriceInput>
           <DescriptionInput>
             <div>제품 설명</div>
-            <input
+            <textarea
               required
-              type="text"
               name="description"
               onChange={onChange}
-              placeholder="상세 설명"
+              placeholder="제품 상세 설명을 입력해주세요"
               value={productform.description}
             />
           </DescriptionInput>
@@ -179,8 +192,11 @@ function AdminProductItemAdd({ setModalOpen }: any) {
               required
               type="text"
               name="tags"
-              placeholder="태그"
-              onChange={onChange}
+              placeholder="쉼표를 사용하여 태그를 입력해주세요"
+              onChange={(e) => {
+                onChange(e);
+                onChangeTags(e);
+              }}
               value={productform.tags}
             />
           </TagsInput>
@@ -207,7 +223,7 @@ function AdminProductItemAdd({ setModalOpen }: any) {
             />
           </DiscountRateInput>
           <ItemAddBtn adminadd type="submit">
-            추가
+            추가하기
           </ItemAddBtn>
         </form>
       </FormContainer>
@@ -226,8 +242,12 @@ const FormContainer = styled.ul`
     align-items: center;
     justify-content: space-between;
     input {
-      height: 40px;
       width: 350px;
+      height: 40px;
+      padding-left: 10px;
+      border-radius: 5px;
+      border: 1px solid ${theme.colors.gray[3]};
+      background-color: ${theme.colors.gray[2]};
     }
   }
 `;
@@ -235,8 +255,9 @@ const FormContainer = styled.ul`
 const TitleAdd = styled.li`
   margin: auto;
   font-size: 36px;
+  font-weight: 700;
   padding-bottom: 50px;
-  font-family: "GmarketSansTTFBold";
+  font-family: "GmarketSans";
 `;
 
 const FileAddBtn = styled.label`
@@ -251,39 +272,51 @@ const FileAddBtn = styled.label`
   justify-content: center;
   color: ${theme.colors.orange.main};
   border: 1px solid ${theme.colors.orange.main};
-  &:hover{
+  &:hover {
     color: ${theme.colors.white};
     background-color: ${theme.colors.orange.main};
-
   }
 `;
 
 const FileAddname = styled.div`
-font-size: 14px;
-font-weight: 400;
-margin-left: 20px;
-color: ${theme.colors.gray[3]};
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 20px;
+  color: ${theme.colors.gray[3]};
 `;
 
 const Thumbnail = styled.div`
-    height: 30px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    justify-content: space-between;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
 `;
 
 const Photo = styled.div`
-    height: 30px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    justify-content: space-between;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: space-between;
 `;
 
 const TitleInput = styled.li``;
 const PriceInput = styled.li``;
-const DescriptionInput = styled.li``;
+const DescriptionInput = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  textarea {
+    width: 350px;
+    resize: none;
+    height: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid ${theme.colors.gray[3]};
+    background-color: ${theme.colors.gray[2]};
+  }
+`;
 const TagsInput = styled.li``;
 const IsSoldOutInput = styled.li``;
 const DiscountRateInput = styled.li``;

@@ -6,7 +6,7 @@ import ProductsPage from "./ProductsPage";
 import styled from "styled-components";
 import AdminHeader from "../../components/admin/AdminHeader";
 
-function AdminPages() {
+function AdminPage() {
   const location = useLocation();
   return (
     <AdminTemplate>
@@ -15,24 +15,24 @@ function AdminPages() {
       </Sidebar>
       <AdminMain>
         <AdminHeader />
-        {location.pathname === "/admins" ? <ProductsPage /> : <Outlet />}
+        {location.pathname === "/admin" ? <ProductsPage /> : <Outlet />}
       </AdminMain>
     </AdminTemplate>
   );
 }
 
 const Sidebar = styled.div`
-  background: linear-gradient(${theme.colors.orange.main}, ${theme.colors.orange.linear});
-  background-color: ${theme.colors.orange.main};
-  width: 17.8125rem;
   display: flex;
+  width: 17.8125rem;
+  background-color: ${theme.colors.orange.main};
+  background: linear-gradient(${theme.colors.orange.main}, ${theme.colors.orange.linear});
 `;
 
 const AdminMain = styled.div`
-  flex-direction: column;
-  display: flex;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
-export default AdminPages;
+export default AdminPage;

@@ -20,8 +20,9 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
+  font-size: 28px;
   margin-top: 25px;
   font-weight: 700;
-  font-size: 28px;
+  font-family: 'GmarketSans';
 `;
 export default AdminTitle;
