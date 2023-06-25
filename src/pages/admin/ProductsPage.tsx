@@ -1,7 +1,11 @@
-function ProductsPage () {
-    return (
-        <>제품 조회 리스트 페이지</>
-    )
+import AdminProductItemList from "../../components/admin/AdminProductItemList";
+
+function AdminOrderPage() {
+  return (
+    <>
+      <AdminProductItemList />
+    </>
+  );
 }
 
-export default ProductsPage;
+export default AdminOrderPage;
