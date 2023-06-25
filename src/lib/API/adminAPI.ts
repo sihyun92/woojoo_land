@@ -16,6 +16,10 @@ export interface UserList {
   profileImg?: string;
 }
 
+export interface IProductLike extends IProduct {
+  like?: boolean;
+}
+
 export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
 }
