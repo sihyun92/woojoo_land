@@ -8,12 +8,15 @@ import Button from "../../components/common/Button";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { check2 } from "../../lib/API/userAPI";
+import { IProduct } from "../../lib/API/adminAPI";
 
 function ProductPage() {
-  const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<IProductDetail>();
   const [like, setLike] = useState(false);
+  const [likes, setLikes] = useState<IProduct[]>([]);
+  const { id } = useParams<{ id: string }>();
   let [quantity, setQuantity] = useState<number>(1);
+  const [product, setProduct] = useState<IProductDetail>();
 
   // 단일 상품 상세 조회
   useEffect(() => {
@@ -28,12 +31,56 @@ function ProductPage() {
     fetchDetail();
   }, [id]);
 
-  const clickHandler = () => {
+  // 로컬 스토리지로 찜 여부가 포함된 상품 정보를 Post
+  const onLike = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // like toggle
     setLike(!like);
+
+    // item 상세 조회
+    const item = await findProduct();
+
+    if (item) {
+      postLike(item);
+    }
   };
 
-  // product 타입에 따른 로딩 중 표시
-  if (!product) return <div>로딩중입니다!</div>;
+  const findProduct = async () => {
+    // 유효한 prdocut일 경우
+    if (id) {
+      // 단일 제품 상세 조회
+      const product: IProduct = await productDetail(id);
+      return product;
+    }
+    return null;
+  };
+
+  // 찜 목록을 로컬스토리지로 보냄
+  const postLike = async (item: IProduct) => {
+    // 인증 확인
+    const res = await check2();
+    // 일치하는 상품을 get
+    const getLikeItems = localStorage.getItem(`like_${res.email}`);
+
+    // 빈 배열 선언
+    let likeItems: IProduct[] = [];
+
+    // 기존 찜 목록을 배열로 담음
+    if (getLikeItems) {
+      likeItems = JSON.parse(getLikeItems);
+    }
+
+    if (like === true) {
+      // 이미 찜한 상품인 경우, 삭제(filter)
+      const updatedLikes = likeItems.filter((value) => value.id !== item.id);
+      localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
+    } else {
+      // 찜하지 않은 상품인 경우, 추가(push)
+      likeItems.push(item);
+      localStorage.setItem(`like_${res.email}`, JSON.stringify(likeItems));
+    }
+  };
 
   return (
     <Container>
@@ -42,13 +89,13 @@ function ProductPage() {
       </PhotoWrapper>
       <DetailWrapper>
         <TitleWrapper>
-          <Title>{product.title} 특별분양</Title>
-          <LikeButton onClick={clickHandler} selected={like}>
+          <Title>{product?.title} 특별분양</Title>
+          <LikeButton onClick={onLike} selected={like}>
             {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
           </LikeButton>
         </TitleWrapper>
-        <Price>{formatDollar(product.price)}</Price>
-        <Desc>{product.description}</Desc>
+        <Price>{formatDollar(product?.price)}</Price>
+        <Desc>{product?.description}</Desc>
         <hr />
         <PurchaseWrapper>
           <Quantity>
@@ -58,7 +105,7 @@ function ProductPage() {
           <PriceAll>
             <span>총 상품 금액</span>
             <Price>
-              {product.price ? formatDollar(product.price * quantity) : 0}
+              {product?.price ? formatDollar(product?.price * quantity) : 0}
             </Price>
           </PriceAll>
           <ButtonWrapper>
