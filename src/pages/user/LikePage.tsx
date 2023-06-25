@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
-import { productsList } from "../../lib/API/adminAPI";
-import { check, check2 } from "../../lib/API/userAPI";
 import { check2 } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import { formatDollar } from "../../lib/Function/commonFn";
@@ -99,39 +97,41 @@ function LikePage() {
     <LikeRoute>
       <UserTitle>찜한 상품</UserTitle>
       <LikeBox>
-        {likes
-          ? likes.map((like: IProduct, index) => {
-              return (
-                <Likelist key={index}>
-                  <ListInfo>
-                    <img src={like.thumbnail as string} alt="Thumnail" />
-                    <ListText>
-                      <LikeName>{like.title}</LikeName>
-                      <LikePrice>{formatDollar(like.price)}</LikePrice>
-                    </ListText>
-                  </ListInfo>
-                  <Buttons>
-                    <OnCartButton
-                      type="button"
-                      onClick={(event) => {
-                        onCart(event, like);
-                      }}
-                    >
-                      장바구니 담기
-                    </OnCartButton>
-                    <DeleteLikeButton
-                      type="button"
-                      onClick={(event) => {
-                        onDelete(event, like);
-                      }}
-                    >
-                      <AiOutlineClose size="1.2rem" />
-                    </DeleteLikeButton>
-                  </Buttons>
-                </Likelist>
-              );
-            })
-          : "찜한 상품이 없습니다"}
+        {likes.length ? (
+          likes.map((like: IProduct, index) => {
+            return (
+              <Likelist key={index}>
+                <ListInfo>
+                  <img src={like.thumbnail as string} alt="Thumnail" />
+                  <ListText>
+                    <LikeName>{like.title}</LikeName>
+                    <LikePrice>{formatDollar(like.price)}</LikePrice>
+                  </ListText>
+                </ListInfo>
+                <Buttons>
+                  <OnCartButton
+                    type="button"
+                    onClick={(event) => {
+                      onCart(event, like);
+                    }}
+                  >
+                    장바구니 담기
+                  </OnCartButton>
+                  <DeleteLikeButton
+                    type="button"
+                    onClick={(event) => {
+                      onDelete(event, like);
+                    }}
+                  >
+                    <AiOutlineClose size="1.2rem" />
+                  </DeleteLikeButton>
+                </Buttons>
+              </Likelist>
+            );
+          })
+        ) : (
+          <NoLikes>찜한 상품이 없습니다.</NoLikes>
+        )}
       </LikeBox>
     </LikeRoute>
   );
@@ -209,6 +209,12 @@ const DeleteLikeButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const NoLikes = styled.span`
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: ${(props) => props.theme.colors.orange.main};
 `;
 
 export default LikePage;
