@@ -58,9 +58,26 @@ const register = ({
 
 // 인증확인
 const check = () => {
-  client.get(
+  // client.post(
+  //   "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+  // );
+};
+
+// 인증확인(fetch)
+const check2 = async () => {
+  const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+    {
+      method: "POST",
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+      },
+    },
   );
+  const result = await response.json();
+  console.log(result);
+  return result;
 };
 
 // 로그아웃
@@ -262,6 +279,7 @@ export {
   login,
   register,
   check,
+  check2,
   logout,
   userUpdate,
   accountList,

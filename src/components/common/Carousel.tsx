@@ -14,9 +14,9 @@ function Carousel({ children, autoplay, speed, loop }: ICarouselProps) {
   const settings: Settings = {
     dots: true,
     infinite: true,
-    speed: 400,
+    speed: 300,
     slidesToShow: 4,
-    autoplay: false,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 768,

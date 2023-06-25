@@ -10,6 +10,7 @@ function MainList() {
   useEffect(() => {
     async function fetchList() {
       try {
+        //  모든 제품 조회
         const res = await productsList();
         setList(res);
       } catch (error) {
@@ -23,7 +24,7 @@ function MainList() {
 
   return (
     <>
-      <Category>🪐 신상 땅 </Category>
+      <Category>🪐 신상 행성 </Category>
       <Container>
         <Carousel>
           {list.map((item) => (
@@ -33,6 +34,8 @@ function MainList() {
               title={item.title}
               price={item.price}
               discountRate={item.discountRate}
+              thumbnail={item.thumbnail}
+              tags={item.tags}
             />
           ))}
         </Carousel>
@@ -44,7 +47,7 @@ function MainList() {
 const Category = styled.h1`
   font-size: 2.625rem;
   font-weight: bold;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 `;
 
 const Container = styled.div`

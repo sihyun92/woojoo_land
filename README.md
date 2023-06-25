@@ -63,7 +63,7 @@ npm start
 2. TypeScript
 3. styled-component
 4. react-icons
-5. ?redux or recoil?
+5. redux & redux-saga
 
 ## 기타 툴
 
