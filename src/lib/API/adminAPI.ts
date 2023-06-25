@@ -1,7 +1,7 @@
 export interface IProduct {
   id?: string;
   title?: string;
-  price?: number;
+  price: number;
   description?: string;
   tags?: string[];
   thumbnail?: string;
@@ -18,10 +18,6 @@ export interface UserList {
 
 export interface IProductEdit extends IProduct {
   isSoldOut?: boolean;
-}
-
-export interface IProductLike extends IProduct {
-  like?: boolean;
 }
 
 export interface RequestBodyEdit {
@@ -150,14 +146,15 @@ const productPost = async (
 
 // 제품 수정
 const productEdit = async (
+  id: string,
   product: RequestBodyEdit,
-  ID: string,
   thumbnailBase64: string,
+  photoBase64: string,
 ) => {
-  const updatedProduct = { ...product, thumbnailBase64 };
+  const updatedProduct = { ...product, thumbnailBase64, photoBase64 };
   //입력값 위주의 product과 Base64로 인코딩된 이미지 데이터는 따로 상태를 받아서 API로 수정 요청
   const res = await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${ID}`,
+    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
     {
       method: "PUT",
       headers: {
