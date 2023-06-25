@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, EventHandler, SetStateAction, useEffect, useState } from "react";
 import { logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 import { useDispatch } from "react-redux";
@@ -101,6 +101,7 @@ function Header({ username, setUsername }: IMainPageProps) {
     </>
   );
 }
+
 const HeaderContainer = styled.header`
   width: 100%;
   height: 9.375rem;
