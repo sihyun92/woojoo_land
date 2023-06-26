@@ -7,7 +7,6 @@ interface ISearched {
 }
 
 function MainSearched({ inputText }: ISearched) {
-  const title = "검색 결과";
   const [list, setList] = useState<IProduct[]>([]);
 
   // 검색값과 item의 title을 비교
@@ -30,7 +29,10 @@ function MainSearched({ inputText }: ISearched) {
     }
     fetchList();
   }, []);
-  return <MainSearchedCard title={title} list={searchedList} />;
+
+  ///////////////////
+
+  return <MainSearchedCard list={searchedList} />;
 }
 
 export default MainSearched;
