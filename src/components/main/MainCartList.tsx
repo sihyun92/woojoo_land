@@ -19,40 +19,49 @@ function MainCartList() {
       const res = await check();
       // 로컬스토리지에서 장바구니 목록 GET
       const getCartItems = localStorage.getItem(`cart_${res.email}`);
+      const prevCartItems = JSON.stringify(carts);
+
       // 장바구니 내 상품이 있다면
-      if (getCartItems) {
+      if (getCartItems && getCartItems !== prevCartItems) {
         // JSON 파싱
+        const cartItems: IProduct[] = JSON.parse(getCartItems);
 
         // carts state Update
-        setCarts(JSON.parse(getCartItems));
+        setCarts(cartItems);
 
         // 장바구니에 상품이 있음을 표시
         setHasCartItems(true);
 
-        // Dispatch
-      } else {
+        // 수량 계산
+        const amount: { [title: string]: number } = {}; // 객체 생성
+        cartItems.forEach((item) => {
+          // item 객체의 title 속성을 변수에 할당
+          const { title } = item;
+          // amount 객체에 해당 title 속성이 존재하는 지에 따라 수량 할당
+          amount[title as string]
+            ? (amount[title as string] += 1)
+            : (amount[title as string] = 1);
+        });
+
+        // 수량에 맞게 state에 dispatch
+        Object.entries(amount).forEach(([title, quantity]) => {
+          // [key, value] - [title, quantity]
+          dispatch(
+            setQuantity({
+              title: title as string,
+              quantity: quantity,
+              price: cartItems.find((item) => item.title === title)?.price || 0,
+            }),
+          );
+        });
+      } else if (!prevCartItems) {
         // 상품이 없는 경우 빈 배열
         setCarts([]);
         setHasCartItems(false); // 장바구니에 상품이 없음을 표시
       }
     };
     getCart();
-  }, []);
-
-  useEffect(() => {
-    // Dispatch
-    carts.map((item: any) =>
-      dispatch(
-        setQuantity({
-          title: item.title as string,
-          quantity: 1 as number,
-          price: item.price as number,
-        }),
-      ),
-    );
   }, [carts]);
-
-  // 로컬스토리지에 접근하여 장바구니 목록에 접근하는 함수
 
   // new Set 메소드로 중복을 제거하고, 상품의 id만 추출한 배열 선언
   // 추후에, 기존의 carts와 비교(filtering)하여 상품의 개수를 계산
