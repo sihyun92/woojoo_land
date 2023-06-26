@@ -21,8 +21,8 @@ function AdminPage() {
   const isAdmin = async () => {
     const res = await check();
     if (!(res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME)) {
-      navigate("/");
       alert("관리자가 아닙니다.");
+      navigate("/");
     }
   };
 
