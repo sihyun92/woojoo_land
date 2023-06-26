@@ -461,8 +461,8 @@ const DeleteBtn = styled(Button)`
 
 const ItemContainer = styled.div`
   display: flex;
-  overflow: hidden;
   border-radius: 5px;
+  height: 100px;
   background-color: ${theme.colors.gray[2]};
   border: 1px solid ${theme.colors.gray[3]};
 `;

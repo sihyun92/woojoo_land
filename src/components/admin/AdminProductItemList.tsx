@@ -125,10 +125,12 @@ function AdminProductItemList() {
 
 const ItemContainer = styled.div`
   width: 100%;
+  max-height: 500px;
+  /* overflow: hidden; */
   display: grid;
-  gap: 10px 10px;
+  gap: 10px 0;
   flex-wrap: wrap;
-  grid-template-rows: repeat(0, 1fr);
+  grid-template-rows: repeat(0, 6fr);
   grid-template-columns: repeat(0, 1fr);
 `;
 
