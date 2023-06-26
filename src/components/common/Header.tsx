@@ -12,6 +12,7 @@ import {
 } from "react";
 import { check, logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
+import MainSearched from "../main/MainSearched";
 
 interface IMainPageProps {
   username: string;
@@ -30,8 +31,12 @@ function Header({
   clickTagHandler,
   searchHandler,
 }: IMainPageProps) {
-  const [userImg, setUserImg] = useState("");
   const navigate = useNavigate();
+  const [userImg, setUserImg] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const ADMIN_EMAIL = process.env.REACT_APP_EMAIL;
+  const ADMIN_NAME = process.env.REACT_APP_DISPLAY_NAME;
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     getUserInfo();
@@ -41,6 +46,10 @@ function Header({
     const res = await check();
     setUsername(res.displayName);
     setUserImg(res.profileImg);
+
+    if (res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME) {
+      setIsAdmin(true);
+    }
   };
 
   const onLogout = async () => {
@@ -59,34 +68,52 @@ function Header({
   const getSubHeader = () => {
     if (location.pathname === "/") {
       return (
-        <SubHeader
-          clickedTag={clickedTag}
-          clickTagHandler={clickTagHandler}
-          inputText={inputText}
-        />
+        <SubHeader clickedTag={clickedTag} clickTagHandler={clickTagHandler} />
       );
     } else {
       return null;
     }
   };
 
+  // input에 Focus가 해제되면 isFocused에 false를 80ms뒤에 전달
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setIsFocused(false);
+    }, 80);
+  };
+
+  // input에 Focus가 되면 isFocused에 true를 전달
+  const handleInputFocus = () => {
+    setIsFocused(true);
+  };
+
   return (
     <>
       <HeaderContainer>
         <HeaderWrapper>
-          <a href="/">
+          <Logo href="/">
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
-          </a>
+          </Logo>
           <Search>
             <SearchInput
               type="text"
               value={inputText}
               onChange={searchHandler}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
             ></SearchInput>
             <MdSearch />
+            {inputText.length > 0 && isFocused && (
+              <MainSearched inputText={inputText} />
+            )}
           </Search>
           <User>
             <Auth>
+              {isAdmin && (
+                <AdminLink to="/admin">
+                  <h2>관리자 페이지</h2>
+                </AdminLink>
+              )}
               {username ? (
                 <>
                   <h2>{username}</h2>
@@ -146,10 +173,15 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
+const Logo = styled.a`
+  width: 30%;
+`;
+
 const Search = styled.div`
   display: flex;
   position: relative;
-  margin-right: 3.75rem;
+  justify-content: center;
+
   svg {
     color: ${theme.colors.orange.main};
     font-size: 1.75rem;
@@ -176,13 +208,33 @@ const SearchInput = styled.input`
 const User = styled.div`
   flex-direction: column;
   display: flex;
-  width: 8.25rem;
+  width: 30%;
   height: 66px;
 `;
 const Auth = styled.div`
-  justify-content: space-between;
+  justify-content: end;
   color: ${theme.colors.white};
   display: flex;
+  gap: 1.25rem;
+`;
+
+const AdminLink = styled(Link)`
+  display: flex;
+  width: 100px;
+  height: 1.25rem;
+  font-size: 11px;
+  transition: 0.2s;
+  align-items: center;
+  border-radius: 1.25rem;
+  justify-content: center;
+  color: ${(props) => props.theme.colors.orange.main};
+  background-color: ${(props) => props.theme.colors.white};
+
+  &:hover {
+    color: ${(props) => props.theme.colors.white};
+    border: 1px solid ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.orange.main};
+  }
 `;
 
 const LogoutBtn = styled.button`
@@ -195,7 +247,8 @@ const LogoutBtn = styled.button`
 `;
 
 const LinkWrapper = styled.div`
-  justify-content: space-between;
+  gap: 1rem;
+  justify-content: end;
   margin-top: 1.25rem;
   display: flex;
   align-items: center;
