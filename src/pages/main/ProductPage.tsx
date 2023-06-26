@@ -8,8 +8,8 @@ import Button from "../../components/common/Button";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { check } from "../../lib/API/userAPI";
-import { IProduct, IProductLike } from "../../lib/API/adminAPI";
+import { check2 } from "../../lib/API/userAPI";
+import { IProductLike } from "../../lib/API/adminAPI";
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -18,13 +18,17 @@ function ProductPage() {
   const [like, setLike] = useState<boolean>(false);
 
   // 최초 LocalStorage에 접근하여, 찜 목록에 있는 상품의 like 값(true) 지정
+  // 단일 상품 상세 조회
   useEffect(() => {
-    async function getLike() {
+    async function fetchDetail() {
       try {
+        const productRes = await productDetail(id as string);
+        setProduct(productRes);
+
         // 인증
-        const res = await check();
+        const AuthRes = await check2();
         // localStorage 접근
-        const getLikeItem = localStorage.getItem(`like_${res.email}`);
+        const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
         // parse를 위해 배열 선언
         let likeItems: IProductLike[] = [];
 
@@ -37,24 +41,10 @@ function ProductPage() {
         const item = likeItems.find((item) => item.id === id);
 
         // 찜 목록에 있다면 item.like(true), 없다면 false 지정
-        const likeVaue = item ? item.like : false;
+        const like = item ? item.like : false;
 
         // like state 변경
-        setLike(likeVaue as boolean);
-      } catch (error) {
-        console.error(`error: ${error}`);
-      }
-    }
-
-    getLike();
-  }, [id]);
-
-  // 단일 상품 상세 조회
-  useEffect(() => {
-    async function fetchDetail() {
-      try {
-        const res = await productDetail(id as string);
-        setProduct(res);
+        setLike(like as boolean);
       } catch (error) {
         console.error(`error: ${error}`);
       }
