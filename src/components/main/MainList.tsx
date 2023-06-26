@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
 import Carousel from "../common/Carousel";
 import { IProductLike } from "../../lib/API/adminAPI";
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 
 function MainList() {
   const [list, setList] = useState<IProduct[]>([]);
@@ -18,7 +18,7 @@ function MainList() {
         setList(res);
 
         // 찜 목록 조회g
-        const AuthRes = await check2();
+        const AuthRes = await check();
         const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
         let likeItems: IProductLike[] = [];
 

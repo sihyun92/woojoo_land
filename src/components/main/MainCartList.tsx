@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 import { IProduct } from "../../lib/API/adminAPI";
 import MainCartListBtn from "./MainCartListBtn";
 import styled from "styled-components";
@@ -16,7 +16,7 @@ function MainCartList() {
   useEffect(() => {
     const getCart = async () => {
       // 인증 확인
-      const res = await check2();
+      const res = await check();
       // 로컬스토리지에서 장바구니 목록 GET
       const getCartItems = localStorage.getItem(`cart_${res.email}`);
       // 장바구니 내 상품이 있다면
