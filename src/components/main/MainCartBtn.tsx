@@ -1,22 +1,17 @@
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
-import { useEffect } from "react";
 import { check } from "../../lib/API/userAPI";
 
 // 인터페이스 선언
-interface MainCartBtnProps {
+interface ICartBtn {
   quantity: number;
 }
 
-function MainCartBtn({ quantity }: MainCartBtnProps) {
+function MainCartBtn({ quantity }: ICartBtn) {
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getUserInfo();
-  });
 
   const findProduct = async () => {
     // 유효한 prdocut일 경우
@@ -28,10 +23,6 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
       return products;
     }
     return null;
-  };
-
-  const getUserInfo = async () => {
-    const res = await check();
   };
 
   const postCart = async (updatedCarts: IProductEdit[]) => {
@@ -54,6 +45,7 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
   };
 
+  // 장바구니 추가 마우스 이벤트 함수
   const onCart = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
