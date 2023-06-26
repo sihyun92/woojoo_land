@@ -44,11 +44,12 @@ const CartWrapper = styled.div`
 `;
 
 const PurchaseWrapper = styled.div`
-  width: 389px;
-  min-width: 389px;
+  width: 384px;
+  max-width: 384px;
   padding: 2rem 1rem;
   border: 1px solid ${theme.colors.gray[3]};
   margin: 8px 0 0 auto;
+  max-height: 384px;
 `;
 
 export default CartPage;

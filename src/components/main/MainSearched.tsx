@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { IProduct, productsList } from "../../lib/API/adminAPI";
-import MainTaggedCard from "./MainTaggedCard";
+import MainSearchedCard from "./Card/MainSearchedCard";
 
 interface ISearched {
   inputText: string;
@@ -30,7 +30,7 @@ function MainSearched({ inputText }: ISearched) {
     }
     fetchList();
   }, []);
-  return <MainTaggedCard title={title} list={searchedList} />;
+  return <MainSearchedCard title={title} list={searchedList} />;
 }
 
 export default MainSearched;

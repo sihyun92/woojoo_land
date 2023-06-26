@@ -4,16 +4,17 @@ import styled from "styled-components";
 import { TRootState } from "../../modules";
 
 function MainCartOrder() {
-  const cartItem = useSelector((state: TRootState) => state);
+  const cartItem = useSelector((state: TRootState) => state.cartItem);
   return (
     <Container>
       <PaymentPrice>
-        <span className="bold">결제 금액</span>
+        <span>결제 금액</span>
       </PaymentPrice>
       <hr />
       <Calculator>
         <div>
           <span>주문 금액</span>
+          {formatDollar(cartItem.reduce((acc, item) => acc + item.price, 0))}
         </div>
         <div>
           <span>할인 금액</span>
@@ -25,7 +26,10 @@ function MainCartOrder() {
       </Calculator>
       <hr />
       <TotalPrice>
-        <span className="bold">총 결제 금액</span>
+        <span>총 결제 금액</span>
+        {formatDollar(
+          cartItem.reduce((acc, item) => acc + item.price, 0) + 3000,
+        )}
       </TotalPrice>
     </Container>
   );
@@ -33,9 +37,6 @@ function MainCartOrder() {
 
 const Container = styled.div`
   width: 100%;
-  .bold {
-    font-weight: bold;
-  }
 `;
 
 const PaymentPrice = styled.div`
@@ -64,6 +65,8 @@ const Calculator = styled.div`
 const TotalPrice = styled.div`
   margin-top: 2rem;
   font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export default MainCartOrder;

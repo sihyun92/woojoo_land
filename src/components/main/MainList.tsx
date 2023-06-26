@@ -1,43 +1,59 @@
-import MainCommet from "./MainCommet";
+import MainItem from "./MainItem";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
 import Carousel from "../common/Carousel";
+import { IProductLike } from "../../lib/API/adminAPI";
+import { check2 } from "../../lib/API/userAPI";
 
 function MainList() {
   const [list, setList] = useState<IProduct[]>([]);
+  const [likeItems, setLikeItems] = useState<IProductLike[]>([]);
 
   useEffect(() => {
-    async function fetchList() {
+    const fetchList = async () => {
       try {
         //  모든 제품 조회
         const res = await productsList();
         setList(res);
+
+        // 찜 목록 조회g
+        const AuthRes = await check2();
+        const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
+        let likeItems: IProductLike[] = [];
+
+        if (getLikeItem) {
+          likeItems = JSON.parse(getLikeItem);
+        }
+        setLikeItems(likeItems);
       } catch (error) {
         console.error("Failed", error);
       }
-    }
-    if (list.length === 0) {
-      fetchList();
-    }
-  }, [list]);
+    };
+    fetchList();
+  }, []);
 
   return (
     <>
       <Category>🪐 신상 행성 </Category>
       <Container>
         <Carousel>
-          {list.map((item) => (
-            <MainCommet
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              price={item.price}
-              discountRate={item.discountRate}
-              thumbnail={item.thumbnail}
-              tags={item.tags}
-            />
-          ))}
+          {list.map((item) => {
+            const liked = likeItems.find((likeItem) => likeItem.id === item.id);
+            const like = liked ? liked.like : false;
+            return (
+              <MainItem
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                price={item.price}
+                discountRate={item.discountRate}
+                thumbnail={item.thumbnail}
+                tags={item.tags}
+                like={like}
+              />
+            );
+          })}
         </Carousel>
       </Container>
     </>

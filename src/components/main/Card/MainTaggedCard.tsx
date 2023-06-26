@@ -1,19 +1,20 @@
 // Tagged-Components의 공용 컴포넌트
 
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
-import { IProduct } from "../../lib/API/adminAPI";
-import MainCommet from "./MainCommet";
+import { theme } from "../../../styles/theme";
+import { IProduct } from "../../../lib/API/adminAPI";
+import MainCommet from "../MainItem";
 
 interface ITaggedCard {
   title: string;
   list: IProduct[];
 }
 
+// 검색 결과 (list)가 있을 때(length > 0)와 없을 때를 구분하여 조건부 출력
 function MainTaggedCard({ title, list }: ITaggedCard) {
   return (
     <Container>
-      <Title>{list.length > 0 ? title : `👽 ${title}가 없습니다.`}</Title>
+      <Title>{title}</Title>
       <Wrapper>
         {list.map((item) => (
           <MainCommet
@@ -37,6 +38,26 @@ const Title = styled.h1`
   font-size: 3.5rem;
   font-weight: bold;
   color: ${theme.colors.orange.main};
+`;
+
+const NoList = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin-top: 5rem;
+  flex-direction: column;
+`;
+
+const Rank = styled.div`
+  margin-top: 2rem;
+
+  > span {
+    display: inline-block;
+    padding-top: 2rem;
+    border-bottom: 8px solid ${theme.colors.orange.main};
+  }
 `;
 
 const Wrapper = styled.div`

@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type TCartState = {
-  [title: string]: number;
-};
+interface ICartItem {
+  title: string;
+  quantity: number;
+  price: number;
+}
 
-const initialState: TCartState = {};
+type TCartState = ICartItem[];
+
+const initialState: TCartState = [];
 
 const cartSlice = createSlice({
   name: "cart",
@@ -21,7 +25,11 @@ const cartSlice = createSlice({
       }>,
     ) => {
       const { title, quantity, price } = action.payload;
-      state[title] = quantity * price;
+      state.push({
+        title: action.payload.title,
+        quantity: action.payload.quantity,
+        price: action.payload.price,
+      });
     },
   },
 });
