@@ -57,7 +57,14 @@ function RegisterForm() {
     }
   }, [user]);
 
-  return null;
+  return (
+    <AuthForm
+      type="register"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+    />
+  );
 }
 
 export default RegisterForm;

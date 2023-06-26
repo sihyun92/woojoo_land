@@ -10,7 +10,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { check, logout } from "../../lib/API/userAPI";
+import { check2, logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 
 interface IMainPageProps {
@@ -38,7 +38,7 @@ function Header({
   });
 
   const getUserInfo = async () => {
-    const res = await check();
+    const res = await check2();
     setUsername(res.displayName);
     setUserImg(res.profileImg);
   };

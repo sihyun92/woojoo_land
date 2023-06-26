@@ -11,9 +11,9 @@ const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] =
   createRequestActionTypes("user/CHECK");
 
 export const tempSetUser = createAction(TEMP_SET_USER, (user) => user)();
-export const checkUser = createAction(CHECK, () => null)();
+export const check = createAction(CHECK, () => null)();
 
-const actions = { tempSetUser, checkUser };
+const actions = { tempSetUser, check };
 type TUserAction = ActionType<typeof actions>;
 type TUserState = {
   user: null;

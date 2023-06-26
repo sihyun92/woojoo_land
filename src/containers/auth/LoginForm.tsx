@@ -47,9 +47,7 @@ function LoginForm() {
     if (auth) {
       console.log("로그인 성공");
       dispatch(check());
-      navigate("/", {
-        state: { name: localStorage.getItem("username") },
-      });
+      navigate("/");
     }
   }, [auth, authError, navigate, dispatch]);
 
@@ -59,7 +57,14 @@ function LoginForm() {
     }
   }, [navigate, user]);
 
-  return null;
+  return (
+    <AuthForm
+      type="login"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+    />
+  );
 }
 
 export default LoginForm;

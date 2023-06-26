@@ -80,7 +80,7 @@ function ProductPage() {
   // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (item: IProductLike) => {
     // 인증 확인
-    const res = await check();
+    const res = await check2();
     // 일치하는 상품을 get
     const getLikeItem = localStorage.getItem(`like_${res.email}`);
 

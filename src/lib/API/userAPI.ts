@@ -1,4 +1,4 @@
-// import client, { testClient } from "./client";
+import client, { testClient } from "./client";
 
 interface IUserUpdate {
   displayName?: string;
@@ -15,56 +15,52 @@ const headers = {
 };
 
 // 로그인
-// 로그인
-const login = async (email: string, password?: string) => {
-  try {
-    const response = await fetch(
-      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      },
-    );
-    const result = await response.json();
-    localStorage.setItem("Token", result.accessToken);
-    localStorage.setItem("username", result.user.displayName);
-    return result;
-  } catch (e) {
-    console.error(e, "로그인에 실패했습니다!");
-  }
+interface ILogin {
+  email: string;
+  password: string;
+}
+const login = ({ email, password }: ILogin) => {
+  client.post(`/api/auth/login`, { email, password });
 };
 
 // 회원가입
-const register = async (
-  email: string,
-  password: string,
-  displayName: string,
-  profileImgBase64: string,
-) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        email,
-        password,
-        displayName,
-        profileImgBase64,
-      }),
-    },
+interface IRegister {
+  email: string;
+  password: string;
+  displayName: string;
+  profileImgBase64: string;
+}
+const register = ({
+  email,
+  displayName,
+  password,
+  profileImgBase64,
+}: IRegister) => {
+  client.post("/api/auth/signup", {
+    email,
+    password,
+    displayName,
+    profileImgBase64,
+  });
+  console.log(
+    client.post("/api/auth/signup", {
+      email,
+      password,
+      displayName,
+      profileImgBase64,
+    }),
   );
-  const result = await response.json();
-  console.log(result);
-  return result;
 };
 
 // 인증확인
-const check = async () => {
+const check = () => {
+  testClient.post(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+  );
+};
+
+// 인증확인(fetch)
+const check2 = async () => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
     {
@@ -79,7 +75,6 @@ const check = async () => {
   console.log(result);
   return result;
 };
-
 
 // 로그아웃
 const logout = async () => {
@@ -280,6 +275,7 @@ export {
   login,
   register,
   check,
+  check2,
   logout,
   userUpdate,
   accountList,
