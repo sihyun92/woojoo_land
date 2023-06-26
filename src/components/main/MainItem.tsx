@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { IProduct } from "../../lib/API/adminAPI";
 import { Link } from "react-router-dom";
 import { formatDollar } from "../../lib/Function/commonFn";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IProductLike } from "../../lib/API/adminAPI";
 
-function MainCommet(props: IProduct) {
+function MainCommet(props: IProductLike) {
+  const like = props.like;
+
   const formatUnit = (tags: string[]) => {
     if (tags) {
       if (tags.includes("태양계") || tags.includes("사건의지평선")) {
@@ -24,8 +27,9 @@ function MainCommet(props: IProduct) {
     <>
       <Link to={`/product/${props.id}`}>
         <Container>
-          <Commet>
+          <Commet selected={like as boolean}>
             <img src={props.thumbnail} alt="Thumbnail" />
+            {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
           </Commet>
           <Desc>
             <Title>{props.title}</Title>
@@ -47,7 +51,9 @@ const Container = styled.div`
   width: 288px;
 `;
 
-const Commet = styled.div`
+const Commet = styled.div<{
+  selected: boolean;
+}>`
   width: 288px;
   height: 288px;
   display: flex;
@@ -61,13 +67,22 @@ const Commet = styled.div`
     right: 0.5rem;
     bottom: 0.5rem;
     position: absolute;
-    font-size: 1.25rem;
+    font-size: 20px;
     color: ${theme.colors.white};
   }
+
   > img {
     width: 288px;
     border-radius: 20px;
   }
+
+  ${(props) =>
+    props.selected &&
+    css`
+      > svg {
+        color: ${theme.colors.pink};
+      }
+    `}
 `;
 
 const Desc = styled.div`
