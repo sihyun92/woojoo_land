@@ -34,7 +34,7 @@ export const register = createAction(
     profileImgBase64,
   }),
 )();
-export const login = createAction(REGISTER, ({ email, password }) => ({
+export const login = createAction(LOGIN, ({ email, password }) => ({
   email,
   password,
 }))();

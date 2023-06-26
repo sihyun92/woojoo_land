@@ -8,7 +8,7 @@ import Button from "../../components/common/Button";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 import { IProduct, IProductLike } from "../../lib/API/adminAPI";
 
 function ProductPage() {
@@ -22,7 +22,7 @@ function ProductPage() {
     async function getLike() {
       try {
         // 인증
-        const res = await check2();
+        const res = await check();
         // localStorage 접근
         const getLikeItem = localStorage.getItem(`like_${res.email}`);
         // parse를 위해 배열 선언
@@ -90,7 +90,7 @@ function ProductPage() {
   // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (item: IProductLike) => {
     // 인증 확인
-    const res = await check2();
+    const res = await check();
     // 일치하는 상품을 get
     const getLikeItem = localStorage.getItem(`like_${res.email}`);
 
