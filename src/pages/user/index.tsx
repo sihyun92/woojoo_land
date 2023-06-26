@@ -3,7 +3,7 @@ import UserNav from "../../components/user/UserNav";
 import OrderListPage from "./OrderListPage";
 import UserLayout from "../../components/user/UserLayout";
 import styled from "styled-components";
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 import { useEffect, useState } from "react";
 
 function UserPage() {
@@ -26,7 +26,7 @@ function UserPage() {
 
   // 유저 인증함수. 유효한 유저가 아니면 state에 false를 반환
   const checkUser = async () => {
-    const res = await check2();
+    const res = await check();
     if (typeof res === "string") {
       setIsChecked(false);
     }

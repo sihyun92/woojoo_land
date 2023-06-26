@@ -45,6 +45,7 @@ function App() {
 
   useEffect(() => {
     localStorage.getItem("username");
+    console.log(localStorage.getItem("username"));
   }, []);
 
   // Tag 선택 여부 관리
