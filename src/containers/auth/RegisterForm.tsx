@@ -2,7 +2,7 @@ import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/auth/AuthForm";
 import { changeField, initializeForm, register } from "../../modules/auth";
-import { check } from "../../modules/user";
+import { check } from "../../lib/API/userAPI";
 
 function RegisterForm() {
   // hooks
@@ -46,7 +46,7 @@ function RegisterForm() {
     }
     if (auth) {
       console.log("회원가입 성공!", auth);
-      dispatch(check());
+      // dispatch(check());
     }
   }, [auth, authError, dispatch]);
 

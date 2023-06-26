@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthForm from "../../components/auth/AuthForm";
 import { TRootState } from "../../modules";
 import { changeField, initializeForm, login } from "../../modules/auth";
-import { check } from "../../modules/user";
+import { check } from "../../lib/API/userAPI";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -46,8 +46,10 @@ function LoginForm() {
     }
     if (auth) {
       console.log("로그인 성공");
-      dispatch(check());
-      navigate("/");
+      // dispatch(check());
+      navigate("/", {
+        state: { name: localStorage.getItem("username") },
+      });
     }
   }, [auth, authError, navigate, dispatch]);
 
