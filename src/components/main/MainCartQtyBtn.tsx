@@ -20,7 +20,7 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
   const dispatch = useDispatch();
 
   // props로 받은 수량을 state에 저장 및 관리
-  let [itemQty, setItemQty] = useState<number>(quantity | 0);
+  let [itemQty, setItemQty] = useState<number>(quantity);
 
   // 최초 렌더링 시, 장바구니 내 상품들의 Id-수량을 dispatch
   useEffect(() => {
@@ -35,11 +35,6 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
     };
     fetchItem();
   }, []);
-
-  const test = useSelector((state: TRootState) => state.cartItem);
-  console.log(test);
-  // const sat = test["토성"];
-  // console.log(sat)
 
   // 단일 제품 상세 조회 함수
   const findProduct = async () => {
@@ -116,9 +111,6 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
     const item = await findProduct();
     if (item && title && price) {
       postCart(item);
-      dispatch(
-        setQuantity({ title: title, quantity: itemQty + 1, price: price }),
-      );
     }
   };
 
@@ -129,9 +121,6 @@ function MainQtyButton({ id, quantity, price, title }: ICartQtyBtnProps) {
     const item = await findProduct();
     if (id && title && price) {
       removeCart(id);
-      dispatch(
-        setQuantity({ title: title, quantity: itemQty - 1, price: price }),
-      );
     }
   };
 
