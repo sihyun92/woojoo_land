@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MainTaggedCard from "../../../components/main/MainTaggedCard";
+import MainTaggedCard from "../../../components/main/Card/MainTaggedCard";
 import { IProduct, productsList } from "../../../lib/API/adminAPI";
 
 function SuitPage() {
