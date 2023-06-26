@@ -15,17 +15,12 @@ const tags = [
 
 interface ISubHeaderProps {
   clickedTag: string;
-  inputText: string;
   clickTagHandler: (tag: string) => void;
 }
 
 // Tag 컴포넌트의 selected에 선택 여부를 boolean으로 전달
 // 태그가 선택됐거나, 검색창에 검색어를 입력 시, Banner를 출력하지 않는다.
-function SubHeader({
-  clickedTag,
-  clickTagHandler,
-  inputText,
-}: ISubHeaderProps) {
+function SubHeader({ clickedTag, clickTagHandler }: ISubHeaderProps) {
   return (
     <>
       <TagContainer>
@@ -41,7 +36,7 @@ function SubHeader({
           ))}
         </TagWrapper>
       </TagContainer>
-      {clickedTag.length > 0 || inputText.length > 0 ? "" : <Banner />}
+      {clickedTag.length > 0 ? "" : <Banner />}
     </>
   );
 }
