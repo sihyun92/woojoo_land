@@ -5,7 +5,6 @@ import styled from "styled-components";
 // common
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
-import Loading from "./components/common/Loading";
 
 // admin
 import AdminPage from "./pages/admin/AdminPage";
@@ -35,7 +34,6 @@ import FoodPage from "./pages/main/tagged/FoodPage";
 import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
 import HorizonPage from "./pages/main/tagged/HorizonPage";
-import MainSearched from "./components/main/MainSearched";
 import DashboardPage from "./pages/admin/DashboardPage";
 
 function App() {
@@ -91,8 +89,6 @@ function App() {
                   <ShipPage />
                 ) : clickedTag === "#사건의 지평선" ? (
                   <HorizonPage />
-                ) : inputText.length > 0 ? (
-                  <MainSearched inputText={inputText} />
                 ) : (
                   <MainPage />
                 )
