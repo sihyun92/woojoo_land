@@ -26,7 +26,7 @@ import SettingPage from "./pages/user/SettingPage";
 import MainPage from "./pages/main/MainPage";
 import ProductPage from "./pages/main/ProductPage";
 import CartPage from "./pages/main/CartPage";
-// import PaymentPage from "./pages/main/PaymentPage";
+import PaymentPage from "./pages/main/PaymentPage";
 import AllPage from "./pages/main/tagged/AllPage";
 import SolarPage from "./pages/main/tagged/SolarPage";
 import StationPage from "./pages/main/tagged/StationPage";
@@ -97,7 +97,7 @@ function App() {
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
-            {/* <Route path="/payment" element={<PaymentPage />} /> */}
+            <Route path="/payment" element={<PaymentPage />} />
 
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />}>
