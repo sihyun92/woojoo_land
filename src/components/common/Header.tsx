@@ -91,9 +91,9 @@ function Header({
     <>
       <HeaderContainer>
         <HeaderWrapper>
-          <Logo href="/">
+          <Link to="/">
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
-          </Logo>
+          </Link>
           <Search>
             <SearchInput
               type="text"

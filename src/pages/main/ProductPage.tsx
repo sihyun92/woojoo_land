@@ -10,6 +10,7 @@ import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { check } from "../../lib/API/userAPI";
 import { IProductLike } from "../../lib/API/adminAPI";
+import MainBuyBtn from "../../components/main/MainBuyBtn";
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -131,7 +132,7 @@ function ProductPage() {
           </PriceAll>
           <ButtonWrapper>
             <MainCartBtn quantity={quantity} />
-            <Button orange="true">구매하기</Button>
+            <MainBuyBtn quantity={quantity} />
           </ButtonWrapper>
         </PurchaseWrapper>
       </DetailWrapper>

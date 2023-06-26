@@ -7,9 +7,9 @@ import {
 } from "react";
 import GrayInput from "../common/GrayInput";
 import UserTitle from "./UserTitle";
-import { check } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import Button from "../common/Button";
+import { check } from "../../lib/API/userAPI";
 
 interface ISettingProps {
   setIsChecked: Dispatch<SetStateAction<boolean>>;
