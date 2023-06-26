@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
   body {
+    font-family: 'NanumSquare', sans-serif;
     line-height: 1;
   }
   ol, ul {
@@ -85,7 +86,8 @@ const GlobalStyle = createGlobalStyle`
           url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff') format('woff'),
           url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.ttf') format("truetype");
       font-display: swap;
-  } 
+  }
+  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css); 
 `;
 
 export default GlobalStyle;
