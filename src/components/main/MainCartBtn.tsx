@@ -1,10 +1,8 @@
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
-import { check } from "../../modules/user";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { check2 } from "../../lib/API/userAPI";
+import { check } from "../../lib/API/userAPI";
 
 // 인터페이스 선언
 interface MainCartBtnProps {
@@ -15,7 +13,6 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getUserInfo();
@@ -33,14 +30,14 @@ function MainCartBtn({ quantity }: MainCartBtnProps) {
     return null;
   };
 
-  const getUserInfo = () => {
-    dispatch(check());
+  const getUserInfo = async () => {
+    const res = await check();
   };
 
   const postCart = async (updatedCarts: IProductEdit[]) => {
     // 인증 확인
     // 기존의 로컬 스토리지에 저장된 product get
-    const res = await check2();
+    const res = await check();
     const getCartItems = localStorage.getItem(`cart_${res.email}`);
     let cartItems: IProductEdit[] = [];
 

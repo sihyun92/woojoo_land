@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { FormEvent, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import GlobalStyle from "../../styles/GlobalStyle";
 import AdminModalTemplate from "./AdminModalTemplate";
 import { formatDollar } from "../../lib/Function/commonFn";
 import { productDel, productEdit } from "../../lib/API/adminAPI";
@@ -29,22 +28,30 @@ function AdminProductItem(props: IProduct) {
   const [PhotoImg, setPhotoImg] = useState("");
   const [ThumbnailFile, setThumbnailFile] = useState(null); //제품 썸네일 파일명 상태
   const [PhotoFile, setPhotoFile] = useState(null); //상세 이미지 썸네일 파일명 상태
+  const [thisProduct, setThisProduct] = useState<IProduct | null>(null);
 
   //모달 요청 setModalOpen()에 true 값을 보낸다.
-  const editModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const editModal = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    props: IProduct,
+  ) => {
     event.preventDefault();
     setModalOpen(true);
+    setThisProduct(props);
   };
 
-  const [put, setPut] = useState()
+  const [put, setPut] = useState();
 
   // 제품 삭제 함수
-  const onDelete = async (event: React.MouseEvent<HTMLButtonElement>, ID: string,) => {
-    if(window.confirm('삭제하시겠습니까?')){
+  const onDelete = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    ID: string,
+  ) => {
+    if (window.confirm("삭제하시겠습니까?")) {
       event.preventDefault();
-      await productDel(ID)
+      await productDel(ID);
       console.log("제품 삭제 완료");
-      setPut(props.onclick)
+      setPut(props.onclick);
     }
   };
 
@@ -78,7 +85,7 @@ function AdminProductItem(props: IProduct) {
     // 가격 입력란에 숫자가 아닌 값을 입력하면 0을 반환
     let updatedValue: string | number = value;
     if (name === "price") {
-      updatedValue = value === "" || isNaN(Number(value)) ? 0 : Number(value);
+      updatedValue = value === "" || isNaN(Number(value)) ? "" : Number(value);
     }
 
     // id는 개별 state에 저장
@@ -107,7 +114,7 @@ function AdminProductItem(props: IProduct) {
     tags: [],
     price: 0,
     title: "",
-    isSoldOut: 0,
+    isSoldOut: false,
     discountRate: 0,
     description: "",
     photoBase64: "",
@@ -124,7 +131,7 @@ function AdminProductItem(props: IProduct) {
       tags: [],
       price: 0,
       title: "",
-      isSoldOut: 0,
+      isSoldOut: false,
       discountRate: 0,
       description: "",
       photoBase64: "",
@@ -132,7 +139,7 @@ function AdminProductItem(props: IProduct) {
     });
     //창 닫기 요청
     setModalOpen(false);
-    setPut(props.onclick)
+    setPut(props.onclick);
   };
 
   //모달 창 닫기 기능
@@ -167,11 +174,16 @@ function AdminProductItem(props: IProduct) {
         <ProductId>{props.id}</ProductId>
         <ProductPrice>{formatDollar(props.price)}</ProductPrice>
         <ProductTags>{props.tags}</ProductTags>
-        <ProductIsSoldOut>{props.isSoldOut}</ProductIsSoldOut>
+        <ProductIsSoldOut>{props.isSoldOut ? "X" : "O"}</ProductIsSoldOut>
         <ProductDiscountRate>{props.discountRate}</ProductDiscountRate>
       </ItemBox>
       <BtnBox>
-        <EditBtn onClick={editModal} adminedit>
+        <EditBtn
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            editModal(event, props);
+          }}
+          adminedit
+        >
           수정
         </EditBtn>
         <DeleteBtn
@@ -184,10 +196,9 @@ function AdminProductItem(props: IProduct) {
         </DeleteBtn>
       </BtnBox>
       <>
-        {modalOpen && (
+        {modalOpen && thisProduct && (
           <AdminModalTemplate>
             <ModalAdd>
-              <GlobalStyle />
               <ModalClose type="button" onClick={ModalBoxCloses}>
                 <AiOutlineClose size="1.2rem" />
               </ModalClose>
@@ -237,7 +248,7 @@ function AdminProductItem(props: IProduct) {
                       required
                       type="text"
                       name="title"
-                      placeholder="제품명을 수정해주세요"
+                      placeholder={thisProduct.title}
                       onChange={onChange}
                       value={updateform.title}
                     />
@@ -248,8 +259,9 @@ function AdminProductItem(props: IProduct) {
                       required
                       type="text"
                       name="price"
+                      placeholder={thisProduct.price.toString()}
                       onChange={onChange}
-                      value={updateform.price}
+                      value={updateform.price !== 0 ? updateform.price : ""}
                     />
                   </PriceInput>
                   <DescriptionInput>
@@ -258,7 +270,7 @@ function AdminProductItem(props: IProduct) {
                       required
                       name="description"
                       onChange={onChange}
-                      placeholder="제품 상세 설명을 수정해주세요"
+                      placeholder={thisProduct.description}
                       value={updateform.description}
                     />
                   </DescriptionInput>
@@ -268,7 +280,7 @@ function AdminProductItem(props: IProduct) {
                       required
                       type="text"
                       name="tags"
-                      placeholder="쉼표를 사용하여 태그를 수정해주세요"
+                      placeholder={thisProduct.tags.join(", ")}
                       onChange={(e) => {
                         onChange(e);
                         onChangeTags(e);
@@ -276,26 +288,20 @@ function AdminProductItem(props: IProduct) {
                       value={updateform.tags}
                     />
                   </TagsInput>
-                  <IsSoldOutInput>
-                    <div>재고 수량</div>
-                    <input
-                      required
-                      type="text"
-                      name="isSoldOut"
-                      placeholder="재고"
-                      onChange={onChange}
-                      value={updateform.isSoldOut}
-                    />
-                  </IsSoldOutInput>
+
                   <DiscountRateInput>
                     <div>할인율</div>
                     <input
                       required
                       type="text"
                       name="discountRate"
-                      placeholder="할인율"
+                      placeholder={thisProduct.discountRate.toString()}
                       onChange={onChange}
-                      value={updateform.discountRate}
+                      value={
+                        updateform.discountRate !== 0
+                          ? updateform.discountRate
+                          : ""
+                      }
                     />
                   </DiscountRateInput>
                   <ItemAddBtn adminadd type="submit">
@@ -398,7 +404,6 @@ const DescriptionInput = styled.div`
   }
 `;
 const TagsInput = styled.li``;
-const IsSoldOutInput = styled.li``;
 const DiscountRateInput = styled.li``;
 
 const ItemAddBtn = styled(Button)`
