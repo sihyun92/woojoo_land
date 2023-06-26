@@ -1,13 +1,19 @@
+import { Dispatch, SetStateAction } from "react";
 import AuthTemplate from "../../components/auth/AuthTemplate";
-import LoginForm from "../../containers/auth/LoginForm";
+import AuthForm from "../../components/auth/AuthForm";
+
+// interface
+interface ILoginPageProps {
+  setUsername: Dispatch<SetStateAction<string>>;
+}
 
 // component
-function LoginPage() {
+function LoginPage({ setUsername }: ILoginPageProps) {
   // render
   return (
     <>
       <AuthTemplate>
-        <LoginForm />
+        <AuthForm type="login" setUsername={setUsername} />
       </AuthTemplate>
     </>
   );

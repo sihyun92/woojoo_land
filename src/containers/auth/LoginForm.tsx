@@ -58,12 +58,13 @@ function LoginForm() {
   }, [navigate, user]);
 
   return (
-    <AuthForm
-      type="login"
-      form={form}
-      onChange={onChange}
-      onSubmit={onSubmit}
-    />
+    // <AuthForm
+    //   type="login"
+    //   form={form}
+    //   onChange={onChange}
+    //   onSubmit={onSubmit}
+    // />
+    null
   );
 }
 
