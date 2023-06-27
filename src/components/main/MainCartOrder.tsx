@@ -4,14 +4,17 @@ import styled from "styled-components";
 import { TRootState } from "../../modules";
 import Button from "../common/Button";
 import { theme } from "../../styles/theme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MainCartOrder() {
+  const navigate = useNavigate();
   const cartItem = useSelector((state: TRootState) => state.cartItem);
   const orderPrice = cartItem.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
+
+  const onPurchase = () => [navigate("/payment")];
 
   const totalPrice = orderPrice + 3000;
 
@@ -42,8 +45,8 @@ function MainCartOrder() {
         </TotalPrice>
       </OrderWrapper>
       <ButtonWrapper>
-        <Button orange="true">
-          <Link to="/payment">주문하기</Link>
+        <Button orange="true" onClick={onPurchase}>
+          주문하기
         </Button>
       </ButtonWrapper>
     </Container>
