@@ -25,10 +25,11 @@ function MainBuyBtn({ quantity }: IBuyBtn) {
   const postBuy = async (item: IProduct) => {
     dispatch(
       payment({
+        productId: item.id as string,
         title: item.title as string,
         quantity: quantity,
         price: item.price,
-        discountRate: item.discountRate,
+        discountRate: item.discountRate as number,
       }),
     );
   };
