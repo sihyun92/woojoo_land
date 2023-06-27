@@ -47,9 +47,9 @@ function Header({
     setUsername(res.displayName);
     setUserImg(res.profileImg);
 
-    if (res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME) {
-      setIsAdmin(true);
-    }
+    res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME
+      ? setIsAdmin(true)
+      : setIsAdmin(false);
   };
 
   const onLogout = async () => {
@@ -91,9 +91,9 @@ function Header({
     <>
       <HeaderContainer>
         <HeaderWrapper>
-          <Link to="/">
+          <Logo to="/">
             <img src="/images/Logo.svg" alt="우주부동산" width={250} />
-          </Link>
+          </Logo>
           <Search>
             <SearchInput
               type="text"
@@ -173,7 +173,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   width: 30%;
 `;
 
