@@ -79,7 +79,7 @@ function Header({
   const handleInputBlur = () => {
     setTimeout(() => {
       setIsFocused(false);
-    }, 80);
+    }, 150);
   };
 
   // input에 Focus가 되면 isFocused에 true를 전달

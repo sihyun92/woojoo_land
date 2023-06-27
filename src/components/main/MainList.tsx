@@ -17,7 +17,7 @@ function MainList() {
         const res = await productsList();
         setList(res);
 
-        // 찜 목록 조회g
+        // 찜 목록 조회
         const AuthRes = await check();
         const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
         let likeItems: IProductLike[] = [];

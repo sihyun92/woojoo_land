@@ -1,30 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IPayment {
-  title?: string;
-  quantity?: number;
-  price?: number;
-  discountRate?: number;
+  productId: string;
+  title: string;
+  quantity: number;
+  price: number;
+  discountRate: number;
 }
 
-type TPaymentState = IPayment;
+type TPaymentState = IPayment[];
 
-const initialState: TPaymentState = {
-  title: "test",
-};
+const initialState: TPaymentState = [];
 
 const paymentSlice = createSlice({
   name: "payment",
   initialState,
   reducers: {
     payment: (state, action: PayloadAction<IPayment>) => {
-      const { title, quantity, price, discountRate } = action.payload;
-      return {
+      const { title, quantity, price, discountRate, productId } =
+        action.payload;
+      state.push({
+        productId,
         title,
         quantity,
         price,
         discountRate,
-      };
+      });
     },
   },
 });

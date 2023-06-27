@@ -4,7 +4,6 @@ import { productDetail, IProductDetail } from "../../lib/API/commonAPI";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { formatDollar } from "../../lib/Function/commonFn";
-import Button from "../../components/common/Button";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";

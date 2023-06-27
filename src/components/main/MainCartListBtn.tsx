@@ -14,6 +14,7 @@ interface ICartListBtnProps {
   price: number;
   title?: string;
   setIsDeleted: Dispatch<SetStateAction<boolean>>;
+  discountRate?: number;
 }
 
 function MainCartListBtn({
@@ -22,12 +23,33 @@ function MainCartListBtn({
   price,
   title,
   setIsDeleted,
+  discountRate,
 }: ICartListBtnProps) {
   // dispatch 선언
   const dispatch = useDispatch();
 
   // props로 받은 수량을 state에 저장 및 관리
-  let [itemQty, setItemQty] = useState<number>(quantity | 0);
+  let [itemQty, setItemQty] = useState<number>(quantity);
+
+  // 최초 렌더링 시, 장바구니 내 상품들의 Id-수량을 dispatch
+  useEffect(() => {
+    const fetchItem = async () => {
+      const item = await findProduct();
+
+      if (item && title && price && discountRate && id) {
+        dispatch(
+          setQuantity({
+            productId: id,
+            title: title,
+            quantity: itemQty,
+            price: price,
+            discountRate: discountRate,
+          }),
+        );
+      }
+    };
+    fetchItem();
+  }, [itemQty]);
 
   // 단일 제품 상세 조회 함수
   const findProduct = async () => {
@@ -127,20 +149,32 @@ function MainCartListBtn({
   // 구매 수량 증가 (increase product)
   const onIncrease = async () => {
     const item = await findProduct();
-    if (item && title && price) {
+    if (item && title && price && id) {
       increaseItem(item);
       dispatch(
-        setQuantity({ title: title, quantity: itemQty + 1, price: price }),
+        setQuantity({
+          productId: id,
+          title: title,
+          quantity: itemQty + 1,
+          price: price,
+          discountRate: discountRate as number,
+        }),
       );
     }
   };
 
   // 구매 수량 감소 (decrease product)
   const onDecrease = async () => {
-    if (id && title && price) {
+    if (id && title && price && id) {
       decreaseItem(id);
       dispatch(
-        setQuantity({ title: title, quantity: itemQty - 1, price: price }),
+        setQuantity({
+          productId: id,
+          title: title,
+          quantity: itemQty - 1,
+          price: price,
+          discountRate: discountRate as number,
+        }),
       );
     }
   };
