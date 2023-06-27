@@ -4,9 +4,13 @@ import styled from "styled-components";
 import { TRootState } from "../../modules";
 import Button from "../common/Button";
 import { theme } from "../../styles/theme";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function MainCartOrder() {
+interface IChecked {
+  isChecked: boolean;
+}
+
+function MainCartOrder({ isChecked }: IChecked) {
   const cartItem = useSelector((state: TRootState) => state.cartItem);
   const orderPrice = cartItem.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -14,6 +18,11 @@ function MainCartOrder() {
   );
 
   const totalPrice = orderPrice + 3000;
+  const navigate = useNavigate();
+  const onClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    navigate("/payment");
+  };
 
   return (
     <Container>
@@ -42,8 +51,8 @@ function MainCartOrder() {
         </TotalPrice>
       </OrderWrapper>
       <ButtonWrapper>
-        <Button orange="true">
-          <Link to="/payment">주문하기</Link>
+        <Button orange="true" disabled={isChecked} onClick={onClick}>
+          주문하기
         </Button>
       </ButtonWrapper>
     </Container>
