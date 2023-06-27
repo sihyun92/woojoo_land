@@ -24,17 +24,19 @@ function SubHeader({ clickedTag, clickTagHandler }: ISubHeaderProps) {
   return (
     <>
       <TagContainer>
-        <TagWrapper>
-          {tags.map((value) => (
-            <Tag
-              key={value.key}
-              selected={value.tag === clickedTag}
-              onClick={() => clickTagHandler(value.tag)}
-            >
-              {value.tag}
-            </Tag>
-          ))}
-        </TagWrapper>
+        <TagBG>
+          <TagWrapper>
+            {tags.map((value) => (
+              <Tag
+                key={value.key}
+                selected={value.tag === clickedTag}
+                onClick={() => clickTagHandler(value.tag)}
+              >
+                {value.tag}
+              </Tag>
+            ))}
+          </TagWrapper>
+        </TagBG>
       </TagContainer>
       {clickedTag.length > 0 ? "" : <Banner />}
     </>
@@ -46,7 +48,20 @@ const TagContainer = styled.div`
   display: flex;
   height: 7.5rem;
   justify-content: center;
-  background-color: ${theme.colors.orange.main};
+  background: linear-gradient(
+    ${theme.colors.orange.main},
+    ${theme.colors.orange.linear}
+  );
+`;
+
+const TagBG = styled.div`
+  width: 100%;
+  display: flex;
+  background-size: auto;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-image: url("/images/TagMenuImage.svg");
 `;
 
 const TagWrapper = styled.div`
@@ -55,7 +70,6 @@ const TagWrapper = styled.div`
   max-width: 1088px;
   align-items: center;
   justify-content: space-between;
-
   > div {
   }
 `;
