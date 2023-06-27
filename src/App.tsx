@@ -97,7 +97,12 @@ function App() {
             <Route path="/product" element={<ProductPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
+            <Route
+              path="/payment"
+              element={
+                <PaymentPage username={username} setUsername={setUsername} />
+              }
+            />
 
             {/* 관리자 페이지 */}
             <Route path="/admin" element={<AdminPage />}>
