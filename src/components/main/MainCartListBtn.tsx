@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { check } from "../../lib/API/userAPI";
@@ -13,9 +13,16 @@ interface ICartListBtnProps {
   quantity: number;
   price: number;
   title?: string;
+  setIsDeleted: Dispatch<SetStateAction<boolean>>;
 }
 
-function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
+function MainCartListBtn({
+  id,
+  quantity,
+  price,
+  title,
+  setIsDeleted,
+}: ICartListBtnProps) {
   // dispatch 선언
   const dispatch = useDispatch();
 
@@ -110,6 +117,7 @@ function MainCartListBtn({ id, quantity, price, title }: ICartListBtnProps) {
       if (itemQty > 0) {
         cartItems = cartItems.filter((item) => item.id !== id);
         alert("상품이 삭제되었습니다.");
+        setIsDeleted(true);
       }
     }
     // localStorage에 저장(set)
