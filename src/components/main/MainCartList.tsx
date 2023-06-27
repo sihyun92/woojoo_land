@@ -46,13 +46,20 @@ function MainCartList() {
         // 수량에 맞게 state에 dispatch
         Object.entries(amount).forEach(([title, quantity]) => {
           // [key, value] - [title, quantity]
-          dispatch(
-            setQuantity({
-              title: title as string,
-              quantity: quantity,
-              price: cartItems.find((item) => item.title === title)?.price || 0,
-            }),
-          );
+          const cartItem = cartItems.find((item) => item.title === title);
+          if (cartItem) {
+            const { id, price } = cartItem;
+            dispatch(
+              setQuantity({
+                productId: id as string,
+                title: title as string,
+                quantity: quantity,
+                price:
+                  cartItems.find((item) => item.title === title)?.price || 0,
+                discountRate: 0,
+              }),
+            );
+          }
         });
       } else if (!prevCartItems) {
         // 상품이 없는 경우 빈 배열
@@ -78,7 +85,7 @@ function MainCartList() {
             const cart = sortedCart[0];
 
             return (
-              <li key={index}>
+              <li key={id}>
                 <input type="checkbox" />
                 <img src={cart.thumbnail} alt="Thumbnail" width="100px" />
                 <Title>{cart.title} 특별 분양</Title>

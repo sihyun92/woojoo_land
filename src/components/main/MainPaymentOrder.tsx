@@ -1,22 +1,22 @@
-import { useSelector } from "react-redux";
 import { formatDollar } from "../../lib/Function/commonFn";
 import styled from "styled-components";
-import { TRootState } from "../../modules";
 import Button from "../common/Button";
 import { theme } from "../../styles/theme";
-import { Link, useNavigate } from "react-router-dom";
+import { orderApply } from "../../lib/API/userAPI";
 
-function MainCartOrder() {
-  const navigate = useNavigate();
-  const cartItem = useSelector((state: TRootState) => state.cartItem);
-  const orderPrice = cartItem.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
+interface IPaymentOrder {
+  price: number;
+  productId: string[];
+  accountId: string;
+}
 
-  const onPurchase = () => [navigate("/payment")];
-
-  const totalPrice = orderPrice + 3000;
+function MainPaymentOrder({ price, productId, accountId }: IPaymentOrder) {
+  const onPayment = () => {
+    console.log(productId, accountId);
+    for (let i = 0; i < productId.length; i++) {
+      orderApply(productId[i], accountId);
+    }
+  };
 
   return (
     <Container>
@@ -28,7 +28,7 @@ function MainCartOrder() {
         <Calculator>
           <div>
             <span>주문 금액</span>
-            {formatDollar(orderPrice)}
+            {formatDollar(price)}
           </div>
           <div>
             <span>할인 금액</span>
@@ -41,12 +41,12 @@ function MainCartOrder() {
         <hr />
         <TotalPrice>
           <span>총 결제 금액</span>
-          {formatDollar(totalPrice)}
+          {formatDollar(price + 3000)}
         </TotalPrice>
       </OrderWrapper>
       <ButtonWrapper>
-        <Button orange="true" onClick={onPurchase}>
-          주문하기
+        <Button orange="true" onClick={onPayment}>
+          결제하기
         </Button>
       </ButtonWrapper>
     </Container>
@@ -54,7 +54,10 @@ function MainCartOrder() {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: 384px;
+  max-width: 384px;
+  margin: 8px 0px 0px auto;
+  max-height: 384px;
 `;
 
 const OrderWrapper = styled.div`
@@ -102,4 +105,4 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default MainCartOrder;
+export default MainPaymentOrder;

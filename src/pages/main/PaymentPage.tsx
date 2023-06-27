@@ -1,62 +1,148 @@
 // CartPage(장바구니)에서 구매하기 버튼을 누르면 장바구니에 담긴 제품(들)만 렌더링
 // ProductPage(상세페이지)에서 구매하기 버튼을 누르면, 해당 상품만 렌더링
-
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { useSelector } from "react-redux";
 import { TRootState } from "../../modules";
+import { formatDollar } from "../../lib/Function/commonFn";
+import MainPaymentOrder from "../../components/main/MainPaymentOrder";
+import { check, myAccount } from "../../lib/API/userAPI";
+interface IPaymentProps {
+  username: string;
+  setUsername: Dispatch<SetStateAction<string>>;
+}
 
-function PaymentPage() {
+interface IBank {
+  id: string; // 계좌 ID
+  bankName: string; // 은행 이름
+  bankCode: string; // 은행 코드
+  accountNumber: string; // 계좌 번호
+  balance: number; // 계좌 잔액
+}
+
+interface IAccounts {
+  totalBalance: number;
+  accounts: IBank[];
+}
+
+function PaymentPage({ username, setUsername }: IPaymentProps) {
+  const [userEmail, setUserEmail] = useState("");
+  const [myAccounts, setMyAccounts] = useState<IAccounts>();
+  const [productId, setProductId] = useState<string[]>([]);
+  const [accountId, setAccountId] = useState("");
+
   const buyItem = useSelector((state: TRootState) => state.payment);
   const cartItem = useSelector((state: TRootState) => state.cartItem);
+  const items = buyItem.concat(cartItem);
 
-  // 단독 구매 상품이 존재할 때와 그렇지 않을 때 조건화
-  const buyItemQty = buyItem.quantity ? buyItem.quantity : 0;
-  const cartItemQty = cartItem.length ? cartItem.length : 0;
-  const totalQty = buyItemQty || cartItem.length;
+  const title = items.length > 0 ? items[0].title : "";
+  const quantity = items.reduce(
+    (acc, cur) => (acc + cur.quantity) as number,
+    0,
+  );
 
-  const buyItemTitle = buyItem.title ? buyItem.title : "";
-  const cartItemTitle = cartItem[0].title ? cartItem[0].title : "";
-  const title = cartItemTitle || buyItemTitle;
+  const price = items.reduce(
+    (acc, cur) => (acc + cur.price * cur.quantity) as number,
+    0,
+  );
+
+  useEffect(() => {
+    getUserInfo();
+    getUsableAccounts();
+
+    items.map((item) => productId.push(item.productId));
+  }, []);
+
+  const getUserInfo = async () => {
+    const res = await check();
+    setUsername(res.displayName);
+    setUserEmail(res.email);
+  };
+
+  const getUsableAccounts = async () => {
+    const res = await myAccount();
+    setMyAccounts(res);
+  };
+
+  const onCheck = (accountId: string) => {
+    setAccountId(accountId);
+  };
 
   return (
     <>
-      <Title>주문서</Title>
       <Container>
-        <PaymentWrapper>
-          <hr />
-          <span>주문상품</span>
-          <hr />
-          <PaymentDetail>
-            <ProductName>
-              <span>상품 이름</span>
-              {title}
-              {totalQty < 1 ? "" : `외 ${totalQty - 1}개`}
-            </ProductName>
-            <ProductPrice>
-              <span>상품 가격</span>
-              {buyItem.price}
-            </ProductPrice>
-            <ProductQty>
-              <span>상품 개수</span>
-              {buyItem.quantity}
-            </ProductQty>
-          </PaymentDetail>
-          <UserDetail>
-            <UserName>
-              <span>주문자 명</span>
-              {}
-            </UserName>
-            <UserMail>
-              <span>이메일</span>
-              {}
-            </UserMail>
-          </UserDetail>
-          <AccountDetail>
-            <span>결제 수단 선택</span>
-            {}
-          </AccountDetail>
-        </PaymentWrapper>
+        <Title>주문서</Title>
+        <Wrapper>
+          <PaymentWrapper>
+            <hr />
+
+            <PaymentDetail>
+              <SubTitle>주문 상품</SubTitle>
+              <hr />
+              <DetailWrapper>
+                <ProductName>
+                  <span>상품 이름</span>
+                  {title}
+                  {quantity > 1 ? ` 등 ${new Set(items).size} 개` : ""}
+                </ProductName>
+
+                <ProductPrice>
+                  <span>총 상품 가격</span>
+                  {formatDollar(price)}
+                </ProductPrice>
+
+                <ProductQty>
+                  <span>상품 개수</span>
+                  {` ${quantity} 개`}
+                </ProductQty>
+              </DetailWrapper>
+            </PaymentDetail>
+
+            <UserDetail>
+              <SubTitle>주문자 정보</SubTitle>
+              <hr />
+              <DetailWrapper>
+                <UserName>
+                  <span>주문자 명</span>
+                  {username}
+                </UserName>
+                <UserMail>
+                  <span>이메일</span>
+                  {userEmail}
+                </UserMail>
+              </DetailWrapper>
+            </UserDetail>
+            <AccountDetail>
+              <SubTitle>결제 수단 선택</SubTitle>
+              <hr />
+              {myAccounts
+                ? myAccounts.accounts.map((account: IBank) => {
+                    return (
+                      <UsableAccount key={account.id}>
+                        <input
+                          type="radio"
+                          id={account.id}
+                          name="account"
+                          onChange={() => {
+                            onCheck(account.id);
+                          }}
+                        />
+                        <label htmlFor={account.id}>
+                          {account.bankName} [{formatDollar(account.balance)}]
+                        </label>
+                      </UsableAccount>
+                    );
+                  })
+                : ""}
+            </AccountDetail>
+          </PaymentWrapper>
+          <MainPaymentOrder
+            price={price}
+            productId={productId}
+            accountId={accountId}
+          />
+        </Wrapper>
       </Container>
     </>
   );
@@ -70,13 +156,10 @@ const Title = styled.div`
   height: 66px;
 `;
 
-const Container = styled.div`
-  display: flex;
-`;
+const Container = styled.div``;
 
-const PaymentWrapper = styled.div`
-  width: 800px;
-  min-width: 800px;
+const Wrapper = styled.div`
+  display: flex;
 
   > hr {
     height: 1px;
@@ -86,12 +169,30 @@ const PaymentWrapper = styled.div`
   }
 `;
 
-const PurchaseWrapper = styled.div`
-  width: 389px;
-  min-width: 389px;
-  padding: 2rem 1rem;
-  border: 1px solid ${theme.colors.gray[3]};
-  margin: 8px 0 0 auto;
+const PaymentWrapper = styled.div`
+  width: 800px;
+  min-width: 800px;
+
+  > div {
+    margin-top: 2rem;
+  }
+`;
+
+const SubTitle = styled.span`
+  font-size: 1.5rem;
+`;
+
+const DetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1rem 2rem 1rem;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const PaymentDetail = styled.div``;
@@ -102,4 +203,19 @@ const UserDetail = styled.div``;
 const UserName = styled.div``;
 const UserMail = styled.div``;
 const AccountDetail = styled.div``;
+
+const UsableAccount = styled.li`
+  height: 22px;
+  width: 254.5px;
+  list-style: none;
+
+  input {
+    margin-right: 0.5rem;
+  }
+
+  label:hover {
+    cursor: pointer;
+  }
+`;
+
 export default PaymentPage;

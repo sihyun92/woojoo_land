@@ -80,7 +80,6 @@ const check = async () => {
   return result;
 };
 
-
 // 로그아웃
 const logout = async () => {
   const response = await fetch(
@@ -199,8 +198,30 @@ const accountDisconnect = async (accountId: string, signature: boolean) => {
   return result;
 };
 
+// 제품 구매 신청
+
+const orderApply = async (productId: string, accountId: string) => {
+  const response = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/buy",
+    {
+      method: "POST",
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+      },
+      body: JSON.stringify({
+        productId,
+        accountId,
+      }),
+    },
+  );
+  const result = await response.json();
+  console.log(result);
+  return result;
+};
+
 // 제품 거래(구매) 취소
-const orderCancle = async (detailId: string) => {
+const orderCancel = async (detailId: string) => {
   const response = await fetch(
     "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel",
     {
@@ -286,7 +307,8 @@ export {
   myAccount,
   accountConnect,
   accountDisconnect,
-  orderCancle,
+  orderApply,
+  orderCancel,
   orderConfirm,
   orderDetailsAll,
   orderDetail,

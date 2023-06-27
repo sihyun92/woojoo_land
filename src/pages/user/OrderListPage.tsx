@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  orderCancle,
+  orderCancel,
   orderConfirm,
   orderDetail,
   orderDetailsAll,
@@ -164,7 +164,7 @@ function OrderListPage() {
       "주문 취소시 주문 금액이 환불됩니다. 취소하시겠습니까?",
     );
     if (CanclemModal) {
-      await orderCancle(id);
+      await orderCancel(id);
       alert("주문 취소되었습니다.");
       window.location.reload();
     }
