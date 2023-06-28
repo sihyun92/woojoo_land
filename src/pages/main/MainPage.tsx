@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import MainList from "../../components/main/MainList";
+import MainSolarList from "../../components/main/MainSolarList";
 import MainPackage from "../../components/main/MainPackage";
+import MainShipList from "../../components/main/MainShipList";
 
 function MainPage() {
   return (
     <Container>
       <Main>
         <Inner>
-          <MainList />
+          <MainSolarList />
           <MainPackage />
+          <MainShipList />
         </Inner>
       </Main>
     </Container>
