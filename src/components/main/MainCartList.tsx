@@ -138,7 +138,7 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
                   </CheckCircle>
                 </div>
                 <img src={cart.thumbnail} alt="Thumbnail" width="100px" />
-                <Title>{cart.title} 특별 분양</Title>
+                <Title>{cart.title}</Title>
                 <MainCartListBtn
                   id={cart.id}
                   quantity={quantity}
