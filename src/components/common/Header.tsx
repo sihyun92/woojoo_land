@@ -1,6 +1,6 @@
 import { theme } from "../../styles/theme";
 import styled from "styled-components";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
@@ -118,7 +118,10 @@ function Header({
               )}
               {username ? (
                 <>
-                  <h2>{username}</h2>
+                  <Link to="/user">
+                    <h2>{username}</h2>
+                  </Link>
+
                   <span>|</span>
                   <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
                 </>
@@ -132,7 +135,7 @@ function Header({
             </Auth>
             <LinkWrapper>
               <Link to="/user/like">
-                <IoMdHeartEmpty />
+                <IoMdHeart />
               </Link>
               <Link to="/cart">
                 <MdOutlineShoppingCart />
@@ -156,7 +159,6 @@ function Header({
 }
 
 const HeaderContainer = styled.header`
-  width: 100%;
   height: 9.375rem;
   display: flex;
   justify-content: center;
