@@ -5,7 +5,7 @@ export interface IProductDetail {
   description?: string;
   tags?: string[];
   thumbnailBase64?: string;
-  photoBase64?: string;
+  photo?: string;
   discountRate?: number;
   isSoldOut: boolean;
 }
