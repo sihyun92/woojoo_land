@@ -208,6 +208,7 @@ const UsableAccount = styled.li`
   height: 22px;
   width: 254.5px;
   list-style: none;
+  margin-bottom: 0.5rem;
 
   input {
     margin-right: 0.5rem;
