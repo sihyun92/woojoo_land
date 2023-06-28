@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
-import { check } from "../../lib/API/userAPI";
 import styled from "styled-components";
 
 import UserLikeList from "../../components/user/UserLikeList";
+import { ICheckData } from "../../components/common/Header";
+import { useQueryClient } from "react-query";
 
 interface IProduct {
   id: string;
@@ -23,27 +24,32 @@ function LikePage() {
     // getProducts();
     getLike();
     getCart();
-  }, []);
+  });
 
   // const [products, setProducts] = useState([]);
   const [likes, setLikes] = useState<IProduct[]>([]);
   const [carts, setCarts] = useState<IProduct[]>([]);
 
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
+
   // 찜 목록을 로컬 스토리지에서 받아옴
   const getLike = async () => {
-    const res = await check();
-    const getLikeItems = localStorage.getItem(`like_${res.email}`);
-    if (getLikeItems) {
-      setLikes(JSON.parse(getLikeItems));
+    if (res) {
+      const getLikeItems = localStorage.getItem(`like_${res.email}`);
+      if (getLikeItems) {
+        setLikes(JSON.parse(getLikeItems));
+      }
     }
   };
 
   // 장바구니 목록을 로컬스토리지에서 받아옴
   const getCart = async () => {
-    const res = await check();
-    const getCartItems = localStorage.getItem(`cart_${res.email}`);
-    if (getCartItems) {
-      setCarts(JSON.parse(getCartItems));
+    if (res) {
+      const getCartItems = localStorage.getItem(`cart_${res.email}`);
+      if (getCartItems) {
+        setCarts(JSON.parse(getCartItems));
+      }
     }
   };
 
