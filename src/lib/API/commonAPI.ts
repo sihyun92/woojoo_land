@@ -4,7 +4,7 @@ export interface IProductDetail {
   price?: number;
   description?: string;
   tags?: string[];
-  thumbnailBase64?: string;
+  thumbnail?: string;
   photo?: string;
   discountRate?: number;
   isSoldOut: boolean;
