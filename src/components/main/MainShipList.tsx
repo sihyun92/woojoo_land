@@ -6,26 +6,33 @@ import Carousel from "../common/Carousel";
 import { IProductLike } from "../../lib/API/adminAPI";
 import { check } from "../../lib/API/userAPI";
 
-function MainList() {
+function MainShipList() {
+  // 상품들을 담는 배열 선언
   const [list, setList] = useState<IProduct[]>([]);
-  const [likeItems, setLikeItems] = useState<IProductLike[]>([]);
+  // liked된 item을 담을 배열 선언
+  const [likedList, setLikedList] = useState<IProductLike[]>([]);
 
   useEffect(() => {
     const fetchList = async () => {
       try {
         //  모든 제품 조회
-        const res = await productsList();
-        setList(res);
+        const response: IProduct[] = await productsList();
+
+        // 태양계 상품 조회
+        const solarList = response.filter((item) =>
+          item.tags?.includes("우주선"),
+        );
+        setList(solarList);
 
         // 찜 목록 조회
-        const AuthRes = await check();
-        const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
-        let likeItems: IProductLike[] = [];
+        let likedList: IProductLike[] = [];
+        const authResponse = await check();
+        const getLikedItem = localStorage.getItem(`like_${authResponse.email}`);
 
-        if (getLikeItem) {
-          likeItems = JSON.parse(getLikeItem);
+        if (getLikedItem) {
+          likedList = JSON.parse(getLikedItem);
         }
-        setLikeItems(likeItems);
+        setLikedList(likedList);
       } catch (error) {
         console.error("Failed", error);
       }
@@ -35,11 +42,11 @@ function MainList() {
 
   return (
     <>
-      <Category>🪐 신상 행성 </Category>
+      <Category>🚀 이달의 우주선 </Category>
       <Container>
         <Carousel>
           {list.map((item) => {
-            const liked = likeItems.find((likeItem) => likeItem.id === item.id);
+            const liked = likedList.find((likeItem) => likeItem.id === item.id);
             const like = liked ? liked.like : false;
             return (
               <MainItem
@@ -63,7 +70,7 @@ function MainList() {
 const Category = styled.h1`
   font-size: 2.625rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 5rem 0 2rem;
 `;
 
 const Container = styled.div`
@@ -84,4 +91,4 @@ const Container = styled.div`
   }
 `;
 
-export default MainList;
+export default MainShipList;
