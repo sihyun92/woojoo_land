@@ -245,7 +245,6 @@ function AdminProductItem(props: IProduct) {
                   <TitleInput>
                     <div>제품명</div>
                     <input
-                      required
                       type="text"
                       name="title"
                       placeholder={thisProduct.title}
@@ -256,7 +255,6 @@ function AdminProductItem(props: IProduct) {
                   <PriceInput>
                     <div>제품 가격</div>
                     <input
-                      required
                       type="text"
                       name="price"
                       placeholder={thisProduct.price.toString()}
@@ -267,7 +265,6 @@ function AdminProductItem(props: IProduct) {
                   <DescriptionInput>
                     <div>제품 설명</div>
                     <textarea
-                      required
                       name="description"
                       onChange={onChange}
                       placeholder={thisProduct.description}
@@ -277,7 +274,6 @@ function AdminProductItem(props: IProduct) {
                   <TagsInput>
                     <div>제품 태그</div>
                     <input
-                      required
                       type="text"
                       name="tags"
                       placeholder={thisProduct.tags.join(", ")}
@@ -292,7 +288,6 @@ function AdminProductItem(props: IProduct) {
                   <DiscountRateInput>
                     <div>할인율</div>
                     <input
-                      required
                       type="text"
                       name="discountRate"
                       placeholder={thisProduct.discountRate.toString()}
