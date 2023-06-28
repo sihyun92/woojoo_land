@@ -6,7 +6,7 @@ function HorizonPage() {
   const title = "사건의 지평선";
   const [list, setList] = useState<IProduct[]>([]);
   const horizonList = list.filter((value) =>
-    value.tags?.includes("사건의지평선"),
+    value.tags?.includes("사건의 지평선"),
   );
 
   useEffect(() => {

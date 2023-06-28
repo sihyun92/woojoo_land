@@ -12,10 +12,13 @@ interface IPaymentOrder {
 }
 
 function MainPaymentOrder({ price, productId, accountId }: IPaymentOrder) {
+  const navigator = useNavigate();
   const onPayment = () => {
     for (let i = 0; i < productId.length; i++) {
       orderApply(productId[i], accountId);
     }
+    navigator("/user");
+    alert("Completed");
   };
 
   return (
