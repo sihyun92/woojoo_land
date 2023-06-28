@@ -2,18 +2,20 @@ import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import MainCartList from "../../components/main/MainCartList";
 import MainCartOrder from "../../components/main/MainCartOrder";
+import { useState } from "react";
 
 function CartPage() {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <Title>장바구니</Title>
       <Container>
         <CartWrapper>
           <hr />
-          <MainCartList />
+          <MainCartList isChecked={isChecked} setIsChecked={setIsChecked} />
         </CartWrapper>
         <PurchaseWrapper>
-          <MainCartOrder />
+          <MainCartOrder isChecked={isChecked} />
         </PurchaseWrapper>
       </Container>
     </>
