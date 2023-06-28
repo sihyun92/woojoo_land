@@ -165,7 +165,7 @@ function MainCartListBtn({
 
   // 구매 수량 감소 (decrease product)
   const onDecrease = async () => {
-    if (id && title && price && id) {
+    if (id && title && itemQty > 1) {
       decreaseItem(id);
       dispatch(
         setQuantity({
@@ -192,7 +192,7 @@ function MainCartListBtn({
         <p>{itemQty}</p>
         <BiPlusCircle onClick={onIncrease}>+</BiPlusCircle>
       </ButtonWrapper>
-      <Price>{formatDollar(price * itemQty)}</Price>
+      <Price>{`총 금액: ${formatDollar(price * itemQty)}`}</Price>
       <Delete onClick={onRemove}>X</Delete>
     </>
   );

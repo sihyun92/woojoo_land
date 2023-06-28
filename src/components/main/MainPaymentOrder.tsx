@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { theme } from "../../styles/theme";
 import { orderApply } from "../../lib/API/userAPI";
+import { useNavigate } from "react-router-dom";
 
 interface IPaymentOrder {
   price: number;
@@ -12,7 +13,6 @@ interface IPaymentOrder {
 
 function MainPaymentOrder({ price, productId, accountId }: IPaymentOrder) {
   const onPayment = () => {
-    console.log(productId, accountId);
     for (let i = 0; i < productId.length; i++) {
       orderApply(productId[i], accountId);
     }
