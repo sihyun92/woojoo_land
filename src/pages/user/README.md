@@ -157,3 +157,9 @@
   - 선택한 항목만 주문할 수 있는 기능으로 착각할 수 있기 때문에 기능 분리
 - 관리자 권한 해제 로직 추가
   - 로그아웃시 새로고침 전까지 관리자페이지 버튼이 남아있는 문제 수정
+
+## 23.06.28
+
+- AccountPage 내 AccountList 영역 컴포넌트 분리
+- OrderListPage 내 Calendar 영역과 Collapsible 영역 컴포넌트 분리
+- likePage 내 LikeList 영억 컴포넌트 분리
