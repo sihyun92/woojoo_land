@@ -6,7 +6,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 function AdminNav() {
   return (
     <AdminNavigator>
-      <Link to="dashboard">
+      <Link to="#">
         <LogoAdminImg>
           <img src="/images/LogoAdmin.svg" alt="우주부동산 관리자" width={210} />
         </LogoAdminImg>
@@ -45,20 +45,26 @@ const LogoAdminImg = styled.div`
 `
 
 const Listname = styled.li`
-  border-top: 1px solid ${theme.colors.white};
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 18px;
-  transition: 0.1s;
-  font-size: 20px;
-  display: flex;
   height: 52px;
+  display: flex;
+  font-size: 20px;
+  transition: 0.1s;
+  padding-left: 18px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid ${theme.colors.white};
   svg {
-    margin-right: 6px;
     font-size: 30px;
+    margin-right: 6px;
   }
   :hover {
+    font-size: 21px;
+    padding-left: 16px;
     background-color: #0000001c;
+    svg {
+      font-size: 32px;
+      margin-right: 5px;
+  }
   }
 `;
 
