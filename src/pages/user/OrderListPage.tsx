@@ -114,8 +114,8 @@ function OrderListPage() {
             const accordionDetails = detailsMap.get(order.detailId);
             return (
               <UserCollapsible
-                index={index}
                 order={order}
+                key={order.detailId}
                 detailsMap={detailsMap}
                 setDetailsMap={setDetailsMap}
                 isAccordionOpen={isAccordionOpen}
