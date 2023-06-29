@@ -1,14 +1,39 @@
 import styled from "styled-components";
 import Carousel from "../common/Carousel";
 import { theme } from "../../styles/theme";
+import { useNavigate } from "react-router-dom";
 
 function Banner() {
+  const navigate = useNavigate();
+
+  const onToTheMoon = () => {
+    navigate("/product/6ENwqwRTuR0GV5X22nTm");
+  };
+  const onToTheMars = () => {
+    navigate("/product/6wfO1el9sgHaB8PsDX3J");
+  };
+  const onToDelivery = () => {
+    navigate("/product/NwRt7wwheSKJl4YH7b0f");
+  };
+
   return (
     <Container>
       <Carousel slides={1}>
-        <Image src="/images/BannerImage1.png" alt="banner1" />
-        <Image src="/images/BannerImage2.png" alt="banner1" />
-        <Image src="/images/BannerImage3.png" alt="banner1" />
+        <Image
+          src="/images/BannerImage1.png"
+          alt="banner1"
+          onClick={onToTheMoon}
+        />
+        <Image
+          src="/images/BannerImage2.png"
+          alt="banner1"
+          onClick={onToDelivery}
+        />
+        <Image
+          src="/images/BannerImage3.png"
+          alt="banner1"
+          onClick={onToTheMars}
+        />
       </Carousel>
     </Container>
   );
@@ -39,6 +64,7 @@ const Container = styled.div`
 
 const Image = styled.img`
   vertical-align: bottom;
+  cursor: pointer;
 `;
 
 export default Banner;
