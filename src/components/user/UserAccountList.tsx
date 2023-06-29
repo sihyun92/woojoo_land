@@ -88,6 +88,11 @@ const AccountList = styled.li`
   padding: 0 1.25rem;
   align-items: center;
   border: 1px solid ${(props) => props.theme.colors.gray[3]};
+
+  &:hover {
+    transform: scale(0.99);
+    background-color: ${(props) => props.theme.colors.gray[2]};
+  }
 `;
 
 const AccountWrapper = styled.div`
