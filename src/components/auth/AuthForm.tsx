@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
@@ -7,7 +7,7 @@ import Button from "../common/Button";
 // Interface
 interface IAuthFormProps {
   type: string;
-  setUsername: Dispatch<SetStateAction<string>>;
+  setUsername: Dispatch<SetStateAction<any>>;
 }
 
 interface ITextMap {
@@ -66,7 +66,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   };
 
   const onRegisterChange = (event: FormEvent) => {
-    const { name, value } = event.target as HTMLInputElement;
+    const { name, value, files } = event.target as HTMLInputElement;
     if (name === "email") {
       // 이메일 유효성 검사
       const rEmail =
@@ -110,6 +110,16 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
         setIsPasswordConfirm(false);
       }
+    } else if (name === "profileImgBase64") {
+      const file = files as FileList;
+      const reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      return new Promise<void>((resolve) => {
+        reader.onload = () => {
+          setProfileImgBase64(reader.result as string);
+          resolve();
+        };
+      });
     }
   };
 
@@ -194,7 +204,24 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         {type === "register" && (
           <>
             <RegisterForm>
-              <ProfileImage>프로필 이미지</ProfileImage>
+              <ProfileImage profileImg={profileImgBase64}>
+                {profileImgBase64 ? "" : "프로필 이미지"}
+              </ProfileImage>
+              <RegisterInputBlock>
+                <ImageLabel>프로필 이미지</ImageLabel>
+                <ImageMessage className={profileImgBase64 ? "message" : ""}>
+                  {profileImgBase64 ? "이미지 업로드 완료" : "선택된 파일 없음"}
+                </ImageMessage>
+                <UploadButton htmlFor="imageUpload">업로드</UploadButton>
+                <ImageUpload
+                  multiple
+                  type="file"
+                  name="profileImgBase64"
+                  onChange={onRegisterChange}
+                  accept="image/*"
+                  id="imageUpload"
+                />
+              </RegisterInputBlock>
               <RegisterInputBlock>
                 <RegisterLabel>닉네임</RegisterLabel>
                 <StyledInput
@@ -379,7 +406,7 @@ const RegisterForm = styled.div`
   gap: 10px;
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.div<{ profileImg?: string }>`
   width: 120px;
   height: 120px;
   background: #ccc;
@@ -389,6 +416,10 @@ const ProfileImage = styled.div`
   align-items: center;
   align-self: center;
   margin-bottom: 20px;
+  background-image: url(${(props) => props.profileImg});
+  background-size: cover;
+  background-position: center center;
+  border: 1px solid #ccc;
 `;
 
 const RegisterInputBlock = styled.div`
@@ -407,6 +438,32 @@ const RegisterLabel = styled.span`
     color: #f00;
     font-size: 18px;
   }
+`;
+
+const ImageLabel = styled.span`
+  font-size: 0.875rem;
+  font-weight: 700;
+`;
+
+const ImageMessage = styled.span`
+  font-size: 12px;
+  color: #818181;
+  &.message {
+    color: #f00;
+  }
+`;
+
+const ImageUpload = styled.input`
+  display: none;
+`;
+
+const UploadButton = styled.label`
+  cursor: pointer;
+  border: 1px solid #ff6214;
+  padding: 4px 8px;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #ff6214;
 `;
 
 const RegisterButton = styled(Button)`
