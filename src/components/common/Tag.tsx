@@ -25,24 +25,31 @@ function Tag({ ...props }: ITagProps) {
 }
 
 const StyledTag = styled.button<{
-  selected: boolean;
+selected: boolean;
 }>`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1.5px solid ${theme.colors.white};
-  border-radius: 1.25rem;
   height: 2.5rem;
-  padding: 1rem 2rem;
-  color: ${theme.colors.white};
-  background: none;
   cursor: pointer;
-
+  font-size: 18px;
+  transition: 0.1s;
+  background: none;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 1.25rem;
+  justify-content: center;
+  color: ${theme.colors.white};
+  padding: 16px 26px 16px 26px;
+  border: 1.5px solid ${theme.colors.white};
+  &:hover{
+    transform: scale(1.04);
+    background-color: ${theme.colors.orange.pressed};
+    border: 1.5px solid ${theme.colors.orange.pressed};
+  }
   ${(props) =>
     props.selected &&
     css`
       background-color: ${props.theme.colors.orange.pressed};
-      border: none;
+      border: 1.5px solid ${props.theme.colors.orange.pressed};
     `}
 `;
 

@@ -65,6 +65,7 @@ const TagBG = styled.div`
 `;
 
 const TagWrapper = styled.div`
+margin-bottom: 20px;
   display: flex;
   width: 1088px;
   max-width: 1088px;

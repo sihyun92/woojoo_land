@@ -8,6 +8,7 @@ import AdminUserPaging from "../../components/admin/AdminUserPaging";
 import AdminProductItem from "../../components/admin/AdminProductItem";
 import AdminModalTemplate from "../../components/admin/AdminModalTemplate";
 import AdminProductItemAdd from "../../components/admin/AdminProductItemAdd";
+import Loading from "../common/Loading";
 
 function AdminProductItemList() {
   const [postPerPage] = useState(6); //한 페이지에 보여질 아이템 수
@@ -20,6 +21,7 @@ function AdminProductItemList() {
 
   //모달 상태 기본값 false다 true로 바뀌면 modalOpen의 값이되며 이 값은 return문의 AdminModal 컴포넌트 요청에 사용된다.
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   //모달 요청 setModalOpen()에 true 값을 보낸다.
   const addModal = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,10 +59,12 @@ function AdminProductItemList() {
   //추가하기 완료시 리스트 랜더링
   useEffect(() => {
     async function fetchList() {
+      setLoading(true)
       try {
         const itemlist = await productsList();
         setProducts(itemlist);
         setCount(itemlist.length); //API로 받은 데이터의 갯수를 아이템의 총 개수 상태로 setCount에 전달
+        setLoading(false)
       } catch (error) {
         console.error("UserListPage", error);
       }
@@ -76,6 +80,7 @@ function AdminProductItemList() {
 
   return (
     <AdminOrderContainer>
+      {loading ? <Loading /> : null}
       <AdminTitle>모든 제품 조회</AdminTitle>
       <CategoryMenuContainer>
         <ItemBox>
@@ -124,12 +129,16 @@ function AdminProductItemList() {
 }
 
 const ItemContainer = styled.div`
-  width: 100%;
-  max-height: 500px;
-  /* overflow: hidden; */
-  display: grid;
   gap: 10px 0;
+  width: 100%;
+  display: grid;
   flex-wrap: wrap;
+  overflow: auto;
+  -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      display: none !important;
+    }
+  max-height: 500px;
   grid-template-rows: repeat(0, 6fr);
   grid-template-columns: repeat(0, 1fr);
 `;

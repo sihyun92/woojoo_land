@@ -161,6 +161,7 @@ function AdminProductItem(props: IProduct) {
   };
 
   return (
+    <>
     <ItemContainer>
       <ItemBox>
         <ProductImg>
@@ -195,120 +196,121 @@ function AdminProductItem(props: IProduct) {
           삭제
         </DeleteBtn>
       </BtnBox>
-      <>
-        {modalOpen && thisProduct && (
-          <AdminModalTemplate>
-            <ModalAdd>
-              <ModalClose type="button" onClick={ModalBoxCloses}>
-                <AiOutlineClose size="1.2rem" />
-              </ModalClose>
-              <FormContainer>
-                <TitleAdd>제품 수정</TitleAdd>
-                <form
-                  onSubmit={(event: any) => {
-                    onSubmit(event, props.id);
-                  }}
-                >
-                  <Thumbnail>
-                    <div>제품 썸네일</div>
-                    <input
-                      id="thumbnail-input-file"
-                      type="file"
-                      style={{ display: "none" }}
-                      onChange={(event) => {
-                        ThumbnailUpload(event);
-                        ThumbnailFileChange(event);
-                      }}
-                    />
-                    <FileAddname>{ThumbnailFile}</FileAddname>
-                    <FileAddBtn htmlFor="thumbnail-input-file">
-                      파일선택
-                    </FileAddBtn>
-                  </Thumbnail>
-                  <Photo>
-                    <div>상세 이미지</div>
-                    <input
-                      id="photo-input-file"
-                      type="file"
-                      style={{ display: "none" }}
-                      //onChange 함수 사용으로 ThumbnailUpload과 handleFileChange 기능 호출
-                      onChange={(event) => {
-                        PhotoUpload(event);
-                        PhotoFileChange(event);
-                      }}
-                    />
-                    <FileAddname>{PhotoFile}</FileAddname>
-                    <FileAddBtn htmlFor="photo-input-file">
-                      파일 선택
-                    </FileAddBtn>
-                  </Photo>
-                  <TitleInput>
-                    <div>제품명</div>
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder={thisProduct.title}
-                      onChange={onChange}
-                      value={updateform.title}
-                    />
-                  </TitleInput>
-                  <PriceInput>
-                    <div>제품 가격</div>
-                    <input
-                      type="text"
-                      name="price"
-                      placeholder={thisProduct.price.toString()}
-                      onChange={onChange}
-                      value={updateform.price !== 0 ? updateform.price : ""}
-                    />
-                  </PriceInput>
-                  <DescriptionInput>
-                    <div>제품 설명</div>
-                    <textarea
-                      name="description"
-                      onChange={onChange}
-                      placeholder={thisProduct.description}
-                      value={updateform.description}
-                    />
-                  </DescriptionInput>
-                  <TagsInput>
-                    <div>제품 태그</div>
-                    <input
-                      type="text"
-                      name="tags"
-                      placeholder={thisProduct.tags.join(", ")}
-                      onChange={(e) => {
-                        onChange(e);
-                        onChangeTags(e);
-                      }}
-                      value={updateform.tags}
-                    />
-                  </TagsInput>
-
-                  <DiscountRateInput>
-                    <div>할인율</div>
-                    <input
-                      type="text"
-                      name="discountRate"
-                      placeholder={thisProduct.discountRate.toString()}
-                      onChange={onChange}
-                      value={
-                        updateform.discountRate !== 0
-                          ? updateform.discountRate
-                          : ""
-                      }
-                    />
-                  </DiscountRateInput>
-                  <ItemAddBtn adminadd type="submit">
-                    수정하기
-                  </ItemAddBtn>
-                </form>
-              </FormContainer>
-            </ModalAdd>
-          </AdminModalTemplate>
-        )}
-      </>
     </ItemContainer>
+    <>
+    {modalOpen && thisProduct && (
+      <AdminModalTemplate>
+        <ModalAdd>
+          <ModalClose type="button" onClick={ModalBoxCloses}>
+            <AiOutlineClose size="1.2rem" />
+          </ModalClose>
+          <FormContainer>
+            <TitleAdd>제품 수정</TitleAdd>
+            <form
+              onSubmit={(event: any) => {
+                onSubmit(event, props.id);
+              }}
+            >
+              <Thumbnail>
+                <FileTltle>제품 썸네일</FileTltle>
+                <input
+                  id="thumbnail-input-file"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={(event) => {
+                    ThumbnailUpload(event);
+                    ThumbnailFileChange(event);
+                  }}
+                />
+                <FileAddname>{ThumbnailFile}</FileAddname>
+                <FileAddBtn htmlFor="thumbnail-input-file">
+                  파일선택
+                </FileAddBtn>
+              </Thumbnail>
+              <Photo>
+                <FileTltle>상세 이미지</FileTltle>
+                <input
+                  id="photo-input-file"
+                  type="file"
+                  style={{ display: "none" }}
+                  //onChange 함수 사용으로 ThumbnailUpload과 handleFileChange 기능 호출
+                  onChange={(event) => {
+                    PhotoUpload(event);
+                    PhotoFileChange(event);
+                  }}
+                />
+                <FileAddname>{PhotoFile}</FileAddname>
+                <FileAddBtn htmlFor="photo-input-file">
+                  파일 선택
+                </FileAddBtn>
+              </Photo>
+              <TitleInput>
+                <div>제품명</div>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder={thisProduct.title}
+                  onChange={onChange}
+                  value={updateform.title}
+                />
+              </TitleInput>
+              <PriceInput>
+                <div>제품 가격</div>
+                <input
+                  type="text"
+                  name="price"
+                  placeholder={thisProduct.price.toString()}
+                  onChange={onChange}
+                  value={updateform.price !== 0 ? updateform.price : ""}
+                />
+              </PriceInput>
+              <DescriptionInput>
+                <div>제품 설명</div>
+                <textarea
+                  name="description"
+                  onChange={onChange}
+                  placeholder={thisProduct.description}
+                  value={updateform.description}
+                />
+              </DescriptionInput>
+              <TagsInput>
+                <div>제품 태그</div>
+                <input
+                  type="text"
+                  name="tags"
+                  placeholder={thisProduct.tags.join(", ")}
+                  onChange={(e) => {
+                    onChange(e);
+                    onChangeTags(e);
+                  }}
+                  value={updateform.tags}
+                />
+              </TagsInput>
+
+              <DiscountRateInput>
+                <div>할인율</div>
+                <input
+                  type="text"
+                  name="discountRate"
+                  placeholder={thisProduct.discountRate.toString()}
+                  onChange={onChange}
+                  value={
+                    updateform.discountRate !== 0
+                      ? updateform.discountRate
+                      : ""
+                  }
+                />
+              </DiscountRateInput>
+              <ItemAddBtn adminadd type="submit">
+                수정하기
+              </ItemAddBtn>
+            </form>
+          </FormContainer>
+        </ModalAdd>
+      </AdminModalTemplate>
+    )}
+  </>
+  </>
   );
 }
 
@@ -360,11 +362,18 @@ const FileAddBtn = styled.label`
 `;
 
 const FileAddname = styled.div`
+  width: 48%;
+  display: flex;
   font-size: 14px;
   font-weight: 400;
-  margin-left: 20px;
   color: ${theme.colors.gray[3]};
 `;
+
+
+const FileTltle = styled.div`
+  width: 150px;
+  display: flex;
+`
 
 const Thumbnail = styled.div`
   height: 30px;
@@ -398,6 +407,7 @@ const DescriptionInput = styled.div`
     background-color: ${theme.colors.gray[2]};
   }
 `;
+
 const TagsInput = styled.li``;
 const DiscountRateInput = styled.li``;
 
@@ -455,22 +465,30 @@ const DeleteBtn = styled(Button)`
 `;
 
 const ItemContainer = styled.div`
+  height: 70px;
   display: flex;
   border-radius: 5px;
-  height: 100px;
-  background-color: ${theme.colors.gray[2]};
-  border: 1px solid ${theme.colors.gray[3]};
+  transition: 0.1s;
+  background-color: ${theme.colors.white};
+  border: 1px solid ${theme.colors.gray[7]};
+  &:hover {
+    transform: scale(0.99);
+    background-color: ${theme.colors.gray[2]};
+
+  }
 `;
 
 const ProductImg = styled.div`
   width: 15%;
   display: flex;
   padding: auto;
-  max-height: 120px;
+  max-height: 100%;
   align-items: center;
   justify-content: center;
+  margin: 8px 0;
   img {
-    height: 80%;
+    height: 100%;
+    display: flex;
     border-radius: 5px;
   }
 `;
@@ -487,6 +505,7 @@ const ProductId = styled.div`
   width: 20%;
   margin: auto;
   display: flex;
+  font-size: 14px;
   justify-content: center;
 `;
 
@@ -494,6 +513,7 @@ const ProductPrice = styled.div`
   width: 10%;
   margin: auto;
   display: flex;
+  font-size: 14px;
   justify-content: center;
 `;
 
@@ -501,6 +521,7 @@ const ProductTags = styled.div`
   width: 15%;
   margin: auto;
   display: flex;
+  font-size: 14px;
   justify-content: center;
 `;
 
@@ -508,6 +529,7 @@ const ProductIsSoldOut = styled.div`
   width: 10%;
   margin: auto;
   display: flex;
+  font-size: 14px;
   justify-content: center;
 `;
 
@@ -515,6 +537,7 @@ const ProductDiscountRate = styled.div`
   width: 10%;
   margin: auto;
   display: flex;
+  font-size: 14px;
   justify-content: center;
 `;
 

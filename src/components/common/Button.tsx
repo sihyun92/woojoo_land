@@ -84,77 +84,82 @@ const StyledButton = styled.button<{
   ${(rest) =>
     rest.adminlogout &&
     css`
-      border: 1px solid ${theme.colors.orange.main};
-      color: ${theme.colors.orange.main};
-      border-radius: 1.25rem;
+      width: 120px;
+      font-size: 1rem;
+      transition: 0.1s;
       transition: 0.3s;
       background: none;
-      width: 8.125rem;
-      font-size: 1rem;
+      border-radius: 1.25rem;
+      color: ${theme.colors.orange.main};
+      border: 1px solid ${theme.colors.orange.main};
       &:hover {
-        background: ${theme.colors.orange.main};
+        transform: scale(1.04);
         color: ${theme.colors.white};
+        background: ${theme.colors.orange.main};
       }
     `}
   ${(rest) =>
     rest.admin &&
     css`
-      color: ${theme.colors.white};
-      background-color: ${theme.colors.orange.main};
-      border-radius: 5px;
-      transition: 0.3s;
       width: 134px;
       height: 40px;
       font-size: 1rem;
+      transition: 0.1s;
+      border-radius: 5px;
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange.main};
       &:hover {
-        background: ${theme.colors.orange.hover};
+        transform: scale(1.04);
         color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
       }
     `}
   ${(rest) =>
     rest.admindel &&
     css`
-      color: ${theme.colors.white};
-      background-color: ${theme.colors.orange.main};
-      border-radius: 5px;
-      transition: 0.3s;
       width: 60px;
       height: 40px;
       font-size: 1rem;
+      transition: 0.1s;
+      border-radius: 5px;
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange.main};
       &:hover {
-        background: ${theme.colors.orange.hover};
+        transform: scale(1.04);
         color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
       }
     `}
   ${(rest) =>
     rest.adminedit &&
     css`
-      border: 1px solid ${theme.colors.orange.main};
-      color: ${theme.colors.orange.main};
-      border-radius: 5px;
-      background: none;
-      transition: 0.3s;
       width: 60px;
       height: 40px;
       font-size: 1rem;
+      background: none;
+      transition: 0.1s;
+      border-radius: 5px;
+      color: ${theme.colors.orange.main};
+      border: 1px solid ${theme.colors.orange.main};
       &:hover {
-        background: ${theme.colors.orange.main};
+        transform: scale(1.04);
         color: ${theme.colors.white};
+        background: ${theme.colors.orange.main};
       }
     `}
   ${(rest) =>
     rest.adminadd &&
     css`
-      background-color: ${theme.colors.orange.main};
-      color: ${theme.colors.white};
-      border-radius: 5px;
-      transition: 0.3s;
       width: 100%;
       height: 40px;
       font-size: 1rem;
+      transition: 0.3s;
+      border-radius: 5px;
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.orange.main};
       &:hover {
-        background: ${theme.colors.orange.hover};
         color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
       }
     `}
 `;

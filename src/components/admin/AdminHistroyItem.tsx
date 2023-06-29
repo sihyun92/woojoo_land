@@ -36,6 +36,7 @@ const ItemBox = styled.div`
 const ID = styled.div`
   justify-content: center;
   align-items: center;
+  font-size: 14px;
   display: flex;
   width: 15%;
 `;
@@ -43,6 +44,7 @@ const ID = styled.div`
 const UserName = styled.div`
   justify-content: center;
   align-items: center;
+  font-size: 14px;
   display: flex;
   width: 15%;
 `;
@@ -58,6 +60,7 @@ const Product = styled.div`
 const TotalOrderAmount = styled.div`
   justify-content: center;
   align-items: center;
+  font-size: 14px;
   display: flex;
   width: 15%;
 `;
@@ -65,6 +68,7 @@ const TotalOrderAmount = styled.div`
 const TransactionTime = styled.div`
   justify-content: center;
   align-items: center;
+  font-size: 14px;
   display: flex;
   width: 20%;
 `;
