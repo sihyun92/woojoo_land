@@ -8,6 +8,7 @@ import {
   useState,
   ChangeEvent,
   FormEvent,
+  useEffect,
 } from "react";
 import { accountConnect, accountList } from "../../lib/API/userAPI";
 import { AiOutlineClose } from "react-icons/ai";
@@ -33,6 +34,13 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   });
   const [checkedCode, setCheckedCode] = useState("");
   const [accounts, setAccounts] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 1500);
+  }, [error]);
 
   useQuery("accountList", accountList, {
     onSuccess: (res) => {
@@ -65,12 +73,12 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   // 폼 제출시 계좌 연결 및 모달 종료
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    try {
-      const props = Object.values(accountForm) as [string, string, boolean];
-      await accountConnect(checkedCode, ...props);
+    const props = Object.values(accountForm) as [string, string, boolean];
+    const data = await accountConnect(checkedCode, ...props);
+    if (typeof data !== "string") {
       closeModal();
-    } catch (error) {
-      console.log(error);
+    } else {
+      setError(data);
     }
   };
 
@@ -145,6 +153,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
           <li>추가할 은행을 선택하면 은행코드가 입력됩니다.</li>
           <li>계좌번호와 전화번호에는 - 구분없이 입력해주세요.</li>
         </Notes>
+        {error ? <ErrorMessage>{error}</ErrorMessage> : ""}
         <AddButton type="submit" orange>
           추가하기
         </AddButton>
@@ -264,6 +273,13 @@ const AddButton = styled(Button)`
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
   }
+`;
+
+const ErrorMessage = styled.span`
+  bottom: 185px;
+  font-weight: 700;
+  position: absolute;
+  color: ${(props) => props.theme.colors.orange.main};
 `;
 
 export default AccountModal;
