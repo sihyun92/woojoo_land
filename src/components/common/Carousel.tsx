@@ -2,7 +2,7 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
 interface ICarouselProps {
   children: React.ReactNode;
@@ -18,8 +18,8 @@ function Carousel({ children, slides, color }: ICarouselProps) {
     slidesToShow: slides,
     autoplay: true,
     arrows: true,
-    nextArrow: <SlArrowRight color={color} />,
-    prevArrow: <SlArrowLeft color={color} />,
+    nextArrow: <MdArrowForwardIos color={color} />,
+    prevArrow: <MdArrowBackIosNew color={color} />,
     responsive: [
       {
         breakpoint: 768,
@@ -44,12 +44,12 @@ const StyledSlider = styled(Slider)`
 
   .slick-prev {
     position: absolute;
-    left: -70px;
+    left: -80px;
   }
 
   .slick-next {
     position: absolute;
-    right: -42px;
+    right: -70px;
   }
 
   .slick-prev::before,
