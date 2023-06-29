@@ -14,6 +14,7 @@ const Title = styled.h2`
   font-size: 1.75rem;
   margin-bottom: 1rem;
   padding-bottom: 1.25rem;
+  font-family: "GmarketSans";
   border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
 `;
 
