@@ -20,6 +20,7 @@ export const theme: DefaultTheme = {
       "#f0f0f0", //[4] 현재 사용되지 않음
       "#818181", //[5] 본문 텍스트에 사용
       "#bbbbbb", //[6] header input border
+      "#ececec", //[7] 리스트 아이템 테두리 색상
     ],
     pink: "#FF2626", //좋아요 하트 컬러
   },
