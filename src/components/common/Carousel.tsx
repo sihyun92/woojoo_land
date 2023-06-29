@@ -1,4 +1,4 @@
-import Slider, { Settings } from "react-slick";
+import Slider, { CustomArrowProps, Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
@@ -11,6 +11,24 @@ interface ICarouselProps {
 }
 
 function Carousel({ children, slides, color }: ICarouselProps) {
+  // NextArrow 컴포넌트
+  const NextArrow = ({
+    currentSlide,
+    slideCount,
+    ...props
+  }: CustomArrowProps) => {
+    return <MdArrowForwardIos {...props} color={color} />;
+  };
+
+  // PrevArrow 컴포넌트
+  const PrevArrow = ({
+    currentSlide,
+    slideCount,
+    ...props
+  }: CustomArrowProps) => {
+    return <MdArrowBackIosNew {...props} color={color} />;
+  };
+
   const settings: Settings = {
     dots: true,
     infinite: true,
@@ -18,8 +36,8 @@ function Carousel({ children, slides, color }: ICarouselProps) {
     slidesToShow: slides,
     autoplay: true,
     arrows: true,
-    nextArrow: <MdArrowForwardIos color={color} />,
-    prevArrow: <MdArrowBackIosNew color={color} />,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 768,
