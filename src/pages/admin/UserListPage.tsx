@@ -10,7 +10,7 @@ function UserListPage() {
   const [products, setProducts] = useState<UserList[]>([]); //리스트에 나타낼 아이템
   const [count, setCount] = useState(0); //아이템 총 개수
   const [currentPage, setCurrentPage] = useState(1); //현재 페이지. 기본값 '1'
-  const [postPerPage] = useState(8); //한 페이지에 보여질 아이템 수
+  const [postPerPage] = useState(24); //한 페이지에 보여질 아이템 수
   const [indexOfLastPost, setIndexOfLastPost] = useState(0); //현재 페이지의 마지막 아이템 인덱스
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); //현재 페이지의 첫번째 아이템 인덱스
   const [currentPosts, setCurrentPosts] = useState<UserList[]>([]); //현재 페이지에서 보여지는 아이템
@@ -49,8 +49,8 @@ function UserListPage() {
             currentPosts.map((productData: any) => (
               <AdminUserItem
                 email={productData.email}
-                displayName={productData.displayName}
                 profileImg={productData.profileImg}
+                displayName={productData.displayName}
               />
             ))
           ) : (
@@ -66,13 +66,16 @@ function UserListPage() {
 }
 
 const UserListContainer = styled.div`
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  margin: 0 30px;
-  display: flex;
-  height: 90%;
   bottom: 0;
+  height: 90%;
+  display: flex;
+  margin: 0 30px;
+  position: relative;
+  flex-direction: column;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
 `;
 
 const UserContainer = styled.div`
@@ -80,7 +83,7 @@ const UserContainer = styled.div`
   grid-template-rows: repeat(3, 1fr);
   margin-top: 15px;
   flex-wrap: wrap;
-  gap: 10px 10px;
+  gap: 20px 20px;
   display: grid;
   width: 100%;
 `;
