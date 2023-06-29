@@ -10,19 +10,27 @@ function MainCommet(props: IProductLike) {
 
   const formatUnit = (tags: string[]) => {
     if (tags) {
-      if (tags.includes("태양계") || tags.includes("사건의지평선")) {
+      if (tags.includes("태양계") || tags.includes("사건의 지평선")) {
         return "평당";
       } else if (tags.includes("우주복")) {
         return "한 벌당";
       } else if (tags.includes("우주선")) {
         return "한 대당";
-      } else if (tags.includes("우주정거장")) {
+      } else if (tags.includes("우주 정거장")) {
         return "시간 당";
       } else {
         return "개당";
       }
     }
   };
+
+  // 할인된 가격 (할인율 존재)
+  const discountedPrice =
+    props.price * (1 - (props.discountRate as number) / 100);
+
+  // 정가
+  const fixedPrice = props.price;
+
   return (
     <>
       <Link to={`/product/${props.id}`}>
@@ -33,12 +41,22 @@ function MainCommet(props: IProductLike) {
           </Commet>
           <Desc>
             <Title>{props.title}</Title>
-            <Py>
-              {typeof props.tags === "object" ? formatUnit(props.tags) : ""}
-            </Py>
+            {(props.discountRate as number) > 0 ? (
+              <PrevPrice>{formatDollar(props.price)}</PrevPrice>
+            ) : (
+              ""
+            )}
+
             <PriceWrapper>
               <Discount>{props.discountRate}%</Discount>
-              <Price>{formatDollar(props.price)}</Price>
+              <Price>
+                <Py>
+                  {typeof props.tags === "object" ? formatUnit(props.tags) : ""}
+                </Py>
+                {(props.discountRate as number) > 0
+                  ? formatDollar(discountedPrice)
+                  : formatDollar(fixedPrice)}
+              </Price>
             </PriceWrapper>
           </Desc>
         </Container>
@@ -95,9 +113,17 @@ const Title = styled.div`
   font-size: 2.5rem;
 `;
 
-const Py = styled.div`
-  font-size: 1rem;
+const PrevPrice = styled.div`
+  text-decoration: line-through;
+  color: ${theme.colors.gray[0]};
   text-align: right;
+`;
+
+const Py = styled.div`
+  display: flex;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  align-items: end;
 `;
 
 const PriceWrapper = styled.div`
@@ -107,13 +133,16 @@ const PriceWrapper = styled.div`
 `;
 
 const Discount = styled.div`
-  font-size: 2rem;
+  display: flex;
+  font-size: 2.5rem;
   color: ${theme.colors.orange.main};
+  align-items: bottom;
 `;
 
 const Price = styled.div`
-  margin-top: 4px;
   font-size: 2rem;
+  display: flex;
+  align-items: center;
 `;
 
 export default MainCommet;
