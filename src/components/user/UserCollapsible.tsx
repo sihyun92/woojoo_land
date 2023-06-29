@@ -11,7 +11,6 @@ import { Dispatch, SetStateAction } from "react";
 import { useQuery } from "react-query";
 
 interface ICollapsibleProps {
-  index: number;
   order: IOrdersDetail;
   isAccordionOpen: boolean;
   accordionDetails: IOrdersDetailExtend | undefined;
@@ -19,7 +18,6 @@ interface ICollapsibleProps {
   setDetailsMap: Dispatch<SetStateAction<Map<string, IOrdersDetailExtend>>>;
 }
 function UserCollapsible({
-  index,
   order,
   isAccordionOpen,
   accordionDetails,
@@ -81,7 +79,6 @@ function UserCollapsible({
 
   return (
     <Collapsible
-      key={index}
       easing="ease-in-out"
       transitionTime={200}
       onOpen={onAccordion}
@@ -160,7 +157,7 @@ const OrderList = styled.li`
   width: 100%;
   height: 70px;
   display: flex;
-  transition: 0.2s;
+  transition: 0.1s;
   padding: 0 1.25rem;
   align-items: center;
   justify-content: space-between;
@@ -168,6 +165,7 @@ const OrderList = styled.li`
 
   &:hover {
     cursor: pointer;
+    transform: scale(0.99);
     background-color: ${(props) => props.theme.colors.gray[2]};
   }
 `;
