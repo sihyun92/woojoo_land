@@ -17,11 +17,15 @@ function AdminUserItem(props:UserList) {
 
 const ItemContainer = styled.div`
   background-color: ${theme.colors.gray[2]};
-  border: 1px solid ${theme.colors.gray[3]};
+  border: 1px solid ${theme.colors.gray[7]};
   flex-direction: column;
-  border-radius: 20px;
+  border-radius: 5px;
   overflow: hidden;
   display: flex;
+  &:hover {
+    transform: scale(1.03);
+    border: 1px solid ${theme.colors.gray[3]};
+  }
 `;
 
 const ProfileImg = styled.div`
@@ -31,6 +35,7 @@ const ProfileImg = styled.div`
   display: flex;
   img {
     max-height: 100%;
+    margin: 10px;
   }
 `;
 
