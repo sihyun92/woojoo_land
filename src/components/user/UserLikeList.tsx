@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { formatDollar } from "../../lib/Function/commonFn";
 import { AiOutlineClose } from "react-icons/ai";
 import { Dispatch, SetStateAction } from "react";
-import { useQueryClient } from "react-query";
 import { ICheckData } from "../common/Header";
 
 export interface IProduct {
@@ -19,17 +18,21 @@ export interface IProduct {
 }
 
 interface ILikeListProps {
+  res: ICheckData | undefined;
   likes: IProduct[];
   carts: IProduct[];
   setLikes: Dispatch<SetStateAction<IProduct[]>>;
   setCarts: Dispatch<SetStateAction<IProduct[]>>;
 }
 
-function UserLikeList({ likes, carts, setLikes, setCarts }: ILikeListProps) {
+function UserLikeList({
+  res,
+  likes,
+  carts,
+  setLikes,
+  setCarts,
+}: ILikeListProps) {
   const navigate = useNavigate();
-
-  const queryClient = useQueryClient();
-  const res = queryClient.getQueryData<ICheckData>("check");
 
   // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (updatedLikes: IProduct[]) => {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
 import styled from "styled-components";
-
 import UserLikeList from "../../components/user/UserLikeList";
 import { ICheckData } from "../../components/common/Header";
 import { useQueryClient } from "react-query";
@@ -19,19 +18,18 @@ interface IProduct {
 }
 
 function LikePage() {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   // 초기값 렌더링
   useEffect(() => {
     // getProducts();
     getLike();
     getCart();
-  });
+  }, [res]);
 
   // const [products, setProducts] = useState([]);
   const [likes, setLikes] = useState<IProduct[]>([]);
   const [carts, setCarts] = useState<IProduct[]>([]);
-
-  const queryClient = useQueryClient();
-  const res = queryClient.getQueryData<ICheckData>("check");
 
   // 찜 목록을 로컬 스토리지에서 받아옴
   const getLike = async () => {
@@ -57,6 +55,7 @@ function LikePage() {
     <LikeRoute>
       <UserTitle>찜한 상품</UserTitle>
       <UserLikeList
+        res={res}
         likes={likes}
         carts={carts}
         setLikes={setLikes}
