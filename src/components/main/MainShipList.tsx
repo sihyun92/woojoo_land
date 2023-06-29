@@ -44,7 +44,7 @@ function MainShipList() {
     <>
       <Category>🚀 이달의 우주선 </Category>
       <Container>
-        <Carousel>
+        <Carousel slides={4}>
           {list.map((item) => {
             const liked = likedList.find((likeItem) => likeItem.id === item.id);
             const like = liked ? liked.like : false;
