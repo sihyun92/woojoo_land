@@ -56,6 +56,7 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
       Object.entries(amount).forEach(([title, quantity]) => {
         // [key, value] - [title, quantity]
         const cartItem = cartItems.find((item) => item.title === title);
+        console.log(cartItems);
         if (cartItem) {
           const { id } = cartItem;
           dispatch(
@@ -64,7 +65,9 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
               title: title as string,
               quantity: quantity,
               price: cartItems.find((item) => item.title === title)?.price || 0,
-              discountRate: 0,
+              discountRate:
+                cartItems.find((item) => item.title === title)?.discountRate ||
+                0,
             }),
           );
         }
@@ -145,6 +148,7 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
                   price={cart.price as number}
                   title={cart.title}
                   setIsDeleted={setIsDeleted}
+                  discountRate={cart.discountRate}
                 />
               </li>
             );

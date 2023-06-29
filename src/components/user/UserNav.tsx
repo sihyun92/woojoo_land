@@ -62,10 +62,13 @@ const TitleBar = styled.div`
 const MyPage = styled.h2`
   font-weight: 700;
   font-size: 2.25rem;
+  font-family: "GmarketSans";
 `;
 
 const NavContainer = styled.ul`
   display: grid;
+  overflow: hidden;
+  border-radius: 5px;
   grid-template-columns: 285px;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   border-top: 1px solid ${(props) => props.theme.colors.gray[3]};
@@ -77,9 +80,9 @@ const NavList = styled.li<{
   isOpen?: boolean;
 }>`
   display: flex;
+  transition: 0.1s;
   padding: 13px 10px;
   align-items: center;
-  transition: 0.2s;
   justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
   background-color: ${({ isOpen, theme }) => isOpen && theme.colors.gray[2]};
@@ -90,6 +93,10 @@ const NavList = styled.li<{
 
   &:hover {
     background-color: ${(props) => props.theme.colors.gray[2]};
+
+    span {
+      font-size: 21px;
+    }
   }
 `;
 
