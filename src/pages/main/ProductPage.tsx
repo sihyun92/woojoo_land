@@ -113,7 +113,7 @@ function ProductPage() {
       </PhotoWrapper>
       <DetailWrapper>
         <TitleWrapper>
-          <Title>{product?.title} 특별분양</Title>
+          <Title>{product?.title} </Title>
           <LikeButton onClick={onLike} selected={like}>
             {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
           </LikeButton>
