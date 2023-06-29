@@ -44,7 +44,7 @@ function MainSolarList() {
     <>
       <Category>🪐 신상 태양계 행성 </Category>
       <Container>
-        <Carousel slides={4}>
+        <Carousel slides={4} color="black">
           {list.map((item) => {
             const liked = likedList.find((likeItem) => likeItem.id === item.id);
             const like = liked ? liked.like : false;

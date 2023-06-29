@@ -18,7 +18,7 @@ function Banner() {
 
   return (
     <Container>
-      <Carousel slides={1}>
+      <Carousel slides={1} color="white">
         <Image
           src="/images/BannerImage1.png"
           alt="banner1"
