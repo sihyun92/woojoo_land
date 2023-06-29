@@ -52,7 +52,7 @@ function Header({
         ? setIsAdmin(true)
         : setIsAdmin(false);
     },
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
   });
 
   const onLogout = async () => {
