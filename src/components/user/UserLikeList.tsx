@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { formatDollar } from "../../lib/Function/commonFn";
 import { AiOutlineClose } from "react-icons/ai";
-import { check } from "../../lib/API/userAPI";
 import { Dispatch, SetStateAction } from "react";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../common/Header";
 
 export interface IProduct {
   id: string;
@@ -27,16 +28,21 @@ interface ILikeListProps {
 function UserLikeList({ likes, carts, setLikes, setCarts }: ILikeListProps) {
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
+
   // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (updatedLikes: IProduct[]) => {
-    const res = await check();
-    localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
+    if (res) {
+      localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
+    }
   };
 
   // 장바구니 목록을 로컬스토리지로 보냄
   const postCart = async (updatedCarts: IProduct[]) => {
-    const res = await check();
-    localStorage.setItem(`cart_${res.email}`, JSON.stringify(updatedCarts));
+    if (res) {
+      localStorage.setItem(`cart_${res.email}`, JSON.stringify(updatedCarts));
+    }
   };
 
   // 장바구니로 상품을 전달하는 함수

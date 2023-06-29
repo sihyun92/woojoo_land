@@ -5,6 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import UserTitle from "../../components/user/UserTitle";
 import UserCalendar, { TValuePiece } from "../../components/user/UserCalendar";
 import UserCollapsible from "../../components/user/UserCollapsible";
+import { useQuery } from "react-query";
 
 export interface IOrdersDetail {
   detailId: string;
@@ -42,9 +43,6 @@ export interface IOrdersDetailExtend extends IOrdersDetail {
 
 function OrderListPage() {
   useEffect(() => {
-    getOrders();
-  }, []);
-  useEffect(() => {
     filterOrders();
   });
 
@@ -59,10 +57,11 @@ function OrderListPage() {
   );
 
   // 주문 내역 불러오기
-  const getOrders = async () => {
-    const orderList = await orderDetailsAll();
-    typeof orderList === "string" ? setError(orderList) : setOrders(orderList);
-  };
+  useQuery("orderDetailsAll", orderDetailsAll, {
+    onSuccess: (res) => {
+      typeof res === "string" ? setError(res) : setOrders(res);
+    },
+  });
 
   // 캘린더 날짜 범위 내의 날짜들을 저장하는 배열 생성
   // 시작날짜와 끝 날짜를 매개변수로 받아 변수에 저장

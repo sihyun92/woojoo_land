@@ -1,10 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { check, userUpdate } from "../../lib/API/userAPI";
+import { userUpdate } from "../../lib/API/userAPI";
 import UserTitle from "./UserTitle";
 import GrayInput from "../common/GrayInput";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
+import { ICheckData } from "../common/Header";
+import { useQueryClient } from "react-query";
 
 function Settings() {
   const [email, setEmail] = useState("");
@@ -21,10 +23,6 @@ function Settings() {
   const [imgName, setImgName] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getEmailAndImg();
-  }, []);
-
   // 수정 폼 제출시 마다 result에 '수정'이라는 string이 포함되어 있지 않으면
   // error로 취급하고 아니면 ok로 취급
   // result가 변하고 2.5초 뒤에 result를 초기화해 메시지가 사라지게 처리
@@ -37,12 +35,13 @@ function Settings() {
     }, 2500);
   }, [result]);
 
-  // emailr과 프로필 이미지 불러오기
-  const getEmailAndImg = async () => {
-    const res = await check();
+  // 헤더에서 캐싱된 데이터에서 email과 프로필 이미지 불러오기
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
+  if (res && res.profileImg !== profileImg && res.email !== email) {
     setEmail(res.email);
-    setOriginalImg(res.profileImg);
-  };
+    setOriginalImg(res.profileImg as string);
+  }
 
   // 폼을 제출하면 유저정보를 수정하고 error 여부를 판단한다.
   // 두 비밀번호 input중 하나만 입력한 경우, 에러 메시지 저장
@@ -72,7 +71,10 @@ function Settings() {
           oldPassword: "",
           newPassword: "",
         });
-        setTimeout(() => navigate("/user"), 1200);
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 1200);
       }
     }
   };

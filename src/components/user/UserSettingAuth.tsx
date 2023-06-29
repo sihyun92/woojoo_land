@@ -9,7 +9,8 @@ import GrayInput from "../common/GrayInput";
 import UserTitle from "./UserTitle";
 import styled from "styled-components";
 import Button from "../common/Button";
-import { check } from "../../lib/API/userAPI";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../common/Header";
 
 interface ISettingProps {
   setIsChecked: Dispatch<SetStateAction<boolean>>;
@@ -32,24 +33,28 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
     username: "KDT5_TeamAirPod8",
   };
 
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
+
   // login API를 변형해 비밀번호 인증용 함수로 구현
   // 로그인 인증 함수인 check를 사용해 현재 로그인 된 토큰에서 email 정보를 추출
   // 로그인용 엔드포인트에 추출한 email을 전달하고 비밀번호는 사용자가 직접 입력
   const getAuth = async (password: string) => {
-    const userInfo = await check();
-    const response = await fetch(
-      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          email: userInfo.email,
-          password,
-        }),
-      },
-    );
-    const result = await response.json();
-    return result;
+    if (res) {
+      const response = await fetch(
+        "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/login",
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            email: res.email,
+            password,
+          }),
+        },
+      );
+      const result = await response.json();
+      return result;
+    }
   };
 
   // 폼 제출시 비밀번호 인증 함수 동작

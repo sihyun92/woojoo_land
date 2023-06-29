@@ -3,16 +3,11 @@ import styled from "styled-components";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  ChangeEventHandler,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import { check, logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 import MainSearched from "../main/MainSearched";
+import { useQuery } from "react-query";
 
 interface IMainPageProps {
   username: string;
@@ -21,6 +16,12 @@ interface IMainPageProps {
   inputText: string;
   clickTagHandler: (tag: string) => void;
   searchHandler: ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface ICheckData {
+  email: string;
+  displayName: string;
+  profileImg: string | null;
 }
 
 function Header({
@@ -38,19 +39,20 @@ function Header({
   const ADMIN_NAME = process.env.REACT_APP_DISPLAY_NAME;
   const [isFocused, setIsFocused] = useState(false);
 
-  useEffect(() => {
-    getUserInfo();
+  // useQuery를 사용해 현제 사용자를 인증. 해당 데이터를 캐싱
+  // 비동기 함수가 성공적으로 동작 완료되면 유저명과 프로필 사진을 state로 전달
+  // 관리자 권한 부여 여부 판단
+  // staleTime으로 캐싱된 데이터의 유효시간을 1000ms로 설정
+  useQuery("check", check, {
+    onSuccess: (res) => {
+      setUsername(res.displayName);
+      setUserImg(res.profileImg);
+
+      res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME
+        ? setIsAdmin(true)
+        : setIsAdmin(false);
+    },
   });
-
-  const getUserInfo = async () => {
-    const res = await check();
-    setUsername(res.displayName);
-    setUserImg(res.profileImg);
-
-    res.email === ADMIN_EMAIL && res.displayName === ADMIN_NAME
-      ? setIsAdmin(true)
-      : setIsAdmin(false);
-  };
 
   const onLogout = async () => {
     await logout();

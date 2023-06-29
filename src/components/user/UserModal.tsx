@@ -6,12 +6,12 @@ import {
   SetStateAction,
   MouseEvent,
   useState,
-  useEffect,
   ChangeEvent,
   FormEvent,
 } from "react";
 import { accountConnect, accountList } from "../../lib/API/userAPI";
 import { AiOutlineClose } from "react-icons/ai";
+import { useQuery } from "react-query";
 
 interface IModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,16 +34,11 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   const [checkedCode, setCheckedCode] = useState("");
   const [accounts, setAccounts] = useState([]);
 
-  // 사용 가능한 계좌 최초 렌더링
-  useEffect(() => {
-    getUsableAccounts();
-  }, []);
-
-  // 사용 가능한 계좌 목록 조회
-  const getUsableAccounts = async () => {
-    const res = await accountList();
-    setAccounts(res);
-  };
+  useQuery("accountList", accountList, {
+    onSuccess: (res) => {
+      setAccounts(res);
+    },
+  });
 
   // 폼 제출 없이 모달 종료하는 버튼
   const onClose = (event: MouseEvent<HTMLButtonElement>) => {

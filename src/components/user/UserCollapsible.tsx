@@ -8,6 +8,7 @@ import {
   IOrdersDetailExtend,
 } from "../../pages/user/OrderListPage";
 import { Dispatch, SetStateAction } from "react";
+import { useQuery } from "react-query";
 
 interface ICollapsibleProps {
   index: number;
@@ -28,14 +29,19 @@ function UserCollapsible({
   // new Map 을 이용한 아코이던 정보 처리
   // id로 된 key를 포함한 객체가 존재하면 해당 객체를 삭제 (아코디언 닫기)
   // 없으면 key가 id이고 value가 res 객체인 객체를 detailsMap으로 전달
-  const onAccordion = async (id: string) => {
-    if (detailsMap.has(id)) {
-      detailsMap.delete(id);
+  const onAccordion = async () => {
+    if (detailsMap.has(order.detailId)) {
+      detailsMap.delete(order.detailId);
     } else {
-      const res = await orderDetail(id);
-      setDetailsMap(new Map(detailsMap.set(id, res)));
+      if (!isLoading && data) {
+        setDetailsMap(new Map(detailsMap.set(order.detailId, data)));
+      }
     }
   };
+
+  const { data, isLoading } = useQuery(["orderDetail", order.detailId], () =>
+    orderDetail(order.detailId),
+  );
 
   // 구매 확정 버튼
   // 확인 모달 등장 후 구매 확정 처리
@@ -78,7 +84,7 @@ function UserCollapsible({
       key={index}
       easing="ease-in-out"
       transitionTime={200}
-      onOpen={() => onAccordion(order.detailId)}
+      onOpen={onAccordion}
       trigger={
         <OrderList>
           <Title>{order.product.title}</Title>

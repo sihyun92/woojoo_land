@@ -163,3 +163,9 @@
 - AccountPage 내 AccountList 영역 컴포넌트 분리
 - OrderListPage 내 Calendar 영역과 Collapsible 영역 컴포넌트 분리
 - likePage 내 LikeList 영억 컴포넌트 분리
+- React-Query Library를 사용해 페이지 내에서 중복 호출되는 함수 관리
+  - 한 페이지 내의 여러 컴포넌트에서 check 함수가 동시에 여러번 호출
+  - Header의 check 함수를 useQuery로 호출해 데이터를 캐싱
+  - 각 컴포넌트에서는 useQueryClient로 캐싱된 데이터를 받아와서 사용
+    - 데이터가 바뀌지 않았을 때는 캐싱된 데이터만을 받아 렌더링 하므로 컴포넌트 렌더링 속도가 빠름
+    - 같은 API 호출을 여러번 하지 않아 페이지 로드 성능 향상
