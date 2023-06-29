@@ -5,6 +5,7 @@ import { productsList, IProduct } from "../../lib/API/adminAPI";
 import Carousel from "../common/Carousel";
 import { IProductLike } from "../../lib/API/adminAPI";
 import { check } from "../../lib/API/userAPI";
+import { theme } from "../../styles/theme";
 
 function MainShipList() {
   // 상품들을 담는 배열 선언
@@ -44,7 +45,7 @@ function MainShipList() {
     <>
       <Category>🚀 이달의 우주선 </Category>
       <Container>
-        <Carousel slides={4} color="black">
+        <Carousel slides={4} color={theme.colors.gray[5]}>
           {list.map((item) => {
             const liked = likedList.find((likeItem) => likeItem.id === item.id);
             const like = liked ? liked.like : false;
