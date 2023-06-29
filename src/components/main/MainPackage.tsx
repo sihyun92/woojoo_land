@@ -1,16 +1,33 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { theme } from "../../styles/theme";
 
 function MainPackage() {
+  const navigate = useNavigate();
+
+  const onToMarsPackage = () => {
+    navigate("/product/52Zq0J0MycRKvTkd0C80");
+  };
+  const onToRoundTrip = () => {
+    navigate("/product/uSInnvkln98h4oP5yOtj");
+  };
   return (
     <>
       <Category>🌕 패키지 특가 상품</Category>
       <Container>
         <Wrapper>
-          <Package>이주 패키지 🛸</Package>
+          <Package
+            src="/images/PackageBanner1.png"
+            alt=""
+            onClick={onToMarsPackage}
+          />
         </Wrapper>
         <Wrapper>
-          <Package>왕복권 🚀</Package>
+          <Package
+            src="/images/PackageBanner2.png"
+            alt=""
+            onClick={onToRoundTrip}
+          />
         </Wrapper>
       </Container>
     </>
@@ -29,25 +46,13 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div``;
 
-const Package = styled.div`
-  position: relative;
-  display: flex;
-  width: 592px;
-  height: 285px;
-  background-color: ${theme.colors.black};
+const Package = styled.img`
+  display: block;
   border-radius: 1.25rem;
   color: ${theme.colors.orange.main};
-  font-size: 3rem;
   align-items: center;
   justify-content: center;
-
-  > svg {
-    position: absolute;
-    font-size: 1.25rem;
-    color: ${theme.colors.white};
-    right: 0.5rem;
-    bottom: 0.5rem;
-  }
+  cursor: pointer;
 `;
 
 export default MainPackage;

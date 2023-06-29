@@ -4,18 +4,15 @@ import "slick-carousel/slick/slick-theme.css";
 
 interface ICarouselProps {
   children: React.ReactNode;
-  className?: string;
-  autoplay?: boolean | number;
-  speed?: number;
-  loop?: boolean;
+  slides: number;
 }
 
-function Carousel({ children, autoplay, speed, loop }: ICarouselProps) {
+function Carousel({ children, slides }: ICarouselProps) {
   const settings: Settings = {
     dots: true,
     infinite: true,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: slides,
     autoplay: true,
     responsive: [
       {

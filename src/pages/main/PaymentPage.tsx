@@ -94,7 +94,7 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
 
                 <ProductQty>
                   <span>상품 개수</span>
-                  {` ${quantity} 개`}
+                  {`총 ${quantity} 개`}
                 </ProductQty>
               </DetailWrapper>
             </PaymentDetail>
@@ -208,6 +208,7 @@ const UsableAccount = styled.li`
   height: 22px;
   width: 254.5px;
   list-style: none;
+  margin-bottom: 0.5rem;
 
   input {
     margin-right: 0.5rem;

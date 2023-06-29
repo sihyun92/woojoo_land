@@ -6,7 +6,7 @@ function StationPage() {
   const title = "우주 정거장";
   const [list, setList] = useState<IProduct[]>([]);
   const stationList = list.filter((value) =>
-    value.tags?.includes("우주정거장"),
+    value.tags?.includes("우주 정거장"),
   );
 
   useEffect(() => {

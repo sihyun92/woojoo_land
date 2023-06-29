@@ -106,8 +106,10 @@ function ProductPage() {
   return (
     <Container>
       <PhotoWrapper>
-        {product?.photo && <img src={product?.photo} alt="Detailed" />}
-        {!product?.photo && (<img src="/images/Detailed.png" alt="기본 이미지" />)}
+        <img
+          src={product ? product.photo : "/images/Detailed.png"}
+          alt="Detailed"
+        />
       </PhotoWrapper>
       <DetailWrapper>
         <TitleWrapper>
