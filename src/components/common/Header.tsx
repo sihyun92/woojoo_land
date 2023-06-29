@@ -1,7 +1,8 @@
 import { theme } from "../../styles/theme";
 import styled from "styled-components";
 import { IoMdHeart } from "react-icons/io";
-import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
+import { HiShoppingCart } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
 import { check, logout } from "../../lib/API/userAPI";
@@ -139,7 +140,7 @@ function Header({
                 <IoMdHeart />
               </Link>
               <Link to="/cart">
-                <MdOutlineShoppingCart />
+                <HiShoppingCart />
               </Link>
               <Link to="/user">
                 <UserImg>
@@ -160,22 +161,22 @@ function Header({
 }
 
 const HeaderContainer = styled.header`
-  height: 9.375rem;
   display: flex;
-  justify-content: center;
+  height: 9.375rem;
   align-items: center;
+  justify-content: center;
   background-color: #ff6214;
   border-bottom: 1px solid ${theme.colors.gray};
 `;
 
 const HeaderWrapper = styled.div`
-  max-width: 75rem;
   width: 75rem;
   height: 5rem;
   display: flex;
+  max-width: 75rem;
   position: relative;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const Logo = styled(Link)`
@@ -185,99 +186,130 @@ const Logo = styled(Link)`
 const Search = styled.div`
   display: flex;
   position: relative;
+  transition: 0.1s;
+  border-radius: 0.625rem;
   justify-content: center;
-
   svg {
-    color: ${theme.colors.orange.main};
-    font-size: 1.75rem;
-    color: ${theme.colors.orange.main};
-    font-size: 1.75rem;
-    position: absolute;
     right: 0.75rem;
-    top: calc((3rem - 1.8rem) / 2);
     cursor: pointer;
+    position: absolute;
+    font-size: 1.75rem;
+    font-size: 1.75rem;
+    top: calc((3rem - 1.8rem) / 2);
+    color: ${theme.colors.orange.main};
+  }
+  &:hover{
+    box-shadow: 0px 3px 10px 3px #00000030;
   }
 `;
 
 const SearchInput = styled.input`
-  width: 26.25rem;
+  border: none;
   height: 3rem;
-  border: none; // 검색바 선 삭제
-  border-radius: 0.625rem;
+  width: 26.25rem;
   padding-left: 1rem;
+  border-radius: 0.625rem;
   &:focus {
     outline: none;
+    box-shadow: 0px 2px 10px 2px #00000046;
   }
 `;
 
 const User = styled.div`
-  flex-direction: column;
-  display: flex;
   width: 30%;
   height: 66px;
+  display: flex;
+  flex-direction: column;
 `;
+
 const Auth = styled.div`
+  gap: 1.25rem;
+  display: flex;
   justify-content: end;
   color: ${theme.colors.white};
-  display: flex;
-  gap: 1.25rem;
+  h2 {
+    transition: 0.1s;
+    &:hover {
+      font-weight: 700;
+      color: ${theme.colors.orange.pressed};
+    }
+  }
 `;
 
 const AdminLink = styled(Link)`
+  width: 76px;
   display: flex;
-  width: 100px;
-  height: 1.25rem;
-  font-size: 11px;
-  transition: 0.2s;
+  font-size: 10px;
+  font-weight: 700;
+  transition: 0.1s;
   align-items: center;
   border-radius: 1.25rem;
   justify-content: center;
-  color: ${(props) => props.theme.colors.orange.main};
-  background-color: ${(props) => props.theme.colors.white};
-
+  color: ${theme.colors.orange.main};
+  border: 1px solid ${theme.colors.white};
+  background-color: ${theme.colors.white};
   &:hover {
-    color: ${(props) => props.theme.colors.white};
-    border: 1px solid ${(props) => props.theme.colors.white};
-    background-color: ${(props) => props.theme.colors.orange.main};
+    h2 {
+      color: ${theme.colors.white};
+    }
+    color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.orange.pressed};
+    background-color: ${theme.colors.orange.pressed};
+    transform: scale(1.02);
   }
 `;
 
 const LogoutBtn = styled.button`
-  color: ${theme.colors.white};
-  background: none;
-  cursor: pointer;
+  padding: 0;
   border: none;
   height: 1rem;
-  padding: 0;
+  cursor: pointer;
+  font-size: 16px;
+  background: none;
+  transition: 0.1s;
+  color: ${theme.colors.white};
+  &:hover {
+    font-weight: 700;
+    color: ${theme.colors.orange.pressed};
+  }
 `;
 
 const LinkWrapper = styled.div`
   gap: 1rem;
-  justify-content: end;
-  margin-top: 1.25rem;
   display: flex;
+  margin-top: 1.25rem;
   align-items: center;
-
+  justify-content: end;
   > a {
-    font-size: 30px;
     margin: auto 0;
-
+    font-size: 30px;
     > svg {
-      color: ${theme.colors.white};
       font-size: 24px;
+      transition: 0.1s;
+      margin-top: 10px;
+      margin-right: 6px;
+      color: ${theme.colors.white};
+      &:hover{
+        transform: scale(1.2);
+        color: ${theme.colors.orange.pressed}
+      }
     }
   }
 `;
 
 const UserImg = styled.div`
-  background-color: ${theme.colors.white};
-  border-radius: 100%;
-  display: flex;
-  height: 40px;
   width: 40px;
-
+  height: 40px;
+  display: flex;
+  transition: 0.1s;
+  border-radius: 100%;
+  background-color: ${theme.colors.white};
   img {
     border-radius: 100%;
+  }
+  &:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 2px 6px 2px #00000046;
   }
 `;
 

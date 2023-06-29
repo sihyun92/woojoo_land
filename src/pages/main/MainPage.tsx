@@ -18,7 +18,7 @@ function MainPage() {
 }
 
 const Container = styled.div`
-  padding-top: 2rem;
+  padding-top: 18px;
 `;
 const Main = styled.main`
   width: 100%;
