@@ -43,7 +43,7 @@ function MainSolarList() {
 
   return (
     <>
-      <Category>🪐 신상 태양계 행성 </Category>
+      <Category><div/>신상 태양계 행성 </Category>
       <Container>
         <Carousel slides={4} color={theme.colors.gray[5]}>
           {list.map((item) => {
@@ -69,15 +69,25 @@ function MainSolarList() {
 }
 
 const Category = styled.h1`
-  font-size: 2.625rem;
+  display: flex;
   font-weight: bold;
+  font-size: 2.625rem;
   margin-bottom: 2rem;
+  letter-spacing: -2px;
+  font-family: 'GmarketSans';
+  div{
+    width: 8px;
+    height: 40px;
+    display: flex;
+    margin-right: 10px;
+    background-color: ${theme.colors.orange.main};
+  }
 `;
 
 const Container = styled.div`
   display: flex;
+  padding-left: 13px;
   justify-content: center;
-
   .slick-slider {
     width: 75rem;
   }
@@ -90,6 +100,29 @@ const Container = styled.div`
     height: 50px;
     top: 150px;
   }
+
+  .slick-dots {
+    li{
+      display: none;
+    }
+  }
+
+  .slick-prev {
+    opacity: 0;
+    transition: 0.1s;
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+
+  .slick-next {
+    opacity: 0;
+    transition: 0.1s;
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+
 `;
 
 export default MainSolarList;
