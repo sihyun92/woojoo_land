@@ -193,6 +193,7 @@ function MainCartListBtn({
         <BiPlusCircle onClick={onIncrease}>+</BiPlusCircle>
       </ButtonWrapper>
       <Price>{`총 금액: ${formatDollar(price * itemQty)}`}</Price>
+
       <Delete onClick={onRemove}>X</Delete>
     </>
   );

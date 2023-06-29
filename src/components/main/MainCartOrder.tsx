@@ -17,7 +17,12 @@ function MainCartOrder({ isChecked }: IChecked) {
     0,
   );
 
-  const totalPrice = orderPrice + 3000;
+  const discountedPrice = cartItem.reduce(
+    (acc, item) => acc + item.price * (item.discountRate / 100) * item.quantity,
+    0,
+  );
+
+  const totalPrice = orderPrice + 3000 - discountedPrice;
   const navigate = useNavigate();
   const onClick = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -33,20 +38,21 @@ function MainCartOrder({ isChecked }: IChecked) {
         <hr />
         <Calculator>
           <div>
-            <span>주문 금액</span>
+            <span>주문 금액(A)</span>
             {formatDollar(orderPrice)}
           </div>
           <div>
-            <span>할인 금액</span>
+            <span>할인 금액(B)</span>
+            {formatDollar(discountedPrice)}
           </div>
           <div>
-            <span>로켓배송비</span>
+            <span>로켓배송비(C)</span>
             <span>{formatDollar(3000)}</span>
           </div>
         </Calculator>
         <hr />
         <TotalPrice>
-          <span>총 결제 금액</span>
+          <span>총 결제 금액(A-B+C)</span>
           {formatDollar(totalPrice)}
         </TotalPrice>
       </OrderWrapper>
