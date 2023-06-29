@@ -58,16 +58,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header
-        username={username}
-        setUsername={setUsername}
-        clickedTag={clickedTag}
-        inputText={inputText}
-        clickTagHandler={clickTagHandler}
-        searchHandler={searchHandler}
-      />
-      {/* <Loading /> */}
       <Main>
+        <Header
+          username={username}
+          setUsername={setUsername}
+          clickedTag={clickedTag}
+          inputText={inputText}
+          clickTagHandler={clickTagHandler}
+          searchHandler={searchHandler}
+        />
+        {/* <Loading /> */}
         <Inner>
           <Routes>
             {/* 메인 */
@@ -128,19 +128,24 @@ function App() {
             </Route>
           </Routes>
         </Inner>
+        <Footer />
       </Main>
-      <Footer />
     </BrowserRouter>
   );
 }
 
 const Main = styled.main`
   width: 100%;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 `;
 
 const Inner = styled.div`
-  max-width: 75rem;
   width: 75rem;
+  flex-grow: 1;
+  max-width: 75rem;
   margin: 3.5rem auto 0rem;
 `;
+
 export default App;

@@ -150,14 +150,16 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
             );
           })
         : "장바구니에 상품이 없습니다"}
-      <SelectDelete
-        disabled={!isChecked}
-        type="button"
-        onClick={deleteChecked}
-        orange
-      >
-        선택 삭제
-      </SelectDelete>
+      {carts.length && (
+        <SelectDelete
+          disabled={!isChecked}
+          type="button"
+          onClick={deleteChecked}
+          orange
+        >
+          선택 삭제
+        </SelectDelete>
+      )}
     </Ul>
   );
 }
