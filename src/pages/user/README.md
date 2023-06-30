@@ -190,3 +190,7 @@
 - Header의 check 함수 refetch 조건 추가
   - 로그인 시 username의 변화를 감지해 refetch
   - 로그아웃 시 refetch
+- CartPage 접근시 로그인 여부 확인
+  - 비 로그인시 메인 화면으로 이동
+- ProductPage의 DetailWrapper가 스크롤에 따라 움직이도록 구현
+- API 함수에 try catch문 적용 및 console.log 제거
