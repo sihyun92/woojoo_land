@@ -29,7 +29,7 @@ import CartPage from "./pages/main/CartPage";
 import PaymentPage from "./pages/main/PaymentPage";
 import AllPage from "./pages/main/tagged/AllPage";
 import SolarPage from "./pages/main/tagged/SolarPage";
-import StationPage from "./pages/main/tagged/StationPage";
+import OnSalePage from "./pages/main/tagged/OnSalePage";
 import FoodPage from "./pages/main/tagged/FoodPage";
 import ShipPage from "./pages/main/tagged/ShipPage";
 import SuitPage from "./pages/main/tagged/SuitPage";
@@ -79,8 +79,8 @@ function App() {
                   <AllPage />
                 ) : clickedTag === "#태양계 부동산" ? (
                   <SolarPage />
-                ) : clickedTag === "#우주 정거장" ? (
-                  <StationPage />
+                ) : clickedTag === "#특가 상품" ? (
+                  <OnSalePage />
                 ) : clickedTag === "#우주복" ? (
                   <SuitPage />
                 ) : clickedTag === "#우주 식량" ? (

@@ -56,7 +56,6 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
       Object.entries(amount).forEach(([title, quantity]) => {
         // [key, value] - [title, quantity]
         const cartItem = cartItems.find((item) => item.title === title);
-        console.log(cartItems);
         if (cartItem) {
           const { id } = cartItem;
           dispatch(
@@ -153,8 +152,8 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
               </li>
             );
           })
-        : "장바구니에 상품이 없습니다"}
-      {carts.length && (
+        : "장바구니에 상품이 없습니다."}
+      {carts.length ? (
         <SelectDelete
           disabled={!isChecked}
           type="button"
@@ -163,6 +162,8 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
         >
           선택 삭제
         </SelectDelete>
+      ) : (
+        ""
       )}
     </Ul>
   );

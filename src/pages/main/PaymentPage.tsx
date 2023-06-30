@@ -29,14 +29,13 @@ interface IAccounts {
 function PaymentPage({ username, setUsername }: IPaymentProps) {
   const [userEmail, setUserEmail] = useState("");
   const [myAccounts, setMyAccounts] = useState<IAccounts>();
-  const [productId, setProductId] = useState<string[]>([]);
   const [accountId, setAccountId] = useState("");
-
   const buyItem = useSelector((state: TRootState) => state.payment);
   const cartItem = useSelector((state: TRootState) => state.cartItem);
   const items = buyItem.concat(cartItem);
-
   const title = items.length > 0 ? items[0].title : "";
+  const productId: string[] = [];
+
   const quantity = items.reduce(
     (acc, cur) => (acc + cur.quantity) as number,
     0,
@@ -47,12 +46,17 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
     0,
   );
 
+  const discountedPrice = items.reduce(
+    (acc, item) => acc + item.price * (item.discountRate / 100) * item.quantity,
+    0,
+  );
+
   useEffect(() => {
     getUserInfo();
     getUsableAccounts();
 
     items.map((item) => productId.push(item.productId));
-  }, []);
+  });
 
   const getUserInfo = async () => {
     const res = await check();
@@ -141,6 +145,7 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
             price={price}
             productId={productId}
             accountId={accountId}
+            discountedPrice={discountedPrice}
           />
         </Wrapper>
       </Container>
