@@ -195,3 +195,8 @@
 - ProductPage의 DetailWrapper가 스크롤에 따라 움직이도록 구현
 - API 함수에 try catch문 적용 및 console.log 제거
 - 계좌 추가시 은행을 선택하면 랜덤으로 계좌번호를 생성하도록 로직 구현
+- CONFLICT 이후 pull을 받지 않은 구버전이 원본 repo에 덮어씌워진 문제 해결
+  - git reset --hard로 CONFLICT 이전 시점으로 복귀
+  - git push -f 로 해당 시점의 커밋으로 원본 repo에 덮어씌움
+  - 모든 조원들의 기존 fork repo를 삭제한 후 다시 fork 및 clone
+  - 다시 CONFLICT 처리 후 최신 버전으로 PR 및 merge
