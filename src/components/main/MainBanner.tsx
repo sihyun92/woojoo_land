@@ -41,25 +41,50 @@ function Banner() {
 
 const Container = styled.div`
   width: 100vw;
+  display: flex;
   color: white;
   text-align: center;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   background-color: ${theme.colors.black};
 
   .slick-slider {
-    width: 100rem;
+    width: 1250px;
+    
   }
 
   .slick-list {
+    
+  }
+
+  .slick-dots {
+    position: absolute;
+    bottom: 12px;
   }
 
   .slick-arrow {
     width: 5rem;
     height: 4rem;
-    top: 280px;
+    top: 210px;
   }
+
+  .slick-prev {
+    opacity: 0;
+    transition: 0.2s;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  .slick-next {
+    opacity: 0;
+    transition: 0.2s;
+    right: -68px;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
 `;
 
 const Image = styled.img`
