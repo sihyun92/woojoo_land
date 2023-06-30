@@ -50,8 +50,6 @@ function ProductPage() {
     }
   };
 
-  console.log(window.scrollY);
-
   // 최초 LocalStorage에 접근하여, 찜 목록에 있는 상품의 like 값(true) 지정
   // 단일 상품 상세 조회
   useEffect(() => {
