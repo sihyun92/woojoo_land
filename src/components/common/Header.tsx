@@ -58,6 +58,7 @@ function Header({
         ? setIsAdmin(true)
         : setIsAdmin(false);
     },
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
