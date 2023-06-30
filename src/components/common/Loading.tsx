@@ -2,11 +2,6 @@ import { BounceLoader } from "react-spinners";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 
-interface ILoadingProps {
-  startLoading: boolean;
-  finishLoading: boolean;
-}
-
 function Loading() {
   return (
     <Wrapper>
