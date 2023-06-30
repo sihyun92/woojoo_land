@@ -16,6 +16,7 @@ function ProductPage() {
   let [quantity, setQuantity] = useState<number>(1);
   const [product, setProduct] = useState<IProductDetail>();
   const [like, setLike] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   // 최초 LocalStorage에 접근하여, 찜 목록에 있는 상품의 like 값(true) 지정
   // 단일 상품 상세 조회
@@ -56,15 +57,17 @@ function ProductPage() {
   const onLike = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    // like toggle
-    setLike(!like);
+    setLike((prevLike) => !prevLike); // like 토글
+    const item = await findProduct(); // item 상세 조회
 
-    // item 상세 조회
-    const item = await findProduct();
+    if (item) postLike(item);
 
-    if (item) {
-      postLike(item);
-    }
+    setIsAnimating(true);
+
+    // 0.4초 후에 resolve 함수를 호출하여 Promise를 완료
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    setIsAnimating(false);
   };
 
   const findProduct = async () => {
@@ -103,6 +106,9 @@ function ProductPage() {
     }
   };
 
+  const discountedPrice =
+    (product?.price as number) * (1 - (product?.discountRate as number) / 100);
+
   return (
     <Container>
       <PhotoWrapper>
@@ -113,12 +119,16 @@ function ProductPage() {
       </PhotoWrapper>
       <DetailWrapper>
         <TitleWrapper>
-          <Title>{product?.title} </Title>
-          <LikeButton onClick={onLike} selected={like}>
+          <Title>{product?.title}</Title>
+          <LikeButton
+            onClick={onLike}
+            selected={like}
+            isAnimating={isAnimating}
+          >
             {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
           </LikeButton>
         </TitleWrapper>
-        <Price>{formatDollar(product?.price)}</Price>
+        <Price>{formatDollar(discountedPrice)}</Price>
         <Desc>{product?.description}</Desc>
         <hr />
         <PurchaseWrapper>
@@ -129,7 +139,7 @@ function ProductPage() {
           <PriceAll>
             <span>총 상품 금액</span>
             <Price>
-              {product?.price ? formatDollar(product?.price * quantity) : 0}
+              {product?.price ? formatDollar(discountedPrice * quantity) : 0}
             </Price>
           </PriceAll>
           <ButtonWrapper>
@@ -169,6 +179,7 @@ const Title = styled.h1`
 
 const LikeButton = styled.button<{
   selected: boolean;
+  isAnimating: boolean;
 }>`
   background: none;
   border: none;
@@ -178,6 +189,12 @@ const LikeButton = styled.button<{
     props.selected &&
     css`
       color: ${theme.colors.pink};
+    `}
+  ${(props) =>
+    props.isAnimating &&
+    css`
+      transform: scale(1.2);
+      transition: 0.4s;
     `}
 
   > svg {
