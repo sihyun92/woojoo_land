@@ -46,28 +46,30 @@ function UserAccountList({
 
   return (
     <AccountListBox>
-      {accounts
-        ? accounts.map((account: IAccount) => {
-            return (
-              <AccountList key={account.id}>
-                <AccountWrapper>
-                  <BankName>
-                    {account.bankName} [ {account.bankCode} ]
-                  </BankName>
-                  <AccountNumber>{account.accountNumber}</AccountNumber>
-                  <Balance>{formatDollar(account.balance)}</Balance>
-                </AccountWrapper>
-                <DelAccount
-                  onClick={(event) => {
-                    delAccount(event, account.id, account.bankName);
-                  }}
-                >
-                  <AiOutlineClose size="1.2rem" />
-                </DelAccount>
-              </AccountList>
-            );
-          })
-        : "연결된 계좌가 없습니다"}
+      {accounts.length ? (
+        accounts.map((account: IAccount) => {
+          return (
+            <AccountList key={account.id}>
+              <AccountWrapper>
+                <BankName>
+                  {account.bankName} [ {account.bankCode} ]
+                </BankName>
+                <AccountNumber>{account.accountNumber}</AccountNumber>
+                <Balance>{formatDollar(account.balance)}</Balance>
+              </AccountWrapper>
+              <DelAccount
+                onClick={(event) => {
+                  delAccount(event, account.id, account.bankName);
+                }}
+              >
+                <AiOutlineClose size="1.2rem" />
+              </DelAccount>
+            </AccountList>
+          );
+        })
+      ) : (
+        <ErrorMessage>연결된 계좌가 없습니다.</ErrorMessage>
+      )}
       <AddAccount onClick={newAccount} orange middleWidth>
         계좌 추가
       </AddAccount>
@@ -120,6 +122,13 @@ const DelAccount = styled.button`
   margin-left: 40px;
   background-color: transparent;
 `;
+
+const ErrorMessage = styled.span`
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: ${(props) => props.theme.colors.orange.main};
+`;
+
 const AddAccount = styled(Button)`
   font-size: 1rem;
   margin-top: 10px;
