@@ -3,7 +3,13 @@ import styled from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { MdOutlineShoppingCart, MdSearch } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ChangeEventHandler, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEventHandler,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { check, logout } from "../../lib/API/userAPI";
 import SubHeader from "./SubHeader";
 import MainSearched from "../main/MainSearched";
@@ -43,7 +49,7 @@ function Header({
   // 비동기 함수가 성공적으로 동작 완료되면 유저명과 프로필 사진을 state로 전달
   // 관리자 권한 부여 여부 판단
   // staleTime으로 캐싱된 데이터의 유효시간을 1000ms로 설정
-  useQuery("check", check, {
+  const { refetch } = useQuery("check", check, {
     onSuccess: (res) => {
       setUsername(res.displayName);
       setUserImg(res.profileImg);
@@ -52,8 +58,11 @@ function Header({
         ? setIsAdmin(true)
         : setIsAdmin(false);
     },
-    // refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, username]);
 
   const onLogout = async () => {
     await logout();
