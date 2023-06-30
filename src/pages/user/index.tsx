@@ -3,7 +3,6 @@ import UserNav from "../../components/user/UserNav";
 import OrderListPage from "./OrderListPage";
 import UserLayout from "../../components/user/UserLayout";
 import styled from "styled-components";
-import { check } from "../../lib/API/userAPI";
 import { useEffect, useState } from "react";
 import { ICheckData } from "../../components/common/Header";
 import { useQueryClient } from "react-query";
