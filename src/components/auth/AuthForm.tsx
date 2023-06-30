@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";

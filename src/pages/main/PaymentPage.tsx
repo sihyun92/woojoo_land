@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 import { TRootState } from "../../modules";
 import { formatDollar } from "../../lib/Function/commonFn";
 import MainPaymentOrder from "../../components/main/MainPaymentOrder";
-import { check, myAccount } from "../../lib/API/userAPI";
+import { myAccount } from "../../lib/API/userAPI";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../../components/common/Header";
+import { useNavigate } from "react-router-dom";
+
 interface IPaymentProps {
   username: string;
   setUsername: Dispatch<SetStateAction<string>>;
@@ -27,6 +31,8 @@ interface IAccounts {
 }
 
 function PaymentPage({ username, setUsername }: IPaymentProps) {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   const [userEmail, setUserEmail] = useState("");
   const [myAccounts, setMyAccounts] = useState<IAccounts>();
   const [accountId, setAccountId] = useState("");
@@ -35,6 +41,28 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
   const items = buyItem.concat(cartItem);
   const title = items.length > 0 ? items[0].title : "";
   const productId: string[] = [];
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+
+  // 유저 인증
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  // state가 false일시 alert와 함께 login페이지로 리디렉션
+  useEffect(() => {
+    if (!isLoggedIn) {
+      alert("로그인이 필요합니다.");
+      navigate("/auth/login");
+    }
+  }, [isLoggedIn, navigate]);
+
+  // 유저 인증함수. 유효한 유저가 아니면 state에 false를 반환
+  const checkUser = async () => {
+    if (typeof res === "string") {
+      setIsLoggedIn(false);
+    }
+  };
 
   const quantity = items.reduce(
     (acc, cur) => (acc + cur.quantity) as number,
@@ -54,24 +82,30 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
   useEffect(() => {
     getUserInfo();
     getUsableAccounts();
-
-    items.map((item) => productId.push(item.productId));
-  });
+  }, [accountId]);
 
   const getUserInfo = async () => {
-    const res = await check();
-    setUsername(res.displayName);
-    setUserEmail(res.email);
+    if (res) {
+      setUsername(res.displayName);
+      setUserEmail(res.email);
+    }
   };
 
   const getUsableAccounts = async () => {
     const res = await myAccount();
-    setMyAccounts(res);
+    if (res) {
+      setMyAccounts(res);
+    }
   };
 
   const onCheck = (accountId: string) => {
     setAccountId(accountId);
   };
+
+  items.forEach((item) => {
+    const quantity = item.quantity;
+    productId.push(...Array.from({ length: quantity }, () => item.productId));
+  });
 
   return (
     <>
@@ -120,7 +154,7 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
             <AccountDetail>
               <SubTitle>결제 수단 선택</SubTitle>
               <hr />
-              {myAccounts
+              {myAccounts?.accounts
                 ? myAccounts.accounts.map((account: IBank) => {
                     return (
                       <UsableAccount key={account.id}>
