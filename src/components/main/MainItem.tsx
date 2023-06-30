@@ -49,10 +49,10 @@ function MainCommet(props: IProductLike) {
 
             <PriceWrapper>
               <Discount>{props.discountRate}%</Discount>
-              <Price>
                 <Py>
                   {typeof props.tags === "object" ? formatUnit(props.tags) : ""}
                 </Py>
+              <Price>
                 {(props.discountRate as number) > 0
                   ? formatDollar(discountedPrice)
                   : formatDollar(fixedPrice)}
@@ -66,38 +66,44 @@ function MainCommet(props: IProductLike) {
 }
 
 const Container = styled.div`
-  width: 288px;
+  width: 275px;
+  transition: 0.1s;
+  &:hover{
+    transform: scale(0.98);
+  }
 `;
 
 const Commet = styled.div<{
   selected: boolean;
 }>`
-  width: 288px;
-  height: 288px;
+  width: 275px;
+  height: 275px;
   display: flex;
+  overflow: hidden;
   position: relative;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 30px;
   justify-content: center;
   background-color: ${theme.colors.black};
 
   > svg {
-    right: 0.5rem;
-    bottom: 0.5rem;
+    right: 13px;
+    bottom: 12px;
+    opacity: 0.3;
+    font-size: 24px;
     position: absolute;
-    font-size: 20px;
     color: ${theme.colors.white};
   }
 
   > img {
     width: 288px;
-    border-radius: 20px;
   }
 
   ${(props) =>
     props.selected &&
     css`
       > svg {
+        opacity: 1;
         color: ${theme.colors.pink};
       }
     `}
@@ -105,12 +111,15 @@ const Commet = styled.div<{
 
 const Desc = styled.div`
   display: flex;
-  margin: 0.5rem 1rem 0 0;
+  margin: 0 8px 0 8px;
   flex-direction: column;
 `;
 
 const Title = styled.div`
-  font-size: 2.5rem;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 10px;
+  font-family: 'GmarketSans';
 `;
 
 const PrevPrice = styled.div`
@@ -120,29 +129,39 @@ const PrevPrice = styled.div`
 `;
 
 const Py = styled.div`
-  display: flex;
-  font-size: 1rem;
-  margin-right: 0.5rem;
-  align-items: end;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: right;
+  margin-right: 10px;
 `;
 
 const PriceWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const Discount = styled.div`
   display: flex;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  align-items: end;
+  padding-top: 5px;
+  letter-spacing: -3px;
   color: ${theme.colors.orange.main};
-  align-items: bottom;
+  div {
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 4px;
+    padding-bottom: 5px;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
+  font-size: 24px;
+  margin-top: 4px;
+  font-weight: 700;
+  letter-spacing: -1px;
 `;
 
 export default MainCommet;

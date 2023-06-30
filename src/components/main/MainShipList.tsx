@@ -43,7 +43,7 @@ function MainShipList() {
 
   return (
     <>
-      <Category>🚀 이달의 우주선 </Category>
+      <Category><div/>이달의 우주선 </Category>
       <Container>
         <Carousel slides={4} color={theme.colors.gray[5]}>
           {list.map((item) => {
@@ -69,15 +69,26 @@ function MainShipList() {
 }
 
 const Category = styled.h1`
+  margin: 6rem 0 2rem;
   font-size: 2.625rem;
   font-weight: bold;
-  margin: 5rem 0 2rem;
+  letter-spacing: -2px;
+  font-family: 'GmarketSans';
+  display: flex;
+  div{
+    background-color: ${theme.colors.orange.main};
+    width: 8px;
+    height: 40px;
+    margin-right: 10px;
+    display: flex;
+  }
 `;
 
 const Container = styled.div`
   display: flex;
+  padding-left: 13px;
+  margin-bottom: 50px;
   justify-content: center;
-
   .slick-slider {
     width: 75rem;
   }
@@ -89,6 +100,28 @@ const Container = styled.div`
     width: 50px;
     height: 50px;
     top: 150px;
+  }
+
+  .slick-dots {
+    li{
+      display: none;
+    }
+  }
+
+  .slick-prev {
+    opacity: 0;
+    transition: 0.1s;
+    &:hover {
+      opacity: 0.4;
+    }
+  }
+
+  .slick-next {
+    opacity: 0;
+    transition: 0.1s;
+    &:hover {
+      opacity: 0.4;
+    }
   }
 `;
 

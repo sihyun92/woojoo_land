@@ -13,7 +13,7 @@ function MainPackage() {
   };
   return (
     <>
-      <Category>🌕 패키지 특가 상품</Category>
+      <Category><div/>패키지 특가 상품</Category>
       <Container>
         <Wrapper>
           <Package
@@ -35,24 +35,43 @@ function MainPackage() {
 }
 
 const Category = styled.h1`
-  font-size: 2.625rem;
+  display: flex;
   font-weight: bold;
-  margin: 5rem 0 2rem;
+  margin: 6rem 0 2rem;
+  font-size: 2.625rem;
+  letter-spacing: -2px;
+  font-family: 'GmarketSans';
+  div{
+    width: 8px;
+    height: 40px;
+    display: flex;
+    margin-right: 10px;
+    background-color: ${theme.colors.orange.main};
+  }
 `;
 const Container = styled.div`
   display: flex;
   width: 1200px;
+  padding-left: 13px;
+  padding-right: 13px;
   justify-content: space-between;
 `;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  transition: 0.1s;
+  &:hover {
+    transform: scale(0.98);
+  }
+`;
 
 const Package = styled.img`
-  display: block;
-  border-radius: 1.25rem;
-  color: ${theme.colors.orange.main};
-  align-items: center;
-  justify-content: center;
+  display: flex;
   cursor: pointer;
+  width: 575px;
+  align-items: center;
+  border-radius: 1.25rem;
+  justify-content: center;
+  color: ${theme.colors.orange.main};
+
 `;
 
 export default MainPackage;
