@@ -194,3 +194,4 @@
   - 비 로그인시 메인 화면으로 이동
 - ProductPage의 DetailWrapper가 스크롤에 따라 움직이도록 구현
 - API 함수에 try catch문 적용 및 console.log 제거
+- 계좌 추가시 은행을 선택하면 랜덤으로 계좌번호를 생성하도록 로직 구현
