@@ -5,11 +5,16 @@ import UserLayout from "../../components/user/UserLayout";
 import styled from "styled-components";
 import { check } from "../../lib/API/userAPI";
 import { useEffect, useState } from "react";
+import { ICheckData } from "../../components/common/Header";
+import { useQueryClient } from "react-query";
 
 function UserPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(true);
+
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
 
   // 유저 인증
   useEffect(() => {
@@ -26,7 +31,6 @@ function UserPage() {
 
   // 유저 인증함수. 유효한 유저가 아니면 state에 false를 반환
   const checkUser = async () => {
-    const res = await check();
     if (typeof res === "string") {
       setIsChecked(false);
     }

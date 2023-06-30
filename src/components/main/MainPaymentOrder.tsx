@@ -2,23 +2,49 @@ import { formatDollar } from "../../lib/Function/commonFn";
 import styled from "styled-components";
 import Button from "../common/Button";
 import { theme } from "../../styles/theme";
-import { orderApply } from "../../lib/API/userAPI";
+import { check, orderApply } from "../../lib/API/userAPI";
 import { useNavigate } from "react-router-dom";
 
 interface IPaymentOrder {
   price: number;
   productId: string[];
   accountId: string;
+  discountedPrice: number;
 }
 
-function MainPaymentOrder({ price, productId, accountId }: IPaymentOrder) {
-  const navigator = useNavigate();
-  const onPayment = () => {
-    for (let i = 0; i < productId.length; i++) {
-      orderApply(productId[i], accountId);
+function MainPaymentOrder({
+  price,
+  productId,
+  accountId,
+  discountedPrice,
+}: IPaymentOrder) {
+  const navigate = useNavigate(); // 내비게이터
+  // 결제 버튼 onClick 이벤트 함수
+  const onPayment = async () => {
+    // 결제 계좌가 성공적으로 선택되었을 때
+    if (accountId) {
+      // 제품 구매 신청
+      for (let i = 0; i < productId.length; i++) {
+        orderApply(productId[i], accountId);
+      }
+      const confirm = window.confirm(
+        "결제가 완료되었습니다. 주문내역으로 이동하시겠습니까?",
+      );
+
+      // 확인 버튼 click 여부
+      if (confirm) {
+        navigate("/user");
+      } else {
+      }
+
+      const res = await check();
+      localStorage.removeItem(`cart_${res.email}`);
+
+      // 최종적으로 결제 후 페이지 리로드
+      window.location.reload();
+    } else {
+      alert("결제 계좌를 선택하세요.");
     }
-    navigator("/user");
-    alert("Completed");
   };
 
   return (
@@ -30,21 +56,27 @@ function MainPaymentOrder({ price, productId, accountId }: IPaymentOrder) {
         <hr />
         <Calculator>
           <div>
-            <span>주문 금액</span>
+            <span>주문 금액(A)</span>
             {formatDollar(price)}
           </div>
           <div>
-            <span>할인 금액</span>
+            <span>할인 금액(B)</span>
+            <span>{formatDollar(discountedPrice)}</span>
           </div>
           <div>
-            <span>로켓배송비</span>
-            <span>{formatDollar(3000)}</span>
+            <span>로켓배송비(C)</span>
+            {price ? <span>{formatDollar(3000)}</span> : ""}
           </div>
         </Calculator>
         <hr />
         <TotalPrice>
-          <span>총 결제 금액</span>
-          {formatDollar(price + 3000)}
+          <span>총 결제 금액(A-B+C)</span>
+
+          {price ? (
+            <span>{formatDollar(price - discountedPrice + 3000)}</span>
+          ) : (
+            ""
+          )}
         </TotalPrice>
       </OrderWrapper>
       <ButtonWrapper>

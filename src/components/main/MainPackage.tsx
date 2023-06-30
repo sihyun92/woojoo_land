@@ -6,10 +6,10 @@ function MainPackage() {
   const navigate = useNavigate();
 
   const onToMarsPackage = () => {
-    navigate("/product/52Zq0J0MycRKvTkd0C80");
+    navigate("/product/uSInnvkln98h4oP5yOtj");
   };
   const onToRoundTrip = () => {
-    navigate("/product/uSInnvkln98h4oP5yOtj");
+    navigate("/product/52Zq0J0MycRKvTkd0C80");
   };
   return (
     <>

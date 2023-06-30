@@ -169,3 +169,18 @@
   - 각 컴포넌트에서는 useQueryClient로 캐싱된 데이터를 받아와서 사용
     - 데이터가 바뀌지 않았을 때는 캐싱된 데이터만을 받아 렌더링 하므로 컴포넌트 렌더링 속도가 빠름
     - 같은 API 호출을 여러번 하지 않아 페이지 로드 성능 향상
+
+## 23.06.29
+
+- Header부터 Footer까지의 최소 높이 지정
+  - App 컴포넌트 내에서 min-height에 100vh 적용 후 메인 컨텐츠 영역에 flex-grow 적용
+- slick-slider의 prev, next 버튼 스타일링
+  - setting props의 nextArrow와 prevArrow에 직접 컴포넌트를 추가하고 그 컴포넌트에 color prop을 전달하니 경고 발생
+  - color prop을 전달할 nextArrow, prevArrow를 별도 컴포넌트화 시켜서 적용하니 정상 작동
+- 브라우저를 이탈했다가 다시 focus 될 때마다 check 함수를 refetch 하는 문제 해결
+  - useQuery의 옵션에 refetchOnWindowFocus:false 추가
+  - 로그인 로그아웃시에 제대로 refetch를 못하는 문제가 생겨 상기 옵션 삭제
+- LikePage의 useEffect Hook에서 함수가 무한 호출되는 현상 해결
+  - 의존성 배열 추가
+- CartPage에서 장바구니 목록이 없으면 선택 삭제 버튼이 나타나지 않도록 수정
+- OrderListPage의 리스트별 고유 key값 추가

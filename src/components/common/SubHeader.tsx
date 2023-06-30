@@ -10,7 +10,7 @@ const tags = [
   { key: 3, tag: "#우주복" },
   { key: 4, tag: "#우주 식량" },
   { key: 5, tag: "#우주선" },
-  { key: 6, tag: "#우주 정거장" },
+  { key: 6, tag: "#특가 상품" },
 ];
 
 interface ISubHeaderProps {
@@ -65,7 +65,7 @@ const TagBG = styled.div`
 `;
 
 const TagWrapper = styled.div`
-margin-bottom: 20px;
+  margin-bottom: 20px;
   display: flex;
   width: 1088px;
   max-width: 1088px;

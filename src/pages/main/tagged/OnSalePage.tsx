@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import MainTaggedCard from "../../../components/main/Card/MainTaggedCard";
 import { IProduct, productsList } from "../../../lib/API/adminAPI";
 
+// 할인율이 30% 이상인 상품
 function StationPage() {
-  const title = "우주 정거장";
+  const title = "특가 상품";
   const [list, setList] = useState<IProduct[]>([]);
-  const stationList = list.filter((value) =>
-    value.tags?.includes("우주 정거장"),
+  const onSaleList = list.filter(
+    (value) => (value.discountRate as number) >= 30,
   );
 
   useEffect(() => {
@@ -21,7 +22,7 @@ function StationPage() {
     fetchList();
   }, []);
 
-  return <MainTaggedCard title={title} list={stationList}></MainTaggedCard>;
+  return <MainTaggedCard title={title} list={onSaleList}></MainTaggedCard>;
 }
 
 export default StationPage;

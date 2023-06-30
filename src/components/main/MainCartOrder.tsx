@@ -12,13 +12,24 @@ interface IChecked {
 
 function MainCartOrder({ isChecked }: IChecked) {
   const cartItem = useSelector((state: TRootState) => state.cartItem);
+  const navigate = useNavigate();
+
+  // 할인 전 가격
   const orderPrice = cartItem.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
 
-  const totalPrice = orderPrice + 3000;
-  const navigate = useNavigate();
+  // 할인 가격
+  const discountedPrice = cartItem.reduce(
+    (acc, item) => acc + item.price * (item.discountRate / 100) * item.quantity,
+    0,
+  );
+
+  // 최종 가격
+  const totalPrice = orderPrice + 3000 - discountedPrice;
+
+  // 주문하기 버튼 onClick 함수
   const onClick = (event: React.MouseEvent) => {
     event.preventDefault();
     navigate("/payment");
@@ -40,14 +51,14 @@ function MainCartOrder({ isChecked }: IChecked) {
             <span>할인 금액</span>
           </div>
           <div>
-            <span>로켓배송비</span>
-            <span>{formatDollar(3000)}</span>
+            <span>로켓배송비(C)</span>
+            {orderPrice > 0 ? <span>{formatDollar(3000)}</span> : ""}
           </div>
         </Calculator>
         <hr />
         <TotalPrice>
-          <span>총 결제 금액</span>
-          {formatDollar(totalPrice)}
+          <span>총 결제 금액(A-B+C)</span>
+          {orderPrice > 0 ? <span>{formatDollar(totalPrice)}</span> : ""}
         </TotalPrice>
       </OrderWrapper>
       <ButtonWrapper>

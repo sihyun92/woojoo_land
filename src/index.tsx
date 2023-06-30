@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
 import App from "./App";
 import { configureStore } from "@reduxjs/toolkit";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import rootReducer, { rootSaga } from "./modules";
 import createSagaMiddleware from "@redux-saga/core";
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <App />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ThemeProvider>
   </Provider>,
