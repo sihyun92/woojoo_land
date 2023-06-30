@@ -4,22 +4,20 @@ import styled from "styled-components";
 function AuthTemplate({ children }: PropsWithChildren) {
   return (
     <AuthTemplateBlock>
-      <WhiteBox>
-        {children}
-      </WhiteBox>
+      <WhiteBox>{children}</WhiteBox>
     </AuthTemplateBlock>
   );
 }
 
 const AuthTemplateBlock = styled.div`
-  position: absolute;
+  /* position: absolute; */
   left: 0;
   top: 200px;
   bottom: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
 `;
 

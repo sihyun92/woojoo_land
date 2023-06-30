@@ -36,6 +36,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const [email, setEmail] = useState("");
   const [displayNameMessage, setDisplayNameMessage] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [profileImgBase64, setProfileImgBase64] = useState("");
 
@@ -47,8 +48,6 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   // 유효성
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
   const [isDisplayName, setIsDisplayName] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
@@ -73,11 +72,9 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
       if (!rEmail.test(value)) {
         setEmailMessage("이메일 형식으로 적어주세요.");
-        setIsEmail(false);
       } else {
         setEmailMessage("");
         setEmail(value);
-        setIsEmail(true);
       }
     } else if (name === "password") {
       // 패스워드 유효성 검사
@@ -86,24 +83,23 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         setPasswordMessage(
           "숫자 + 영문 + 특수문자 조합으로 8자리 이상 입력해주세요.",
         );
-        setIsPassword(false);
       } else {
         setPasswordMessage("");
         setPassword(value);
-        setIsPassword(true);
       }
     } else if (name === "displayName") {
       // 닉네임 유효성 검사
-      if (value.length < 2 || value.length > 5) {
+      if (value.length <= 2 || value.length > 5) {
         setDisplayName(value);
         setIsDisplayName(true);
-      } else {
+      } else if (value.length < 1 || value.length > 6) {
         setDisplayNameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
         setIsDisplayName(false);
       }
     } else if (name === "passwordConfirm") {
       // 비밀번호 일치 유효성 검사
       if (password === value) {
+        setPasswordConfirm(value);
         setPasswordConfirmMessage("비밀번호가 일치합니다.");
         setIsPasswordConfirm(true);
       } else {
@@ -130,13 +126,22 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
       setRegisterMessage("필수 입력 사항입니다!");
     } else {
       // 입력값이 제대로 들어갔을 때 회원가입 요청
-      await register(email, password, displayName, profileImgBase64);
-      const username = localStorage.getItem("username");
-      setUsername(username || "");
-      setEmail("");
-      setPassword("");
-      setProfileImgBase64("");
-      navigate("/");
+      await register(email, password, displayName, profileImgBase64).then(
+        (response) => {
+          if (typeof response === "string") {
+            setRegisterMessage("이미 계정이 있습니다!");
+            console.log(response);
+          } else {
+            const username = localStorage.getItem("username");
+            setUsername(username || "");
+            setEmail("");
+            setPassword("");
+            setProfileImgBase64("");
+            setPasswordConfirm("");
+            navigate("/");
+          }
+        },
+      );
     }
   };
 
@@ -278,9 +283,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
                 type="submit"
                 register
                 fullWidth
-                disabled={
-                  !(isEmail && isDisplayName && isPassword && isPasswordConfirm)
-                }
+                disabled={!passwordConfirm}
               >
                 회원가입
               </RegisterButton>
@@ -323,7 +326,7 @@ const Tab = styled.div`
 `;
 
 const TabButton = styled(NavLink)`
-  background: #f4f4f4;
+  background: #c9c9c9;
   width: 100%;
   height: 3.125rem;
   display: flex;
@@ -331,7 +334,7 @@ const TabButton = styled(NavLink)`
   align-items: center;
   border: 1px solid #ccc;
   border: none;
-  color: #818181;
+  color: #777;
   &:first-child {
     border-radius: 16px 0 0 0;
   }
