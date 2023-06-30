@@ -40,25 +40,25 @@ const Title = styled.h1`
   color: ${theme.colors.orange.main};
 `;
 
-const NoList = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  margin-top: 5rem;
-  flex-direction: column;
-`;
+// const NoList = styled.div`
+//   display: flex;
+//   width: 100%;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 2rem;
+//   margin-top: 5rem;
+//   flex-direction: column;
+// `;
 
-const Rank = styled.div`
-  margin-top: 2rem;
+// const Rank = styled.div`
+//   margin-top: 2rem;
 
-  > span {
-    display: inline-block;
-    padding-top: 2rem;
-    border-bottom: 8px solid ${theme.colors.orange.main};
-  }
-`;
+//   > span {
+//     display: inline-block;
+//     padding-top: 2rem;
+//     border-bottom: 8px solid ${theme.colors.orange.main};
+//   }
+// `;
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,9 +75,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const NoAnswer = styled.div`
-  width: 100%;
-  text-align: center;
-`;
+// const NoAnswer = styled.div`
+//   width: 100%;
+//   text-align: center;
+// `;
 
 export default MainTaggedCard;

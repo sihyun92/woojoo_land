@@ -81,7 +81,7 @@ function ProductPage() {
       }
     }
     fetchDetail();
-  }, [id]);
+  }, [id, res]);
 
   // 로컬 스토리지로 찜 여부가 포함된 상품 정보를 Post
   const onLike = async (event: React.MouseEvent<HTMLButtonElement>) => {

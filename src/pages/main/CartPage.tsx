@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import MainCartList from "../../components/main/MainCartList";

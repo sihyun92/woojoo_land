@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";

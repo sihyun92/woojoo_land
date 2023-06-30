@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IProduct } from "../../lib/API/adminAPI";
 import MainCartListBtn from "./MainCartListBtn";
@@ -81,6 +82,9 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
       }
     }
   };
+  if (isDeleted) {
+    getCart();
+  }
 
   // new Set 메소드로 중복을 제거하고, 상품의 id만 추출한 배열 선언
   // 추후에, 기존의 carts와 비교(filtering)하여 상품의 개수를 계산

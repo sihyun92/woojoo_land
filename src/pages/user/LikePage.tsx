@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import UserTitle from "../../components/user/UserTitle";
 import styled from "styled-components";
@@ -25,7 +26,7 @@ function LikePage() {
     // getProducts();
     getLike();
     getCart();
-  }, [res]);
+  }, []);
 
   // const [products, setProducts] = useState([]);
   const [likes, setLikes] = useState<IProduct[]>([]);

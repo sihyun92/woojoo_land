@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // CartPage(장바구니)에서 구매하기 버튼을 누르면 장바구니에 담긴 제품(들)만 렌더링
 // ProductPage(상세페이지)에서 구매하기 버튼을 누르면, 해당 상품만 렌더링
 import { Dispatch, SetStateAction, useEffect, useState } from "react";

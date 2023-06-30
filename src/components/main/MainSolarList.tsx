@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import MainItem from "./MainItem";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
