@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { check } from "../../lib/API/userAPI";
 import { IProduct } from "../../lib/API/adminAPI";
 import MainCartListBtn from "./MainCartListBtn";
 import styled from "styled-components";
@@ -8,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { setQuantity } from "../../modules/cartItem";
 import Button from "../common/Button";
 import { BsCheckLg } from "react-icons/bs";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../common/Header";
 
 interface IsetisChecked {
   isChecked: boolean;
@@ -15,6 +16,8 @@ interface IsetisChecked {
 }
 
 function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   const dispatch = useDispatch();
   const [carts, setCarts] = useState<IProduct[]>([]);
   const [checkedIds, setCheckedIds] = useState<string[]>([]);
@@ -24,56 +27,58 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
   useEffect(() => {
     getCart();
     handleCheck();
-  });
+  }, []);
 
   const getCart = async () => {
     // 인증 확인
-    const res = await check();
-    // 로컬스토리지에서 장바구니 목록 GET
-    const getCartItems = localStorage.getItem(`cart_${res.email}`);
-    const prevCartItems = JSON.stringify(carts);
+    if (res) {
+      // 로컬스토리지에서 장바구니 목록 GET
+      const getCartItems = localStorage.getItem(`cart_${res.email}`);
+      const prevCartItems = JSON.stringify(carts);
 
-    // 장바구니 내 상품이 있다면
-    if (getCartItems && getCartItems !== prevCartItems) {
-      // JSON 파싱
-      const cartItems: IProduct[] = JSON.parse(getCartItems);
+      // 장바구니 내 상품이 있다면
+      if (getCartItems && getCartItems !== prevCartItems) {
+        // JSON 파싱
+        const cartItems: IProduct[] = JSON.parse(getCartItems);
 
-      // carts state Update
-      setCarts(cartItems);
+        // carts state Update
+        setCarts(cartItems);
 
-      // 수량 계산
-      const amount: { [title: string]: number } = {}; // 객체 생성
-      cartItems.forEach((item) => {
-        // item 객체의 title 속성을 변수에 할당
-        const { title } = item;
-        // amount 객체에 해당 title 속성이 존재하는 지에 따라 수량 할당
-        amount[title as string]
-          ? (amount[title as string] += 1)
-          : (amount[title as string] = 1);
-      });
+        // 수량 계산
+        const amount: { [title: string]: number } = {}; // 객체 생성
+        cartItems.forEach((item) => {
+          // item 객체의 title 속성을 변수에 할당
+          const { title } = item;
+          // amount 객체에 해당 title 속성이 존재하는 지에 따라 수량 할당
+          amount[title as string]
+            ? (amount[title as string] += 1)
+            : (amount[title as string] = 1);
+        });
 
-      // 수량에 맞게 state에 dispatch
-      Object.entries(amount).forEach(([title, quantity]) => {
-        // [key, value] - [title, quantity]
-        const cartItem = cartItems.find((item) => item.title === title);
-        if (cartItem) {
-          const { id } = cartItem;
-          dispatch(
-            setQuantity({
-              productId: id as string,
-              title: title as string,
-              quantity: quantity,
-              price: cartItems.find((item) => item.title === title)?.price || 0,
-              discountRate:
-                cartItems.find((item) => item.title === title)?.discountRate ||
-                0,
-            }),
-          );
-        }
-      });
-    } else if (!prevCartItems) {
-      // 상품이 없는 경우 빈 배열
-      setCarts([]);
+        // 수량에 맞게 state에 dispatch
+        Object.entries(amount).forEach(([title, quantity]) => {
+          // [key, value] - [title, quantity]
+          const cartItem = cartItems.find((item) => item.title === title);
+          if (cartItem) {
+            const { id } = cartItem;
+            dispatch(
+              setQuantity({
+                productId: id as string,
+                title: title as string,
+                quantity: quantity,
+                price:
+                  cartItems.find((item) => item.title === title)?.price || 0,
+                discountRate:
+                  cartItems.find((item) => item.title === title)
+                    ?.discountRate || 0,
+              }),
+            );
+          }
+        });
+      } else if (!prevCartItems) {
+        // 상품이 없는 경우 빈 배열
+        setCarts([]);
+      }
     }
   };
 
@@ -91,8 +96,12 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
         const updatedCarts = carts.filter(
           (cart) => !checkedIds.includes(cart.id as string),
         );
-        const res = await check();
-        localStorage.setItem(`cart_${res.email}`, JSON.stringify(updatedCarts));
+        if (res) {
+          localStorage.setItem(
+            `cart_${res.email}`,
+            JSON.stringify(updatedCarts),
+          );
+        }
       }
       window.location.reload();
       getCart();
