@@ -18,6 +18,31 @@ function ProductPage() {
   const [like, setLike] = useState<boolean>(false);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollActive, setScrollActive] = useState(false);
+
+  useEffect(() => {
+    const scrollListener = () => {
+      window.addEventListener("scroll", scrollFixed);
+    };
+    scrollListener();
+    return () => {
+      window.removeEventListener("scroll", scrollFixed);
+    };
+  });
+
+  console.log(window.scrollY);
+
+  const scrollFixed = () => {
+    if (scrollY > 165) {
+      setScrollY(window.scrollY);
+      setScrollActive(true);
+    } else {
+      setScrollY(window.scrollY);
+      setScrollActive(false);
+    }
+  };
+
   // 최초 LocalStorage에 접근하여, 찜 목록에 있는 상품의 like 값(true) 지정
   // 단일 상품 상세 조회
   useEffect(() => {
@@ -117,53 +142,73 @@ function ProductPage() {
           alt="Detailed"
         />
       </PhotoWrapper>
-      <DetailWrapper>
-        <TitleWrapper>
-          <Title>{product?.title}</Title>
-          <LikeButton
-            onClick={onLike}
-            selected={like}
-            isAnimating={isAnimating}
-          >
-            {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
-          </LikeButton>
-        </TitleWrapper>
-        <Price>{formatDollar(discountedPrice)}</Price>
-        <Desc>{product?.description}</Desc>
-        <hr />
-        <PurchaseWrapper>
-          <Quantity>
-            <span>구매 수량</span>
-            <MainProductBtn quantity={quantity} setQuantity={setQuantity} />
-          </Quantity>
-          <PriceAll>
-            <span>총 상품 금액</span>
-            <Price>
-              {product?.price ? formatDollar(discountedPrice * quantity) : 0}
-            </Price>
-          </PriceAll>
-          <ButtonWrapper>
-            <MainCartBtn quantity={quantity} />
-            <MainBuyBtn quantity={quantity} />
-          </ButtonWrapper>
-        </PurchaseWrapper>
-      </DetailWrapper>
+      <AbsoluteWrapper>
+        <DetailWrapper scrollActive={scrollActive}>
+          <TitleWrapper>
+            <Title>{product?.title}</Title>
+            <LikeButton
+              onClick={onLike}
+              selected={like}
+              isAnimating={isAnimating}
+            >
+              {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
+            </LikeButton>
+          </TitleWrapper>
+          <Price>{formatDollar(discountedPrice)}</Price>
+          <Desc>{product?.description}</Desc>
+          <hr />
+          <PurchaseWrapper>
+            <Quantity>
+              <span>구매 수량</span>
+              <MainProductBtn quantity={quantity} setQuantity={setQuantity} />
+            </Quantity>
+            <PriceAll>
+              <span>총 상품 금액</span>
+              <Price>
+                {product?.price ? formatDollar(discountedPrice * quantity) : 0}
+              </Price>
+            </PriceAll>
+            <ButtonWrapper>
+              <MainCartBtn quantity={quantity} />
+              <MainBuyBtn quantity={quantity} />
+            </ButtonWrapper>
+          </PurchaseWrapper>
+        </DetailWrapper>
+      </AbsoluteWrapper>
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
+  position: relative;
 `;
 
 const PhotoWrapper = styled.div`
-  margin-right: 2rem;
-`;
+  width: 687px;
 
-const DetailWrapper = styled.div`
-  height: 100%;
-  padding: 2rem 1rem;
+  img {
+    width: 100%;
+  }
+`;
+const AbsoluteWrapper = styled.div`
+  position: absolute;
+  width: 480px;
+  right: 0;
+`;
+const DetailWrapper = styled.div<{ scrollActive: boolean }>`
+  position: ${(props) => props.scrollActive && "fixed"};
+  width: 480px;
+  padding: 2rem;
+  border-radius: 10px;
   border: 1px solid ${theme.colors.gray[5]};
+
+  ${(props) =>
+    props.scrollActive &&
+    css`
+      top: 40px;
+    `};
 `;
 
 const TitleWrapper = styled.div`
@@ -175,6 +220,7 @@ const TitleWrapper = styled.div`
 const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
+  font-family: "GmarketSans";
 `;
 
 const LikeButton = styled.button<{
@@ -229,14 +275,19 @@ const Quantity = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  gap: 2rem;
   display: flex;
-  gap: 0.5rem;
   margin-top: 2rem;
+  justify-content: center;
 
   > Button {
     width: 170px;
     height: 50px;
+    display: flex;
     font-size: 18px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
 
     &:first-child {
       background-color: ${theme.colors.white};

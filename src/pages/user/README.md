@@ -184,3 +184,9 @@
   - 의존성 배열 추가
 - CartPage에서 장바구니 목록이 없으면 선택 삭제 버튼이 나타나지 않도록 수정
 - OrderListPage의 리스트별 고유 key값 추가
+
+## 23.06.30
+
+- Header의 check 함수 refetch 조건 추가
+  - 로그인 시 username의 변화를 감지해 refetch
+  - 로그아웃 시 refetch
