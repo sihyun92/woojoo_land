@@ -45,108 +45,126 @@ const register = async (
   displayName: string,
   profileImgBase64: string,
 ) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        email,
-        password,
-        displayName,
-        profileImgBase64,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          email,
+          password,
+          displayName,
+          profileImgBase64,
+        }),
+      },
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e, "회원가입에 실패했습니다!");
+  }
 };
 
 // 인증확인
 const check = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/me",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 로그아웃
 const logout = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/logout",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/logout",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 사용자 정보 수정
 const userUpdate = async (user: IUserUpdate) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
-    {
-      method: "PUT",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
+      {
+        method: "PUT",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify(user),
       },
-      body: JSON.stringify(user),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 선택 가능한 은행 목록 조회
 const accountList = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 계좌 목록 및 잔액 조회
 const myAccount = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 계좌 연결
@@ -156,145 +174,166 @@ const accountConnect = async (
   phoneNumber: string,
   signature: boolean,
 ) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          bankCode,
+          accountNumber,
+          phoneNumber,
+          signature,
+        }),
       },
-      body: JSON.stringify({
-        bankCode,
-        accountNumber,
-        phoneNumber,
-        signature,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 계좌 해지
 const accountDisconnect = async (accountId: string, signature: boolean) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
-    {
-      method: "DELETE",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/account",
+      {
+        method: "DELETE",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          accountId,
+          signature,
+        }),
       },
-      body: JSON.stringify({
-        accountId,
-        signature,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 구매 신청
 
 const orderApply = async (productId: string, accountId: string) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/buy",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/buy",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          productId,
+          accountId,
+        }),
       },
-      body: JSON.stringify({
-        productId,
-        accountId,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 거래(구매) 취소
 const orderCancel = async (detailId: string) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          detailId,
+        }),
       },
-      body: JSON.stringify({
-        detailId,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 거래(구매) 확정
 const orderConfirm = async (detailId: string) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          detailId,
+        }),
       },
-      body: JSON.stringify({
-        detailId,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 전체 거래(구매) 내역
 const orderDetailsAll = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 단일 제품 상세 거래(구매) 내역
 const orderDetail = async (detailId: string) => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${localStorage.getItem("Token")}`,
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify({
+          detailId,
+        }),
       },
-      body: JSON.stringify({
-        detailId,
-      }),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export {

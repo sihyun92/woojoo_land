@@ -62,71 +62,83 @@ const headers = {
 
 // 사용자 목록 조회
 const userCheck = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/users",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/users",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 모든 제품 조회
 const productsList = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 //전체 거래(판매) 내역
 const salesHistory = async () => {
-  const response = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/all",
-    {
-      method: "GET",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const response = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/all",
+      {
+        method: "GET",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 거래(판매) 내역 완료/취소 및 해제
 const salesManage = async (detailID: string, saleManage: ISalesManage) => {
-  const response = await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${detailID}`,
-    {
-      method: "PUT",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const response = await fetch(
+      `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${detailID}`,
+      {
+        method: "PUT",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
+        body: JSON.stringify(saleManage),
       },
-      body: JSON.stringify(saleManage),
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 추가
@@ -136,20 +148,23 @@ const productPost = async (
   photoBase64: string,
 ) => {
   const updatedProduct = { ...product, thumbnailBase64, photoBase64 };
-  const res = await fetch(
-    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
-    {
-      method: "POST",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const res = await fetch(
+      "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products",
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
+        body: JSON.stringify(updatedProduct),
       },
-      body: JSON.stringify(updatedProduct),
-    },
-  );
-  const result = await res.json();
-  console.log(result);
-  return result;
+    );
+    const result = await res.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 수정
@@ -161,37 +176,43 @@ const productEdit = async (
 ) => {
   const updatedProduct = { ...product, thumbnailBase64, photoBase64 };
   //입력값 위주의 product과 Base64로 인코딩된 이미지 데이터는 따로 상태를 받아서 API로 수정 요청
-  const res = await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const res = await fetch(
+      `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
+        body: JSON.stringify(updatedProduct),
       },
-      body: JSON.stringify(updatedProduct),
-    },
-  );
-  const result = await res.json();
-  console.log(result);
-  return result;
+    );
+    const result = await res.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 // 제품 삭제
 const productDel = async (productID: string) => {
-  const response = await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${productID}`,
-    {
-      method: "DELETE",
-      headers: {
-        ...headers,
-        masterKey: "true",
+  try {
+    const response = await fetch(
+      `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${productID}`,
+      {
+        method: "DELETE",
+        headers: {
+          ...headers,
+          masterKey: "true",
+        },
       },
-    },
-  );
-  const result = await response.json();
-  console.log(result);
-  return result;
+    );
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export {
