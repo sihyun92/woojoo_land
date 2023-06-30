@@ -7,11 +7,14 @@ import { formatDollar } from "../../lib/Function/commonFn";
 import MainProductBtn from "../../components/main/MainProductBtn";
 import MainCartBtn from "../../components/main/MainCartBtn";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { check } from "../../lib/API/userAPI";
 import { IProductLike } from "../../lib/API/adminAPI";
 import MainBuyBtn from "../../components/main/MainBuyBtn";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../../components/common/Header";
 
 function ProductPage() {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   const { id } = useParams<{ id: string }>();
   let [quantity, setQuantity] = useState<number>(1);
   const [product, setProduct] = useState<IProductDetail>();
@@ -27,25 +30,27 @@ function ProductPage() {
         setProduct(productRes);
 
         // 인증
-        const AuthRes = await check();
-        // localStorage 접근
-        const getLikeItem = localStorage.getItem(`like_${AuthRes.email}`);
-        // parse를 위해 배열 선언
-        let likeItems: IProductLike[] = [];
+        if (res) {
+          // localStorage 접근
+          const getLikeItem = localStorage.getItem(`like_${res.email}`);
 
-        // 파싱
-        if (getLikeItem) {
-          likeItems = JSON.parse(getLikeItem);
+          // parse를 위해 배열 선언
+          let likeItems: IProductLike[] = [];
+
+          // 파싱
+          if (getLikeItem) {
+            likeItems = JSON.parse(getLikeItem);
+          }
+
+          // useParams로 지정한 상품의 id값과 동일한 item을 찾아서 변수에 저장
+          const item = likeItems.find((item) => item.id === id);
+
+          // 찜 목록에 있다면 item.like(true), 없다면 false 지정
+          const like = item ? item.like : false;
+
+          // like state 변경
+          setLike(like as boolean);
         }
-
-        // useParams로 지정한 상품의 id값과 동일한 item을 찾아서 변수에 저장
-        const item = likeItems.find((item) => item.id === id);
-
-        // 찜 목록에 있다면 item.like(true), 없다면 false 지정
-        const like = item ? item.like : false;
-
-        // like state 변경
-        setLike(like as boolean);
       } catch (error) {
         console.error(`error: ${error}`);
       }
@@ -83,26 +88,27 @@ function ProductPage() {
   // 찜 목록을 로컬스토리지로 보냄
   const postLike = async (item: IProductLike) => {
     // 인증 확인
-    const res = await check();
-    // 일치하는 상품을 get
-    const getLikeItem = localStorage.getItem(`like_${res.email}`);
+    if (res) {
+      // 일치하는 상품을 get
+      const getLikeItem = localStorage.getItem(`like_${res.email}`);
 
-    // 빈 배열 선언
-    let likeItems: IProductLike[] = [];
+      // 빈 배열 선언
+      let likeItems: IProductLike[] = [];
 
-    // 기존 찜 목록을 배열로 담음
-    if (getLikeItem) {
-      likeItems = JSON.parse(getLikeItem);
-    }
+      // 기존 찜 목록을 배열로 담음
+      if (getLikeItem) {
+        likeItems = JSON.parse(getLikeItem);
+      }
 
-    if (like === true) {
-      // 이미 찜한 상품인 경우, 삭제(filter)
-      const updatedLikes = likeItems.filter((value) => value.id !== item.id);
-      localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
-    } else {
-      // 찜하지 않은 상품인 경우, 추가(push)
-      likeItems.push(item);
-      localStorage.setItem(`like_${res.email}`, JSON.stringify(likeItems));
+      if (like === true) {
+        // 이미 찜한 상품인 경우, 삭제(filter)
+        const updatedLikes = likeItems.filter((value) => value.id !== item.id);
+        localStorage.setItem(`like_${res.email}`, JSON.stringify(updatedLikes));
+      } else {
+        // 찜하지 않은 상품인 경우, 추가(push)
+        likeItems.push(item);
+        localStorage.setItem(`like_${res.email}`, JSON.stringify(likeItems));
+      }
     }
   };
 

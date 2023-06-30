@@ -1,14 +1,16 @@
 import { productDetail } from "../../lib/API/commonAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { IProductEdit } from "../../lib/API/adminAPI";
-import { check } from "../../lib/API/userAPI";
-
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../common/Header";
 // 인터페이스 선언
 interface ICartBtn {
   quantity: number;
 }
 
 function MainCartBtn({ quantity }: ICartBtn) {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -27,22 +29,23 @@ function MainCartBtn({ quantity }: ICartBtn) {
 
   const postCart = async (updatedCarts: IProductEdit[]) => {
     // 인증 확인
-    // 기존의 로컬 스토리지에 저장된 product get
-    const res = await check();
-    const getCartItems = localStorage.getItem(`cart_${res.email}`);
-    let cartItems: IProductEdit[] = [];
+    // 기존의 로컬 스토리지에 저장된 product
+    if (res) {
+      const getCartItems = localStorage.getItem(`cart_${res.email}`);
+      let cartItems: IProductEdit[] = [];
 
-    if (getCartItems) {
-      cartItems = JSON.parse(getCartItems);
+      if (getCartItems) {
+        cartItems = JSON.parse(getCartItems);
+      }
+
+      // props로 받은 상품들을 push
+      if (cartItems) {
+        cartItems.push(...updatedCarts);
+      }
+
+      // localStorage에 저장(set)
+      localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
     }
-
-    // props로 받은 상품들을 push
-    if (cartItems) {
-      cartItems.push(...updatedCarts);
-    }
-
-    // localStorage에 저장(set)
-    localStorage.setItem(`cart_${res.email}`, JSON.stringify(cartItems));
   };
 
   // 장바구니 추가 마우스 이벤트 함수
