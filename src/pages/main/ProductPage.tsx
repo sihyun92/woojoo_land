@@ -204,9 +204,9 @@ const AbsoluteWrapper = styled.div`
   right: 0;
 `;
 const DetailWrapper = styled.div<{ scrollActive: boolean }>`
-  position: ${(props) => props.scrollActive && "fixed"};
   width: 480px;
   padding: 2rem;
+  transition: 1s;
   border-radius: 10px;
   border: 1px solid ${theme.colors.gray[5]};
 
@@ -214,6 +214,8 @@ const DetailWrapper = styled.div<{ scrollActive: boolean }>`
     props.scrollActive &&
     css`
       top: 40px;
+      margin-top: 22vh;
+      position: fixed;
     `};
 `;
 
