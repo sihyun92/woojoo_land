@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { productsList, IProduct } from "../../lib/API/adminAPI";
 import Carousel from "../common/Carousel";
 import { IProductLike } from "../../lib/API/adminAPI";
-import { check } from "../../lib/API/userAPI";
 import { theme } from "../../styles/theme";
+import { useQueryClient } from "react-query";
+import { ICheckData } from "../common/Header";
 
 function MainSolarList() {
+  const queryClient = useQueryClient();
+  const res = queryClient.getQueryData<ICheckData>("check");
   // 상품들을 담는 배열 선언
   const [list, setList] = useState<IProduct[]>([]);
   // liked된 item을 담을 배열 선언
@@ -26,14 +29,15 @@ function MainSolarList() {
         setList(solarList);
 
         // 찜 목록 조회
-        let likedList: IProductLike[] = [];
-        const authResponse = await check();
-        const getLikedItem = localStorage.getItem(`like_${authResponse.email}`);
+        if (res) {
+          let likedList: IProductLike[] = [];
+          const getLikedItem = localStorage.getItem(`like_${res.email}`);
 
-        if (getLikedItem) {
-          likedList = JSON.parse(getLikedItem);
+          if (getLikedItem) {
+            likedList = JSON.parse(getLikedItem);
+          }
+          setLikedList(likedList);
         }
-        setLikedList(likedList);
       } catch (error) {
         console.error("Failed", error);
       }
