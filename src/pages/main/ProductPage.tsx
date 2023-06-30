@@ -23,6 +23,7 @@ function ProductPage() {
 
   const [scrollY, setScrollY] = useState(0);
   const [scrollActive, setScrollActive] = useState(false);
+  const [scrollBottom, setScrollBottom] = useState(false);
 
   useEffect(() => {
     const scrollListener = () => {
@@ -34,17 +35,22 @@ function ProductPage() {
     };
   });
 
-  console.log(window.scrollY);
-
   const scrollFixed = () => {
-    if (scrollY > 165) {
+    if (scrollY > 165 && scrollY < 1077) {
       setScrollY(window.scrollY);
       setScrollActive(true);
-    } else {
+      setScrollBottom(false);
+    } else if (scrollY <= 165) {
       setScrollY(window.scrollY);
       setScrollActive(false);
+    } else if (scrollY >= 1077) {
+      setScrollY(window.scrollY);
+      // setScrollActive(false);
+      setScrollBottom(true);
     }
   };
+
+  console.log(window.scrollY);
 
   // 최초 LocalStorage에 접근하여, 찜 목록에 있는 상품의 like 값(true) 지정
   // 단일 상품 상세 조회
@@ -149,7 +155,7 @@ function ProductPage() {
         />
       </PhotoWrapper>
       <AbsoluteWrapper>
-        <DetailWrapper scrollActive={scrollActive}>
+        <DetailWrapper scrollActive={scrollActive} scrollBottom={scrollBottom}>
           <TitleWrapper>
             <Title>{product?.title}</Title>
             <LikeButton
@@ -203,7 +209,10 @@ const AbsoluteWrapper = styled.div`
   width: 480px;
   right: 0;
 `;
-const DetailWrapper = styled.div<{ scrollActive: boolean }>`
+const DetailWrapper = styled.div<{
+  scrollActive: boolean;
+  scrollBottom: boolean;
+}>`
   width: 480px;
   padding: 2rem;
   transition: 1s;
@@ -216,6 +225,13 @@ const DetailWrapper = styled.div<{ scrollActive: boolean }>`
       top: 40px;
       margin-top: 22vh;
       position: fixed;
+    `};
+
+  ${(props) =>
+    props.scrollBottom &&
+    css`
+      top: -240px;
+      position: none;
     `};
 `;
 
