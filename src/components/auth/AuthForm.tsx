@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
 import Button from "../common/Button";
+import Loading from "../common/Loading";
 
 // Interface
 interface IAuthFormProps {
@@ -50,6 +51,8 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
   // 유효성
   const [isDisplayName, setIsDisplayName] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   // 라우팅
   const navigate = useNavigate();
@@ -126,6 +129,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
       setRegisterMessage("필수 입력 사항입니다!");
     } else {
       // 입력값이 제대로 들어갔을 때 회원가입 요청
+      setLoading(true);
       await register(email, password, displayName, profileImgBase64).then(
         (response) => {
           if (typeof response === "string") {
@@ -143,6 +147,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         },
       );
     }
+    setTimeout(() => setLoading(false), 5000);
   };
 
   const onLogin = async (event: FormEvent) => {
@@ -152,6 +157,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
       setLoginMessage("아이디와 비밀번호를 확인해주세요!");
     } else {
       // 입력값이 제대로 들어갔을 때 로그인 요청
+      setLoading(true);
       const username = localStorage.getItem("username");
       await login(email, password).then((response) => {
         if (response === undefined) {
@@ -167,132 +173,138 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
         }
       });
     }
+    setTimeout(() => setLoading(false), 5000);
   };
 
   // Render
   return (
-    <AuthFormBlock>
-      <Tab>
-        {/* NavLink를 Styled-Components로 스타일링 */}
-        <TabButton to={PARAMS.login}>로그인</TabButton>
-        <TabButton to={PARAMS.register}>회원가입</TabButton>
-      </Tab>
-      <h3>{text}</h3>
-      <StyledForm onSubmit={type === "login" ? onLogin : onRegister}>
-        {/* Login */}
-        {type === "login" && (
-          <>
-            <LoginForm>
-              <LoginInputWrapper>
-                <StyledInput
-                  autoComplete="email"
-                  name="email"
-                  placeholder="이메일 입력"
-                  onChange={onLoginChange}
-                />
-                <StyledInput
-                  type="password"
-                  autoComplete="new-password"
-                  name="password"
-                  placeholder="비밀번호 입력"
-                  onChange={onLoginChange}
-                />
-              </LoginInputWrapper>
-              <LoginButton disabled={!email} login>
-                로그인
-              </LoginButton>
-            </LoginForm>
-            <LoginError>{loginMessage}</LoginError>
-          </>
-        )}
-        {/* Register */}
-        {type === "register" && (
-          <>
-            <RegisterForm>
-              <ProfileImage profileImg={profileImgBase64}>
-                {profileImgBase64 ? "" : "프로필 이미지"}
-              </ProfileImage>
-              <RegisterInputBlock>
-                <ImageLabel>프로필 이미지</ImageLabel>
-                <ImageMessage className={profileImgBase64 ? "message" : ""}>
-                  {profileImgBase64 ? "이미지 업로드 완료" : "선택된 파일 없음"}
-                </ImageMessage>
-                <UploadButton htmlFor="imageUpload">업로드</UploadButton>
-                <ImageUpload
-                  multiple
-                  type="file"
-                  name="profileImgBase64"
-                  onChange={onRegisterChange}
-                  accept="image/*"
-                  id="imageUpload"
-                />
-              </RegisterInputBlock>
-              <RegisterInputBlock>
-                <RegisterLabel>닉네임</RegisterLabel>
-                <StyledInput
-                  autoComplete="displayName"
-                  name="displayName"
-                  placeholder="닉네임"
-                  onChange={onRegisterChange}
-                />
-              </RegisterInputBlock>
-              {isDisplayName && (
-                <ErrorMessage>{displayNameMessage}</ErrorMessage>
-              )}
-              <RegisterInputBlock>
-                <RegisterLabel>이메일</RegisterLabel>
-                <StyledInput
-                  autoComplete="email"
-                  name="email"
-                  placeholder="이메일"
-                  onChange={onRegisterChange}
-                />
-              </RegisterInputBlock>
-              {emailMessage && <ErrorMessage>{emailMessage}</ErrorMessage>}
-              <RegisterInputBlock>
-                <RegisterLabel>비밀번호</RegisterLabel>
-                <StyledInput
-                  type="password"
-                  autoComplete="new-password"
-                  name="password"
-                  placeholder="패스워드"
-                  onChange={onRegisterChange}
-                />
-              </RegisterInputBlock>
-              {passwordMessage && (
-                <ErrorMessage>{passwordMessage}</ErrorMessage>
-              )}
-              <RegisterInputBlock>
-                <RegisterLabel>비밀번호 확인</RegisterLabel>
-                <StyledInput
-                  type="password"
-                  autoComplete="new-password"
-                  name="passwordConfirm"
-                  placeholder="패스워드 확인"
-                  onChange={onRegisterChange}
-                />
-              </RegisterInputBlock>
-              {passwordConfirmMessage && (
-                <ErrorMessage
-                  className={isPasswordConfirm ? "success" : "failure"}
+    <>
+      {loading && <Loading />}
+      <AuthFormBlock>
+        <Tab>
+          {/* NavLink를 Styled-Components로 스타일링 */}
+          <TabButton to={PARAMS.login}>로그인</TabButton>
+          <TabButton to={PARAMS.register}>회원가입</TabButton>
+        </Tab>
+        <h3>{text}</h3>
+        <StyledForm onSubmit={type === "login" ? onLogin : onRegister}>
+          {/* Login */}
+          {type === "login" && (
+            <>
+              <LoginForm>
+                <LoginInputWrapper>
+                  <StyledInput
+                    autoComplete="email"
+                    name="email"
+                    placeholder="이메일 입력"
+                    onChange={onLoginChange}
+                  />
+                  <StyledInput
+                    type="password"
+                    autoComplete="new-password"
+                    name="password"
+                    placeholder="비밀번호 입력"
+                    onChange={onLoginChange}
+                  />
+                </LoginInputWrapper>
+                <LoginButton disabled={!email} login>
+                  로그인
+                </LoginButton>
+              </LoginForm>
+              <LoginError>{loginMessage}</LoginError>
+            </>
+          )}
+          {/* Register */}
+          {type === "register" && (
+            <>
+              <RegisterForm>
+                <ProfileImage profileImg={profileImgBase64}>
+                  {profileImgBase64 ? "" : "프로필 이미지"}
+                </ProfileImage>
+                <RegisterInputBlock>
+                  <ImageLabel>프로필 이미지</ImageLabel>
+                  <ImageMessage className={profileImgBase64 ? "message" : ""}>
+                    {profileImgBase64
+                      ? "이미지 업로드 완료"
+                      : "선택된 파일 없음"}
+                  </ImageMessage>
+                  <UploadButton htmlFor="imageUpload">업로드</UploadButton>
+                  <ImageUpload
+                    multiple
+                    type="file"
+                    name="profileImgBase64"
+                    onChange={onRegisterChange}
+                    accept="image/*"
+                    id="imageUpload"
+                  />
+                </RegisterInputBlock>
+                <RegisterInputBlock>
+                  <RegisterLabel>닉네임</RegisterLabel>
+                  <StyledInput
+                    autoComplete="displayName"
+                    name="displayName"
+                    placeholder="닉네임"
+                    onChange={onRegisterChange}
+                  />
+                </RegisterInputBlock>
+                {isDisplayName && (
+                  <ErrorMessage>{displayNameMessage}</ErrorMessage>
+                )}
+                <RegisterInputBlock>
+                  <RegisterLabel>이메일</RegisterLabel>
+                  <StyledInput
+                    autoComplete="email"
+                    name="email"
+                    placeholder="이메일"
+                    onChange={onRegisterChange}
+                  />
+                </RegisterInputBlock>
+                {emailMessage && <ErrorMessage>{emailMessage}</ErrorMessage>}
+                <RegisterInputBlock>
+                  <RegisterLabel>비밀번호</RegisterLabel>
+                  <StyledInput
+                    type="password"
+                    autoComplete="new-password"
+                    name="password"
+                    placeholder="패스워드"
+                    onChange={onRegisterChange}
+                  />
+                </RegisterInputBlock>
+                {passwordMessage && (
+                  <ErrorMessage>{passwordMessage}</ErrorMessage>
+                )}
+                <RegisterInputBlock>
+                  <RegisterLabel>비밀번호 확인</RegisterLabel>
+                  <StyledInput
+                    type="password"
+                    autoComplete="new-password"
+                    name="passwordConfirm"
+                    placeholder="패스워드 확인"
+                    onChange={onRegisterChange}
+                  />
+                </RegisterInputBlock>
+                {passwordConfirmMessage && (
+                  <ErrorMessage
+                    className={isPasswordConfirm ? "success" : "failure"}
+                  >
+                    {passwordConfirmMessage}
+                  </ErrorMessage>
+                )}
+                <RegisterButton
+                  type="submit"
+                  register
+                  fullWidth
+                  disabled={!passwordConfirm}
                 >
-                  {passwordConfirmMessage}
-                </ErrorMessage>
-              )}
-              <RegisterButton
-                type="submit"
-                register
-                fullWidth
-                disabled={!passwordConfirm}
-              >
-                회원가입
-              </RegisterButton>
-            </RegisterForm>
-            <RegisterErrorMessage>{registerMessage}</RegisterErrorMessage>
-          </>
-        )}
-      </StyledForm>
-    </AuthFormBlock>
+                  회원가입
+                </RegisterButton>
+              </RegisterForm>
+              <RegisterErrorMessage>{registerMessage}</RegisterErrorMessage>
+            </>
+          )}
+        </StyledForm>
+      </AuthFormBlock>
+    </>
   );
 }
 
