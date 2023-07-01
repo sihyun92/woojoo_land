@@ -28,11 +28,12 @@ interface IBank {
 
 function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   const [accountForm, setAccountForm] = useState({
-    accountNumber: "",
     phoneNumber: "",
     signature: true,
   });
   const [checkedCode, setCheckedCode] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [accountNumberBar, setAccountNumberBar] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [error, setError] = useState("");
 
@@ -54,9 +55,36 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
     setIsModalOpen(false);
   };
 
-  // 은행 체크시 해당 은행코드 전달
-  const onCheck = (code: string) => {
+  // 은행 체크시 해당 은행코드 전달 및 랜덤 계좌번호 생성
+  // 은행 코드의 각 수를 합해 계좌의 자릿수 저장
+  // 자릿수의 횟수만큼 랜덤한 한자리 수를 배열에 저장 후 이어붙임
+  // 해당 숫자를 은행 코드의 자릿수를 이용해 잘라 배열에 저장 후 하이픈으로 이어붙임
+  const onCheck = (code: string, digits: number[]) => {
+    let randomNumbers = [];
+    let randomNumbersAddBar = [];
+
+    const subDigits = digits.reduce((acc, cur) => {
+      return acc + cur;
+    });
+
+    for (let i = 0; i < subDigits; i++) {
+      randomNumbers.push(Math.floor(Math.random() * 10).toString());
+    }
+
+    const randomAccount = randomNumbers.join("");
+
+    for (let i = 0; i < digits.length - 1; i++) {
+      if (i === 0) {
+        randomNumbersAddBar.push(randomAccount.slice(i, digits[i]));
+      }
+      randomNumbersAddBar.push(
+        randomAccount.slice(digits[i], digits[i] + digits[i + 1]),
+      );
+    }
+
     setCheckedCode(code);
+    setAccountNumber(randomAccount);
+    setAccountNumberBar(randomNumbersAddBar.join("-"));
   };
 
   // input에 입력되는 값을 state 객체에 전달
@@ -73,8 +101,8 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   // 폼 제출시 계좌 연결 및 모달 종료
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const props = Object.values(accountForm) as [string, string, boolean];
-    const data = await accountConnect(checkedCode, ...props);
+    const props = Object.values(accountForm) as [string, boolean];
+    const data = await accountConnect(checkedCode, accountNumber, ...props);
     if (typeof data !== "string") {
       closeModal();
     } else {
@@ -100,7 +128,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
                         id={account.code}
                         name="account"
                         onChange={() => {
-                          onCheck(account.code);
+                          onCheck(account.code, account.digits);
                         }}
                       />
                       <label htmlFor={account.code}>
@@ -129,12 +157,14 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
           <InputBox>
             <span>계좌번호</span>
             <GrayInput
+              readonly
               required
               type="text"
               middleWidth
               onChange={onChange}
+              value={accountNumberBar}
               name="accountNumber"
-              placeholder="계좌번호를 입력해주세요"
+              placeholder="은행코드를 선택해주세요"
             />
           </InputBox>
           <InputBox>
@@ -150,7 +180,7 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
           </InputBox>
         </AccountInputs>
         <Notes>
-          <li>추가할 은행을 선택하면 은행코드가 입력됩니다.</li>
+          <li>추가할 은행을 선택하면 은행코드와 계좌번호가 입력됩니다.</li>
           <li>계좌번호와 전화번호에는 - 구분없이 입력해주세요.</li>
         </Notes>
         {error ? <ErrorMessage>{error}</ErrorMessage> : ""}
