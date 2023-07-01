@@ -56,7 +56,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLUC_URL}>
       <Main>
         <Header
           username={username}
