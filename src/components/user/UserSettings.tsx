@@ -183,7 +183,7 @@ function Settings() {
       </Message>
       {Object.keys(user).length ? (
         <SaveButton type="submit" onClick={onSubmit} orange middleWidth>
-          저장
+          저장하기
         </SaveButton>
       ) : (
         ""
@@ -272,7 +272,7 @@ const InputBox = styled.div`
 `;
 
 const FileSelect = styled.label`
-  width: 90px;
+  width: 80px;
   display: flex;
   height: 1.5rem;
   transition: 0.2s;
@@ -336,10 +336,10 @@ const Message = styled.span<{
 
 const SaveButton = styled(Button)`
   right: 0;
-  font-weight: 700;
+  width: 120px;
+  transition: 0.2s;
   position: absolute;
   font-size: 1.125rem;
-  transition: 0.2s;
 
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
