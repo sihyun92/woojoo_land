@@ -6,7 +6,7 @@ function SubLoading() {
     <StyledSpinner>
       <Box>
         <img src="/images/LodingAni.png" alt="Loading" />
-        <div>로딩중...</div>
+        <div>로딩 중...</div>
       </Box>
     </StyledSpinner>
   );
@@ -17,12 +17,12 @@ const flyAnimation = keyframes`
     transform: translate(0, 40%);
   }
   100% {
-    transform: translate(0, -40%);
+    transform: translate(0, -20%);
   }
 `;
 
 const Box = styled.div`
-margin: 250px auto;
+  margin: 180px auto;
   width: 200px;
   height: 200px;
   display: flex;
@@ -30,7 +30,7 @@ margin: 250px auto;
   justify-content: center;
   img {
     margin: auto;
-    animation: ${flyAnimation} 2s ease-out infinite;
+    animation: ${flyAnimation} 1.5s ease-out infinite;
   }
   div {
     width: 0 auto;
@@ -45,7 +45,7 @@ margin: 250px auto;
 
 const StyledSpinner = styled.div`
   width: 100%;
-  height: 100%;
+  height: 80%;
 `;
 
 export default SubLoading;

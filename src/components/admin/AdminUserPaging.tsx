@@ -53,12 +53,13 @@ const PageStyles = styled.div`
   .PrevArrow a, .NextArrow a{
     background-color: ${theme.colors.orange.main};
     color: ${theme.colors.white};
+    line-height: 30px;
     justify-content: center;
     border-radius: 5px;
+    transition: 0.2s;
     display: flex;
     height: 30px;
     width: 30px;
-    transition: 0.2s;
     &:hover {
       background-color: ${theme.colors.orange.hover};
     }
