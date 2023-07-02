@@ -10,10 +10,10 @@ import {
   FormEvent,
   useEffect,
 } from "react";
-import { accountConnect, accountList } from "../../lib/API/userAPI";
+import { accountConnect } from "../../lib/API/userAPI";
 import { AiOutlineClose } from "react-icons/ai";
-import { useQuery } from "react-query";
 import { theme } from "../../styles/theme";
+import { useQueryClient } from "react-query";
 
 interface IModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -35,20 +35,16 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   const [checkedCode, setCheckedCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountNumberBar, setAccountNumberBar] = useState("");
-  const [accounts, setAccounts] = useState([]);
   const [error, setError] = useState("");
+
+  const queryClient = useQueryClient();
+  const accounts = queryClient.getQueryData<IBank[]>("accountList");
 
   useEffect(() => {
     setTimeout(() => {
       setError("");
     }, 1500);
   }, [error]);
-
-  useQuery("accountList", accountList, {
-    onSuccess: (res) => {
-      setAccounts(res);
-    },
-  });
 
   // 폼 제출 없이 모달 종료하는 버튼
   const onClose = (event: MouseEvent<HTMLButtonElement>) => {
@@ -221,7 +217,7 @@ const Modal = styled.form`
 const ModalTitle = styled.h2`
   font-size: 2.25rem;
   font-weight: 700;
-  font-family: 'GmarketSans';
+  font-family: "GmarketSans";
 `;
 
 const ModalClose = styled.button`
@@ -296,7 +292,6 @@ const InputBox = styled.div`
   input {
     width: 380px;
   }
-
 `;
 
 const Notes = styled.ul`

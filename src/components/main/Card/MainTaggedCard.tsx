@@ -4,30 +4,39 @@ import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 import { IProduct } from "../../../lib/API/adminAPI";
 import MainCommet from "../MainItem";
+import SubLoading from "../../common/SubLoading";
 
 interface ITaggedCard {
+  isFetching: boolean;
   title: string;
   list: IProduct[];
 }
 
 // 검색 결과 (list)가 있을 때(length > 0)와 없을 때를 구분하여 조건부 출력
-function MainTaggedCard({ title, list }: ITaggedCard) {
+function MainTaggedCard({ isFetching, title, list }: ITaggedCard) {
   return (
     <Container>
-      <Title><div/>{title}</Title>
-      <Wrapper>
-        {list.map((item) => (
-          <MainCommet
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            price={item.price}
-            discountRate={item.discountRate}
-            thumbnail={item.thumbnail}
-            tags={item.tags}
-          />
-        ))}
-      </Wrapper>
+      <Title>
+        <div />
+        {title}
+      </Title>
+      {isFetching ? (
+        <SubLoading />
+      ) : (
+        <Wrapper>
+          {list.map((item) => (
+            <MainCommet
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              discountRate={item.discountRate}
+              thumbnail={item.thumbnail}
+              tags={item.tags}
+            />
+          ))}
+        </Wrapper>
+      )}
     </Container>
   );
 }
@@ -38,9 +47,9 @@ const Title = styled.h1`
   font-size: 46px;
   display: flex;
   font-weight: bold;
-  font-family: 'GmarketSans';
+  font-family: "GmarketSans";
   color: ${theme.colors.black};
-  div{
+  div {
     width: 8px;
     height: 43px;
     display: flex;
