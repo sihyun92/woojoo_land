@@ -6,21 +6,28 @@ function Footer() {
   return (
     <Container>
       <Contents>
-        <Logo><img src="/images/LogoBlack.svg" alt="우주부동산" width={250} /></Logo>
+        <Logo>
+          <img src="/images/LogoBlack.svg" alt="우주부동산" width={250} />
+        </Logo>
         <FooterContent>
           <Customer>
             <div className="CustomerTitle">
               <div>고객센터</div>
               <div>24시간 연중무휴</div>
             </div>
-            <div className="CustomerAddres" >1566-1004</div>
+            <div className="CustomerAddres">1566-1004</div>
           </Customer>
           <Company>(주)에이트 스페이스 그룹</Company>
           <Business>
-            사업자 등록번호 : 150-66-100004 | 대표 : 메롱머스크<br />
-            호스팅 서비스 : 주식회사 에버랜드 아마존 서버 | 통신판매업 신고번호: 2023-서울강남-03377<br />
-            06241 서울 강남구 강남대로 364, 10층 11층 (강남역, 미왕빌딩)<br />
-            고객센터 : 서울 강남구 강남대로 364, 12층 (강남역, 미왕빌딩)<br />
+            사업자 등록번호 : 150-66-100004 | 대표 : 메롱머스크
+            <br />
+            호스팅 서비스 : 주식회사 에버랜드 아마존 서버 | 통신판매업 신고번호:
+            2023-서울강남-03377
+            <br />
+            06241 서울 강남구 강남대로 364, 10층 11층 (강남역, 미왕빌딩)
+            <br />
+            고객센터 : 서울 강남구 강남대로 364, 12층 (강남역, 미왕빌딩)
+            <br />
           </Business>
           <Service>
             <div>개인정보 처리방침</div>
@@ -61,7 +68,7 @@ const Contents = styled.footer`
 
 const Logo = styled.footer`
   width: 25%;
-  img{
+  img {
     opacity: 30%;
   }
 `;
@@ -79,7 +86,7 @@ const Customer = styled.footer`
   height: 45px;
   display: flex;
   margin-bottom: 20px;
-  .CustomerTitle{
+  .CustomerTitle {
     justify-content: center;
     div:first-child {
       display: flex;
@@ -117,7 +124,7 @@ const Business = styled.footer`
 
 const Service = styled.footer`
   display: flex;
-  div{
+  div {
     width: 94px;
     height: 20px;
     display: flex;
@@ -146,7 +153,7 @@ const SocialMenu = styled.footer`
     transition: 0.1s;
     margin-right: 20px;
     color: ${theme.colors.orange.main};
-    &:hover{
+    &:hover {
       transform: scale(1.1);
     }
   }

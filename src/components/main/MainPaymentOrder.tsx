@@ -8,28 +8,29 @@ import { useQueryClient } from "react-query";
 import { ICheckData } from "../common/Header";
 interface IPaymentOrder {
   price: number;
-  productId: string[];
+  productIds: string[];
   accountId: string;
   discountedPrice: number;
 }
 
 function MainPaymentOrder({
   price,
-  productId,
+  productIds,
   accountId,
   discountedPrice,
 }: IPaymentOrder) {
   const queryClient = useQueryClient();
   const res = queryClient.getQueryData<ICheckData>("check");
   const navigate = useNavigate(); // 내비게이터
+
   // 결제 버튼 onClick 이벤트 함수
   const onPayment = async () => {
     if (res) {
       // 결제 계좌가 성공적으로 선택되었을 때
       if (accountId) {
         // 제품 구매 신청
-        for (let i = 0; i < productId.length; i++) {
-          orderApply(productId[i], accountId);
+        for (let i = 0; i < productIds.length; i++) {
+          orderApply(productIds[i], accountId);
         }
 
         const confirm = window.confirm(
@@ -42,6 +43,7 @@ function MainPaymentOrder({
         } else {
         }
 
+        // 결제 완료 시, 로컬 스토리지 내 장바구니 삭제
         localStorage.removeItem(`cart_${res.email}`);
 
         // 최종적으로 결제 후 페이지 리로드

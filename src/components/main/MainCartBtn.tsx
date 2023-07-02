@@ -9,7 +9,9 @@ interface ICartBtn {
 }
 
 function MainCartBtn({ quantity }: ICartBtn) {
+  // 데이터 조회
   const queryClient = useQueryClient();
+  // 데이터 저장
   const res = queryClient.getQueryData<ICheckData>("check");
   // URL로부터 현재 product의 id값 도출
   const { id } = useParams<{ id: string }>();
@@ -28,12 +30,12 @@ function MainCartBtn({ quantity }: ICartBtn) {
   };
 
   const postCart = async (updatedCarts: IProductEdit[]) => {
-    // 인증 확인
     // 기존의 로컬 스토리지에 저장된 product
     if (res) {
       const getCartItems = localStorage.getItem(`cart_${res.email}`);
       let cartItems: IProductEdit[] = [];
 
+      // 파싱
       if (getCartItems) {
         cartItems = JSON.parse(getCartItems);
       }
@@ -54,7 +56,7 @@ function MainCartBtn({ quantity }: ICartBtn) {
 
     const item = await findProduct();
     if (item) {
-      // 1. postCart() 실행
+      // postCart() 실행
       postCart(item);
     }
 

@@ -9,46 +9,52 @@ import { theme } from "../../styles/theme";
 import { useQueryClient } from "react-query";
 import { ICheckData } from "../common/Header";
 
+// 태양계 상품을 나열하는 컴포넌트
 function MainSolarList() {
+  // 쿼리 선언
   const queryClient = useQueryClient();
   const res = queryClient.getQueryData<ICheckData>("check");
-  // 상품들을 담는 배열 선언
-  const [list, setList] = useState<IProduct[]>([]);
-  // liked된 item을 담을 배열 선언
-  const [likedList, setLikedList] = useState<IProductLike[]>([]);
+
+  const [list, setList] = useState<IProduct[]>([]); // 상품들을 담는 배열
+  const [likedList, setLikedList] = useState<IProductLike[]>([]); // liked된 item을 담을 배열
+
+  //
+  const fetchList = async () => {
+    try {
+      //  모든 제품 조회
+      const response: IProduct[] = await productsList();
+
+      // 태양계 상품 조회 (tags 기반)
+      const solarList = response.filter((item) =>
+        item.tags?.includes("태양계"),
+      );
+      setList(solarList);
+
+      // 찜 목록 조회
+      if (res) {
+        let likedList: IProductLike[] = [];
+        const getLikedItem = localStorage.getItem(`like_${res.email}`);
+
+        if (getLikedItem) {
+          likedList = JSON.parse(getLikedItem);
+        }
+        setLikedList(likedList);
+      }
+    } catch (error) {
+      console.error("Failed", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchList = async () => {
-      try {
-        //  모든 제품 조회
-        const response: IProduct[] = await productsList();
-
-        // 태양계 상품 조회
-        const solarList = response.filter((item) =>
-          item.tags?.includes("태양계"),
-        );
-        setList(solarList);
-
-        // 찜 목록 조회
-        if (res) {
-          let likedList: IProductLike[] = [];
-          const getLikedItem = localStorage.getItem(`like_${res.email}`);
-
-          if (getLikedItem) {
-            likedList = JSON.parse(getLikedItem);
-          }
-          setLikedList(likedList);
-        }
-      } catch (error) {
-        console.error("Failed", error);
-      }
-    };
     fetchList();
-  }, []);
+  }, [res]);
 
   return (
     <>
-      <Category><div/>신상 태양계 행성 </Category>
+      <Category>
+        <div />
+        신상 태양계 행성{" "}
+      </Category>
       <Container>
         <Carousel slides={4} color={theme.colors.gray[5]}>
           {list.map((item) => {
@@ -79,8 +85,8 @@ const Category = styled.h1`
   font-size: 2.625rem;
   margin-bottom: 2rem;
   letter-spacing: -2px;
-  font-family: 'GmarketSans';
-  div{
+  font-family: "GmarketSans";
+  div {
     width: 8px;
     height: 40px;
     display: flex;
@@ -107,7 +113,7 @@ const Container = styled.div`
   }
 
   .slick-dots {
-    li{
+    li {
       display: none;
     }
   }
@@ -127,7 +133,6 @@ const Container = styled.div`
       opacity: 0.4;
     }
   }
-
 `;
 
 export default MainSolarList;
