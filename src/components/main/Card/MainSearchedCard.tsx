@@ -40,6 +40,9 @@ const Container = styled.div`
   z-index: 2;
   top: 3.3rem;
   position: absolute;
+  width: 420px;
+  padding: 5px 0px 10px 0px;
+  border-radius: 10px;
 `;
 
 const Wrapper = styled.div`
@@ -49,17 +52,20 @@ const Wrapper = styled.div`
 `;
 
 const SearchList = styled.div`
-  width: 500px;
+  width: 100%;
+  margin: 3px 0;
   padding: 10px;
   display: flex;
+  transition: 0.1s;
   align-items: center;
-  border-radius: 1rem;
+  border-radius: 10px;
   justify-content: space-between;
+  box-shadow: 0px 0px 8px 1px #00000035;
   background-color: ${(props) => props.theme.colors.white};
-  border: 1px solid ${(props) => props.theme.colors.orange.main};
-
   &:hover {
     background-color: ${(props) => props.theme.colors.gray[2]};
+    transform: scale(0.99);
+    box-shadow: 0px 0px 4px 0px #00000022;
   }
 `;
 
@@ -71,22 +77,27 @@ const WrapperLeft = styled.div`
 const ItemTitle = styled.div`
   display: flex;
   align-items: center;
+  font-weight: 700;
 `;
 
 const WrapperRight = styled.div`
-  gap: 10px;
+  gap: 5px;
   display: flex;
   align-items: end;
   flex-direction: column;
+  span:first-child {
+    font-size: 18px;
+  }
 `;
 
 const Discount = styled.span`
   color: ${(props) => props.theme.colors.orange.main};
+  font-size: 14px;
 `;
 
 const TumbnailImg = styled.img`
-  width: 4rem;
-  height: 4rem;
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
 `;
 

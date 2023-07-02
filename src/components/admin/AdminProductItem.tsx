@@ -474,7 +474,6 @@ const ItemContainer = styled.div`
   &:hover {
     transform: scale(0.99);
     background-color: ${theme.colors.gray[2]};
-
   }
 `;
 

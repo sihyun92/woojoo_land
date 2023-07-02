@@ -11,6 +11,7 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import { useQueryClient } from "react-query";
 import { ICheckData } from "../common/Header";
+import { theme } from "../../styles/theme";
 
 interface ISettingProps {
   setIsChecked: Dispatch<SetStateAction<boolean>>;
@@ -93,14 +94,17 @@ function SettingAuth({ setIsChecked }: ISettingProps) {
 }
 
 const SettingRoute = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const SubTitle = styled.span`
   display: block;
+  font-weight: 700;
   font-size: 1.125rem;
   margin-bottom: 1rem;
+  color: ${theme.colors.orange.main};
 `;
 
 const Form = styled.form`
@@ -115,11 +119,9 @@ const SettingInput = styled(GrayInput)`
 `;
 
 const AuthButton = styled(Button)`
-  font-weight: 700;
   transition: 0.5s;
-  font-size: 1.125rem;
+  font-size: 16px;
   transition: 0.2s;
-
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
   }

@@ -66,9 +66,9 @@ const CalendarBox = styled.div`
 
   .react-calendar {
     width: 300px;
-    height: 310px;
     padding: 20px;
     border-radius: 5px;
+    border: 1px solid ${theme.colors.gray[3]};
   }
 
   .react-calendar__tile--range {
@@ -167,12 +167,13 @@ const CalendarBox = styled.div`
 const ToggleButton = styled.button<{
   isOpen?: boolean;
 }>`
-  width: 190px;
   height: 24px;
   display: flex;
   cursor: pointer;
+  padding: 0 15px;
   transition: 0.2s;
   font-weight: 700;
+  line-height: 12px;
   font-size: 0.75rem;
   align-items: center;
   border-radius: 1rem;

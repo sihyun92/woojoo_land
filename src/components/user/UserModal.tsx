@@ -10,9 +10,10 @@ import {
   FormEvent,
   useEffect,
 } from "react";
-import { accountConnect, accountList } from "../../lib/API/userAPI";
+import { accountConnect } from "../../lib/API/userAPI";
 import { AiOutlineClose } from "react-icons/ai";
-import { useQuery } from "react-query";
+import { theme } from "../../styles/theme";
+import { useQueryClient } from "react-query";
 
 interface IModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,20 +35,16 @@ function AccountModal({ setIsModalOpen, closeModal }: IModalProps) {
   const [checkedCode, setCheckedCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountNumberBar, setAccountNumberBar] = useState("");
-  const [accounts, setAccounts] = useState([]);
   const [error, setError] = useState("");
+
+  const queryClient = useQueryClient();
+  const accounts = queryClient.getQueryData<IBank[]>("accountList");
 
   useEffect(() => {
     setTimeout(() => {
       setError("");
     }, 1500);
   }, [error]);
-
-  useQuery("accountList", accountList, {
-    onSuccess: (res) => {
-      setAccounts(res);
-    },
-  });
 
   // 폼 제출 없이 모달 종료하는 버튼
   const onClose = (event: MouseEvent<HTMLButtonElement>) => {
@@ -219,6 +216,8 @@ const Modal = styled.form`
 
 const ModalTitle = styled.h2`
   font-size: 2.25rem;
+  font-weight: 700;
+  font-family: "GmarketSans";
 `;
 
 const ModalClose = styled.button`
@@ -237,7 +236,7 @@ const ModalClose = styled.button`
 `;
 
 const AccountSelect = styled.ul`
-  width: 509px;
+  width: 470px;
   height: 139px;
   display: flex;
   flex-wrap: wrap;
@@ -246,10 +245,24 @@ const AccountSelect = styled.ul`
 
 const UsableAccount = styled.li`
   height: 22px;
-  width: 254.5px;
+  width: 235px;
 
-  input {
-    margin-right: 0.5rem;
+  input[type="radio"] {
+    width: 14px;
+    height: 14px;
+    appearance: none;
+    margin-right: 8px;
+    border-radius: 100%;
+    background-color: white;
+    border: 1px solid ${theme.colors.gray[3]};
+  }
+  input[type="radio"]:checked {
+    border: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background-color: white;
+    background-color: ${theme.colors.orange.main};
   }
 
   label:hover {
@@ -267,7 +280,7 @@ const AccountInputs = styled.div`
 `;
 
 const InputBox = styled.div`
-  width: 100%;
+  width: 92%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -276,10 +289,13 @@ const InputBox = styled.div`
     font-weight: 700;
     font-size: 1.125rem;
   }
+  input {
+    width: 380px;
+  }
 `;
 
 const Notes = styled.ul`
-  width: 509px;
+  width: 450px;
   height: 43px;
   display: flex;
   padding: 0.5rem;
@@ -297,9 +313,8 @@ const Notes = styled.ul`
 const AddButton = styled(Button)`
   width: 428px;
   height: 50px;
+  transition: 0.1s;
   font-size: 1.125rem;
-  transition: 0.2s;
-
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
   }

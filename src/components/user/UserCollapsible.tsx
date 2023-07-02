@@ -86,8 +86,10 @@ function UserCollapsible({
         <OrderList>
           <Title>{order.product.title}</Title>
           <Time>{adjustDate(order.timePaid)}</Time>
-          <PriceTitle>총 주문 금액</PriceTitle>
-          <Price>{formatDollar(order.product.price)}</Price>
+          <Price>
+            <span>총 주문 금액</span>
+            <span>{formatDollar(order.product.price)}</span>
+          </Price>
           <OrderButton>
             {!order.done && !order.isCanceled ? (
               <>
@@ -159,10 +161,10 @@ const OrderList = styled.li`
   display: flex;
   transition: 0.1s;
   padding: 0 1.25rem;
+  border-radius: 5px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid ${(props) => props.theme.colors.gray[3]};
-
+  border: 1px solid ${(props) => props.theme.colors.gray[7]};
   &:hover {
     cursor: pointer;
     transform: scale(0.99);
@@ -180,14 +182,17 @@ const Time = styled.span`
   width: 30%;
 `;
 
-const PriceTitle = styled.span``;
-
-const Price = styled.span``;
+const Price = styled.div`
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+`;
 
 const OrderButton = styled.div`
-  gap: 1rem;
+  gap: 8px;
   width: 136px;
   display: flex;
+  padding-left: 10px;
   justify-content: center;
 `;
 
@@ -197,12 +202,10 @@ const OrderText = styled.span`
 `;
 
 const ConfirmButton = styled(Button)`
-  height: 2.5rem;
   width: 3.75rem;
-  font-size: 1rem;
-  font-weight: 700;
+  height: 2.5rem;
+  font-size: 16px;
   transition: 0.2s;
-
   &:hover {
     color: ${(props) => props.theme.colors.white};
     background: ${(props) => props.theme.colors.orange.main};
@@ -213,9 +216,7 @@ const CancleButton = styled(Button)`
   height: 2.5rem;
   width: 3.75rem;
   font-size: 1rem;
-  font-weight: 700;
   transition: 0.2s;
-
   &:hover {
     background: ${(props) => props.theme.colors.orange.hover};
   }
@@ -224,6 +225,7 @@ const CancleButton = styled(Button)`
 const DetailBox = styled.div`
   height: 250px;
   display: flex;
+  margin-top: 5px;
   justify-content: center;
 `;
 
@@ -232,23 +234,24 @@ const DetailContent = styled.div`
   width: 870px;
   display: flex;
   padding: 1.7rem;
+  border-radius: 5px;
   align-items: center;
   justify-content: center;
   background-color: #f8f8f8;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border: 1px solid ${(props) => props.theme.colors.gray[3]};
+  border: 1px solid ${(props) => props.theme.colors.gray[7]};
 `;
 
 const DetailImg = styled.img`
   width: 187px;
   height: 187px;
+  border-radius: 10px;
 `;
 
 const DetailTitle = styled.h2`
   height: 2.2rem;
+  font-size: 20px;
+  margin-top: 8px;
   font-weight: 700;
-  font-size: 1.125rem;
   color: ${(props) => props.theme.colors.orange.main};
 `;
 
@@ -258,9 +261,11 @@ const DetailText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   div {
-    border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};
+    border-bottom: 1px solid ${(props) => props.theme.colors.gray[7]};
+    width: 98%;
+    margin-left: 5px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -269,9 +274,14 @@ const DetailList = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  h3 {
+    font-weight: 700;
+    padding-left: 5px;
+  }
   span {
-    color: ${(props) => props.theme.colors.orange.main};
+    font-size: 14px;
+    color: #9d9d9d;
+    padding-right: 8px;
   }
 `;
 

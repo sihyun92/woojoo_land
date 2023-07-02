@@ -6,14 +6,17 @@ import { useNavigate } from "react-router-dom";
 function Banner() {
   const navigate = useNavigate();
 
+  // 달 분양 배너
   const onToTheMoon = () => {
     navigate("/product/6ENwqwRTuR0GV5X22nTm");
   };
-  const onToTheMars = () => {
-    navigate("/product/6wfO1el9sgHaB8PsDX3J");
-  };
+  // 초광속 택배 배너
   const onToDelivery = () => {
     navigate("/product/NwRt7wwheSKJl4YH7b0f");
+  };
+  // 화성 헬스테이트 배너
+  const onToTheMars = () => {
+    navigate("/product/6wfO1el9sgHaB8PsDX3J");
   };
 
   return (
@@ -50,11 +53,9 @@ const Container = styled.div`
 
   .slick-slider {
     width: 1250px;
-    
   }
 
   .slick-list {
-    
   }
 
   .slick-dots {
@@ -84,7 +85,6 @@ const Container = styled.div`
       opacity: 0.6;
     }
   }
-
 `;
 
 const Image = styled.img`

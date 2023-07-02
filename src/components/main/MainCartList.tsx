@@ -27,8 +27,15 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
   // 로컬 스토리지 내 장바구니 목록 조회 및 장바구니 내 상품 정보 dispatch
   useEffect(() => {
     getCart();
-    handleCheck();
   }, []);
+
+  useEffect(() => {
+    if (checkedIds.length) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [checkedIds]);
 
   const getCart = async () => {
     // 인증 확인
@@ -121,14 +128,7 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
       setCheckedIds((prev) => prev.filter((item) => item !== id));
     }
   };
-
-  const handleCheck = () => {
-    if (checkedIds.length) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
-  };
+  console.log(checkedIds);
 
   return (
     <Ul>
@@ -189,16 +189,20 @@ const Ul = styled.ul`
   flex-direction: column;
 
   > li {
-    padding: 0 2rem;
-    justify-content: space-between;
     width: 100%;
     height: 120px;
     display: flex;
-    margin-bottom: 16px;
-    align-items: center;
+    padding: 0 2rem;
+    transition: 0.1s;
     border-radius: 5px;
-    border: 1px solid ${theme.colors.gray[3]};
-
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid ${theme.colors.gray[7]};
+    :hover{
+    transform: scale(0.99);
+    background-color: ${theme.colors.gray[2]};
+    }
+    
     input {
       display: none;
     }
@@ -209,44 +213,61 @@ const Ul = styled.ul`
 
     .checkLg {
       color: ${theme.colors.gray[3]};
+      &:hover {
+        color: white;
+      }
     }
 
     input:checked + label {
       background-color: ${theme.colors.orange.main};
-
+      border: 1px solid ${(props) => props.theme.colors.orange.main};
       .checkLg {
         color: ${theme.colors.white};
       }
     }
     > img {
+      width: 80px;
+      height: 80px;
+      margin-left: 30px;
       border-radius: 5px;
     }
   }
 `;
 
 const CheckCircle = styled.label`
-  width: 1.6rem;
+  width: 20px;
   display: flex;
-  height: 1.6rem;
-  align-items: center;
+  height: 20px;
+  transition: 0.1s;
   border-radius: 50%;
+  align-items: center;
   justify-content: center;
   border: 1px solid ${(props) => props.theme.colors.gray[3]};
+  &:hover {
+      background-color: ${theme.colors.orange.main};
+      border: 1px solid ${(props) => props.theme.colors.orange.main};
+      }
+  svg {
+    font-size: 15px;
+    margin-right: 1px;
+  }
 `;
 
 const SelectDelete = styled(Button)`
   width: 5rem;
   height: 2.5rem;
   align-self: end;
+  margin-top: 10px;
   font-weight: 700;
-
   &:hover {
     background-color: ${(props) => props.theme.colors.orange.hover};
   }
 `;
 
 const Title = styled.div`
-  min-width: 275px;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: 700;
   width: 275px;
 `;
 

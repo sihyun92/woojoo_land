@@ -1,3 +1,8 @@
+interface IDiscount {
+  price: number;
+  discountRate: number;
+}
+
 // API에서 받아온 시간을 한국 시간으로 조정하고 원하는 포맷으로 수정
 // 예) 2023-06-15T00:00:00.000Z -> 2023-06-15 00:00:00
 const adjustDate = (date: string) => {
@@ -18,4 +23,11 @@ const formatDollar = (dollar: number | undefined) => {
   }
 };
 
-export { adjustDate, formatDollar };
+const formatDiscount = ({ price, discountRate }: IDiscount): number => {
+  if (price && discountRate) {
+    return price * (discountRate / 100);
+  }
+  return 0;
+};
+
+export { adjustDate, formatDollar, formatDiscount };
