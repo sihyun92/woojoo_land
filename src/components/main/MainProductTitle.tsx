@@ -96,18 +96,20 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
   font-family: "GmarketSans";
+  margin-bottom: 6px;
 `;
 
 const LikeButton = styled.button<{
   isLiked?: boolean;
   isAnimate?: boolean;
 }>`
-  background: none;
   border: none;
   cursor: pointer;
+  background: none;
+  color: ${theme.colors.gray[3]};
 
   ${(props) =>
     props.isLiked &&
@@ -122,7 +124,7 @@ const LikeButton = styled.button<{
     `}
 
   > svg {
-    font-size: 3rem;
+    font-size: 38px;
   }
 `;
 

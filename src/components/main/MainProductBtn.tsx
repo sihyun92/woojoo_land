@@ -1,5 +1,6 @@
-import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import styled from "styled-components";
+import { theme } from "../../styles/theme";
 
 interface IQtyButtonProps {
   quantity: number;
@@ -19,9 +20,9 @@ function MainProductBtn({ quantity, setQuantity }: IQtyButtonProps) {
 
   return (
     <ButtonWrapper>
-      <BiMinusCircle onClick={onDecrease}>-</BiMinusCircle>
+      <AiFillMinusCircle onClick={onDecrease}>-</AiFillMinusCircle>
       <p>{quantity}</p>
-      <BiPlusCircle onClick={onIncrease}>+</BiPlusCircle>
+      <AiFillPlusCircle onClick={onIncrease}>+</AiFillPlusCircle>
     </ButtonWrapper>
   );
 }
@@ -31,8 +32,13 @@ const ButtonWrapper = styled.div`
   gap: 0.5rem;
 
   > svg {
-    font-size: 1.5rem;
     cursor: pointer;
+    font-size: 24px;
+    transition: 0.1s;
+    color: ${theme.colors.gray[3]};
+    :hover {
+      color: ${theme.colors.orange.main};
+    }
   }
   > p {
     font-size: 1.5rem;

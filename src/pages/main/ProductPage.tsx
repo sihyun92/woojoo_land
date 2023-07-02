@@ -106,7 +106,7 @@ function ProductPage() {
           />
           <Price>{formatDollar(discountedPrice)}</Price>
           <Desc>{product?.description}</Desc>
-          <hr />
+          <Line />
           <MainProductPurchase
             product={product}
             discountedPrice={discountedPrice}
@@ -116,6 +116,11 @@ function ProductPage() {
     </Container>
   );
 }
+
+const Line = styled.div`
+  background-color: ${theme.colors.gray[7]};
+  height: 1px;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -157,7 +162,7 @@ const DetailWrapper = styled.div<{
   padding: 2rem;
   transition: all 1s ease-in-out;
   border-radius: 10px;
-  border: 1px solid ${theme.colors.gray[5]};
+  border: 1px solid ${theme.colors.gray[3]};
   position: relative;
 
   ${(props) =>
