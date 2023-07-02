@@ -210,8 +210,7 @@
 ## 23.07.02
 
 - 컴포넌트 내에서 사용할 로딩 컴포넌트인 SubLoading 생성
-- AdminPage 내 전체 거래 내역 영역에 SubLoading 추가
-- UserPage 내에 SubLoading 추가
+- AdminPage, UserPage 내에 SubLoading 추가
 
 ## 프로젝트 회고록
 
