@@ -85,6 +85,12 @@ const StyledButton = styled.button<{
     rest.orange &&
     css`
       background: ${theme.colors.orange.main};
+      transition: 0.1s;
+      &:hover {
+        transform: scale(1.04);
+        color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
+      }
     `}
   ${(rest) =>
     rest.reverse &&
