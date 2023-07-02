@@ -27,8 +27,15 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
   // 로컬 스토리지 내 장바구니 목록 조회 및 장바구니 내 상품 정보 dispatch
   useEffect(() => {
     getCart();
-    handleCheck();
   }, []);
+
+  useEffect(() => {
+    if (checkedIds.length) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [checkedIds]);
 
   const getCart = async () => {
     // 인증 확인
@@ -121,14 +128,7 @@ function MainCartList({ isChecked, setIsChecked }: IsetisChecked) {
       setCheckedIds((prev) => prev.filter((item) => item !== id));
     }
   };
-
-  const handleCheck = () => {
-    if (checkedIds.length) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
-  };
+  console.log(checkedIds);
 
   return (
     <Ul>

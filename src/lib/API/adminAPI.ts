@@ -38,6 +38,32 @@ export interface RequestBodyEdit {
   discountRate?: number; // 제품 할인율
 }
 
+export interface IOrdalDetailAll {
+  detailId: string;
+  user: {
+    email: string;
+    displayName: string;
+    profileImg: string | null;
+  };
+  account: {
+    bankName: string;
+    bankCode: string;
+    accountNumber: string;
+  };
+  product: {
+    productId: string;
+    title: string;
+    price: number;
+    description: string;
+    tags: string[];
+    thumbnail: string | null;
+    discountRate: number;
+  };
+  timePaid: string; // 제품을 거래한 시간
+  isCanceled: boolean; // 거래 취소 여부
+  done: boolean; // 거래 완료 여부
+}
+
 interface RequestBodyAdd {
   title: string; // 제품 이름 (필수!)
   price: number; // 제품 가격 (필수!)

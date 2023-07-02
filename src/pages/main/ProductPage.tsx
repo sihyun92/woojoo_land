@@ -36,15 +36,13 @@ function ProductPage() {
   });
 
   const scrollFixed = () => {
-    if (scrollY > 165 && scrollY < 1077) {
-      setScrollY(window.scrollY);
+    setScrollY(window.scrollY);
+    if (scrollY <= 165) {
+      setScrollActive(false);
+    } else if (scrollY > 165 && scrollY < 1050) {
       setScrollActive(true);
       setScrollBottom(false);
-    } else if (scrollY <= 165) {
-      setScrollY(window.scrollY);
-      setScrollActive(false);
-    } else if (scrollY >= 1077) {
-      setScrollY(window.scrollY);
+    } else if (scrollY >= 1050) {
       // setScrollActive(false);
       setScrollBottom(true);
     }
@@ -203,7 +201,6 @@ const PhotoWrapper = styled.div`
   }
 `;
 const AbsoluteWrapper = styled.div`
-  position: absolute;
   width: 480px;
   right: 0;
 `;
@@ -213,9 +210,10 @@ const DetailWrapper = styled.div<{
 }>`
   width: 480px;
   padding: 2rem;
-  transition: 1s;
+  transition: all 1s ease-in-out;
   border-radius: 10px;
   border: 1px solid ${theme.colors.gray[5]};
+  position: relative;
 
   ${(props) =>
     props.scrollActive &&
@@ -228,8 +226,9 @@ const DetailWrapper = styled.div<{
   ${(props) =>
     props.scrollBottom &&
     css`
-      top: -240px;
-      position: none;
+      top: unset;
+      bottom: 0;
+      position: absolute;
     `};
 `;
 
