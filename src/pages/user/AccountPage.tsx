@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import UserTitle from "../../components/user/UserTitle";
 import UserModal from "../../components/user/UserModal";
-import { myAccount } from "../../lib/API/userAPI";
+import { accountList, myAccount } from "../../lib/API/userAPI";
 import UserAccountList from "../../components/user/UserAccountList";
 import SubLoading from "../../components/common/SubLoading";
+import { useQuery } from "react-query";
 
 function AccountPage() {
   // 계좌 목록 최초 렌더링
@@ -15,6 +16,8 @@ function AccountPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [accounts, setAccounts] = useState([]);
+
+  useQuery("accountList", accountList);
 
   // 계정 내 연결된 계좌 목록 조회
   const getAccounts = async () => {
