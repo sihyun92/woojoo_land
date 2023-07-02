@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
 import styled from "styled-components";
-import { formatDollar } from "../../lib/Function/commonFn";
-import { AiOutlineClose } from "react-icons/ai";
-import { Dispatch, SetStateAction } from "react";
+import { theme } from "../../styles/theme";
 import { ICheckData } from "../common/Header";
+import { useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { formatDollar } from "../../lib/Function/commonFn";
 
 export interface IProduct {
   id: string;
@@ -102,12 +103,12 @@ function UserLikeList({
                   장바구니 담기
                 </OnCartButton>
                 <DeleteLikeButton
+                  minidel
                   type="button"
-                  onClick={(event) => {
+                  onClick={(event: any) => {
                     onDelete(event, like);
                   }}
-                >
-                  <AiOutlineClose size="1.2rem" />
+                >삭제
                 </DeleteLikeButton>
               </Buttons>
             </Likelist>
@@ -121,29 +122,35 @@ function UserLikeList({
 }
 
 const LikeBox = styled.ul`
-  gap: 0.5rem;
+  gap: 5px;
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const Likelist = styled.li`
-  padding: 0 1rem;
   flex-grow: 1;
   height: 120px;
   display: flex;
+  padding: 0 1rem;
+  transition: 0.1s;
+  border-radius: 5px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid ${(props) => props.theme.colors.gray[3]};
+  border: 1px solid ${(props) => props.theme.colors.gray[7]};
+  &:hover {
+    transform: scale(0.99);
+    background-color: ${theme.colors.gray[2]};
+  }
 `;
 
 const ListInfo = styled.div`
   gap: 1.2rem;
   display: flex;
-
+  padding: 20px 0;
+  height: 130px;
   img {
-    width: 6.25rem;
-    height: 6.25rem;
+    border-radius: 5px;
   }
 `;
 
@@ -155,7 +162,7 @@ const ListText = styled.div`
 `;
 
 const LikeName = styled.span`
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 700;
 `;
 
@@ -164,25 +171,28 @@ const LikePrice = styled.span`
 `;
 
 const Buttons = styled.div`
-  gap: 20px;
+  gap: 10px;
   display: flex;
 `;
 
 const OnCartButton = styled.button`
   border: none;
+  font-size: 12px;
+  transition: 0.1s;
+  border-radius: 5px;
   background-color: transparent;
-  color: ${(props) => props.theme.colors.gray[5]};
-
+  color: ${theme.colors.orange.main};
+  border: 1px solid ${theme.colors.orange.main};
   &:hover {
     cursor: pointer;
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.orange.main};
+    border: 1px solid ${theme.colors.orange.main};
   }
 `;
 
-const DeleteLikeButton = styled.button`
+const DeleteLikeButton = styled(Button)`
   border: none;
-  background-color: transparent;
-  color: ${(props) => props.theme.colors.gray[5]};
-
   &:hover {
     cursor: pointer;
   }

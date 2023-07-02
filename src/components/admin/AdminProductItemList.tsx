@@ -105,6 +105,7 @@ function AdminProductItemList() {
         {currentPosts && currentPosts.length > 0 ? (
           currentPosts.map((productData: any) => (
             <AdminProductItem
+              key={productData.id}
               onclick={onclick}
               thumbnail={productData.thumbnail}
               title={productData.title}

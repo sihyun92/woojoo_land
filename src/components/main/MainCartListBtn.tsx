@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import Button from "../common/Button";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { theme } from "../../styles/theme";
 import { check } from "../../lib/API/userAPI";
 import { setQuantity } from "../../modules/cartItem";
 import { IProductEdit } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";
-import { BiPlusCircle, BiMinusCircle } from "react-icons/bi";
 import { formatDollar } from "../../lib/Function/commonFn";
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 interface ICartListBtnProps {
   id?: string;
@@ -189,12 +191,12 @@ function MainCartListBtn({
   return (
     <>
       <ButtonWrapper>
-        <BiMinusCircle onClick={onDecrease}>-</BiMinusCircle>
+        <AiFillMinusCircle onClick={onDecrease}>-</AiFillMinusCircle>
         <p>{itemQty}</p>
-        <BiPlusCircle onClick={onIncrease}>+</BiPlusCircle>
+        <AiFillPlusCircle onClick={onIncrease}>+</AiFillPlusCircle>
       </ButtonWrapper>
-      <Price>{`주문 금액: ${formatDollar(price * itemQty)}`}</Price>
-      <Delete onClick={onRemove}>X</Delete>
+      <Price><span>합계 금액 :</span>{formatDollar(price * itemQty)}</Price>
+      <Delete onClick={onRemove} minidel >삭제</Delete>
     </>
   );
 }
@@ -203,27 +205,32 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
-
+  margin-right: 20px;
   > p {
-    font-size: 1.5rem;
     width: 2rem;
+    font-size: 18px;
     text-align: center;
   }
-
   > svg {
-    font-size: 1.8rem;
     cursor: pointer;
+    font-size: 20px;
+    transition: 0.1s;
+    color: ${theme.colors.gray[3]};
+    :hover {
+      color: ${theme.colors.orange.main};
+    }
   }
 `;
 
 const Price = styled.span`
-  min-width: 96px;
+  width: 200px;
+  margin-left: 20px;
+  span{
+    font-weight: 700;
+    margin-right: 5px;
+  }
 `;
 
-const Delete = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
+const Delete = styled(Button)``;
 
 export default MainCartListBtn;

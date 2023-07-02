@@ -81,7 +81,7 @@ const NavList = styled.li<{
 }>`
   display: flex;
   transition: 0.1s;
-  padding: 13px 10px;
+  padding: 13px 10px 13px 20px;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.colors.gray[3]};

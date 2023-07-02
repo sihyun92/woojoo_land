@@ -79,11 +79,12 @@ function PaymentPage({ username, setUsername }: IPaymentProps) {
 }
 
 const Title = styled.div`
+  height: 66px;
   display: flex;
-  align-items: center;
   font-size: 36px;
   font-weight: bold;
-  height: 66px;
+  align-items: center;
+  font-family: "GmarketSans";
 `;
 
 const Container = styled.div``;

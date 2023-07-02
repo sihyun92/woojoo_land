@@ -1,8 +1,8 @@
-import Button from "../../components/common/Button";
-import { AiOutlineClose } from "react-icons/ai";
-import { formatDollar } from "../../lib/Function/commonFn";
-import { accountDisconnect } from "../../lib/API/userAPI";
 import styled from "styled-components";
+import { theme } from "../../styles/theme";
+import Button from "../../components/common/Button";
+import { accountDisconnect } from "../../lib/API/userAPI";
+import { formatDollar } from "../../lib/Function/commonFn";
 
 interface IAccount {
   id: string;
@@ -58,11 +58,12 @@ function UserAccountList({
                 <Balance>{formatDollar(account.balance)}</Balance>
               </AccountWrapper>
               <DelAccount
-                onClick={(event) => {
+                minidel
+                onClick={(event: any) => {
                   delAccount(event, account.id, account.bankName);
                 }}
               >
-                <AiOutlineClose size="1.2rem" />
+              삭제
               </DelAccount>
             </AccountList>
           );
@@ -87,13 +88,14 @@ const AccountList = styled.li`
   width: 100%;
   height: 70px;
   display: flex;
+  transition: 0.1s;
   padding: 0 1.25rem;
+  border-radius: 5px;
   align-items: center;
-  border: 1px solid ${(props) => props.theme.colors.gray[3]};
-
+  border: 1px solid ${(props) => props.theme.colors.gray[7]};
   &:hover {
     transform: scale(0.99);
-    background-color: ${(props) => props.theme.colors.gray[2]};
+    background-color: ${theme.colors.gray[2]};
   }
 `;
 
@@ -104,35 +106,33 @@ const AccountWrapper = styled.div`
 `;
 const BankName = styled.span`
   width: 40%;
+  font-weight: 700;
   font-size: 1.125rem;
 `;
 const AccountNumber = styled.span`
   flex-grow: 1;
-  font-size: 1.125rem;
+  font-size: 16px;
   color: ${(props) => props.theme.colors.orange.main};
 `;
 const Balance = styled.span`
-  font-size: 1.125rem;
+  font-size: 16px;
 `;
 
-const DelAccount = styled.button`
-  color: ${(props) => props.theme.colors.gray[5]};
+const DelAccount = styled(Button)`
   border: none;
   cursor: pointer;
   margin-left: 40px;
-  background-color: transparent;
 `;
 
 const ErrorMessage = styled.span`
-  font-weight: 700;
   font-size: 1.125rem;
-  color: ${(props) => props.theme.colors.orange.main};
+  font-weight: 700;
+  color: ${theme.colors.orange.main};
 `;
 
 const AddAccount = styled(Button)`
   font-size: 1rem;
   margin-top: 10px;
-  font-weight: 700;
   transition: 0.2s;
   align-self: flex-end;
 

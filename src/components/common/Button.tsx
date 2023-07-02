@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
+import styled, { css } from "styled-components";
 
 interface IButtonProps {
   [rest: string]: any;
@@ -22,6 +22,7 @@ const StyledButton = styled.button<{
   admindel?: boolean;
   adminedit?: boolean;
   adminadd?: boolean;
+  minidel?: boolean;
 }>`
   border: none;
   outline: none;
@@ -47,6 +48,12 @@ const StyledButton = styled.button<{
     css`
       width: 160px;
       height: 2.5rem;
+      &:hover {
+        font-weight: 700;
+        transform: scale(1.04);
+        color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
+      }
     `}
   ${(rest) =>
     rest.fullWidth &&
@@ -59,9 +66,14 @@ const StyledButton = styled.button<{
     rest.login &&
     css`
       background: ${theme.colors.orange.main};
-      border-radius: 8px;
+      border-radius: 5px;
       font-size: 1rem;
-      font-weight: 700;
+      transition: 0.1s;
+      &:hover {
+        transform: scale(1.04);
+        color: ${theme.colors.white};
+        background: ${theme.colors.orange.hover};
+      }
     `}
   ${(rest) =>
     rest.register &&
@@ -93,6 +105,7 @@ const StyledButton = styled.button<{
       color: ${theme.colors.orange.main};
       border: 1px solid ${theme.colors.orange.main};
       &:hover {
+        font-weight: 700;
         transform: scale(1.04);
         color: ${theme.colors.white};
         background: ${theme.colors.orange.main};
@@ -109,6 +122,7 @@ const StyledButton = styled.button<{
       color: ${theme.colors.white};
       background-color: ${theme.colors.orange.main};
       &:hover {
+        font-weight: 700;
         transform: scale(1.04);
         color: ${theme.colors.white};
         background: ${theme.colors.orange.hover};
@@ -125,6 +139,7 @@ const StyledButton = styled.button<{
       color: ${theme.colors.white};
       background-color: ${theme.colors.orange.main};
       &:hover {
+        font-weight: 700;
         transform: scale(1.04);
         color: ${theme.colors.white};
         background: ${theme.colors.orange.hover};
@@ -142,6 +157,7 @@ const StyledButton = styled.button<{
       color: ${theme.colors.orange.main};
       border: 1px solid ${theme.colors.orange.main};
       &:hover {
+        font-weight: 700;
         transform: scale(1.04);
         color: ${theme.colors.white};
         background: ${theme.colors.orange.main};
@@ -158,9 +174,31 @@ const StyledButton = styled.button<{
       color: ${theme.colors.white};
       background-color: ${theme.colors.orange.main};
       &:hover {
+        font-weight: 700;
         color: ${theme.colors.white};
         background: ${theme.colors.orange.hover};
       }
+    `}
+  ${(rest) =>
+    rest.minidel &&
+    css`
+        width: 40px;
+  height: 20px;
+  border: none;
+  display: flex;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.1s;
+  line-height: 18px;
+  padding-right: 6px;
+  border-radius: 5px;
+  justify-content: center;
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.orange.main};
+  :hover {
+    transform: scale(1.03);
+    background-color: ${theme.colors.orange.hover};
+  }
     `}
 `;
 

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { login, register } from "../../lib/API/userAPI";
 import Button from "../common/Button";
 import Loading from "../common/Loading";
+import { theme } from "../../styles/theme";
 
 // Interface
 interface IAuthFormProps {
@@ -219,7 +220,7 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
             <>
               <RegisterForm>
                 <ProfileImage profileImg={profileImgBase64}>
-                  {profileImgBase64 ? "" : "프로필 이미지"}
+                  {profileImgBase64 ? "" : <ProfileImgs><img src="/images/AdminUser.png" alt="기본 이미지" /></ProfileImgs>}
                 </ProfileImage>
                 <RegisterInputBlock>
                   <ImageLabel>프로필 이미지</ImageLabel>
@@ -311,14 +312,28 @@ function AuthForm({ type, setUsername }: IAuthFormProps) {
 // Style
 const AuthFormBlock = styled.div`
   border-radius: 1rem;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   padding-bottom: 40px;
+  border: 1px solid ${theme.colors.gray[3]};
   h3 {
     padding-top: 30px;
     text-align: center;
     margin: 20px 0;
     font-weight: 700;
     font-size: 1.5rem;
+    font-family: 'GmarketSans';
+  }
+`;
+
+const ProfileImgs = styled.div`
+  background-color: ${theme.colors.white};
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  border-radius: 100%;
+  img {
+    border-radius: 100%;
   }
 `;
 
@@ -338,15 +353,15 @@ const Tab = styled.div`
 `;
 
 const TabButton = styled(NavLink)`
-  background: #c9c9c9;
   width: 100%;
-  height: 3.125rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ccc;
   border: none;
-  color: #777;
+  display: flex;
+  color: #b7b7b7;
+  height: 3.125rem;
+  align-items: center;
+  background: ${theme.colors.gray[2]};
+  justify-content: center;
+  /* border: 1px solid #ccc; */
   &:first-child {
     border-radius: 16px 0 0 0;
   }
@@ -379,15 +394,18 @@ const LoginInputWrapper = styled.div`
 `;
 
 const StyledInput = styled.input`
-  font-size: 0.875rem;
   outline: none;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
   width: 200px;
-  background: #ccc;
+  padding: 0.5rem;
   border-radius: 4px;
+  font-size: 0.875rem;
+  background: ${theme.colors.gray[2]};
+  border: 1px solid ${theme.colors.gray[3]};
   &:focus {
     border: 1px solid #707070;
+  }
+  &::placeholder {
+    color: ${theme.colors.gray[3]};
   }
 `;
 
@@ -399,11 +417,11 @@ const LoginError = styled.span`
 
 const ErrorMessage = styled.span`
   color: #f00;
-  font-weight: 700;
   font-size: 12px;
+  font-weight: 700;
   align-self: flex-end;
   &.success {
-    color: #00f;
+    color: #229bff;
   }
   &.failure {
     color: #f00;
@@ -412,29 +430,33 @@ const ErrorMessage = styled.span`
 
 const LoginButton = styled(Button)`
   height: 100%;
+  width: 90px;
+  font-weight: 400;
 `;
 
 // Register
 const RegisterForm = styled.div`
-  display: flex;
-  flex-direction: column;
   gap: 10px;
+  display: flex;
+  width: 330px;
+  flex-direction: column;
 `;
 
 const ProfileImage = styled.div<{ profileImg?: string }>`
   width: 120px;
   height: 120px;
+  display: flex;
+  align-self: center;
   background: #ccc;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  align-self: center;
   margin-bottom: 20px;
-  background-image: url(${(props) => props.profileImg});
+  margin-bottom: 36px;
   background-size: cover;
-  background-position: center center;
+  justify-content: center;
   border: 1px solid #ccc;
+  background-position: center center;
+  background-image: url(${(props) => props.profileImg});
 `;
 
 const RegisterInputBlock = styled.div`
@@ -447,11 +469,11 @@ const RegisterInputBlock = styled.div`
 const RegisterLabel = styled.span`
   font-size: 0.875rem;
   font-weight: 700;
-  &::before {
+  &::after {
     content: "*";
-    margin-right: 4px;
-    color: #f00;
-    font-size: 18px;
+    margin: 0 4px;
+    color: ${theme.colors.orange.main};
+    font-size: 14px;
   }
 `;
 
@@ -464,7 +486,7 @@ const ImageMessage = styled.span`
   font-size: 12px;
   color: #818181;
   &.message {
-    color: #f00;
+    color: ${theme.colors.orange.main};
   }
 `;
 
@@ -473,12 +495,21 @@ const ImageUpload = styled.input`
 `;
 
 const UploadButton = styled.label`
+  width: 60px;
+  height: 26px;
+  display: flex;
   cursor: pointer;
-  border: 1px solid #ff6214;
-  padding: 4px 8px;
-  border-radius: 30px;
-  font-size: 14px;
-  color: #ff6214;
+  font-size: 13px;
+  transition: 0.3s;
+  line-height: 24px;
+  border-radius: 20px;
+  justify-content: center;
+  color: ${theme.colors.orange.main};
+  border: 1px solid ${theme.colors.orange.main};
+  &:hover {
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.orange.main};
+  }
 `;
 
 const RegisterButton = styled(Button)`

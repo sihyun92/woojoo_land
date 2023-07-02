@@ -41,24 +41,39 @@ function MainCartOrder({ isChecked }: IChecked) {
         <PaymentPrice>
           <span>결제 금액</span>
         </PaymentPrice>
-        <hr />
+        <Line />
         <Calculator>
           <div>
-            <span>주문 금액(A)</span>
+            <span>
+              주문 금액<AbcItem>A</AbcItem>
+            </span>
             {formatDollar(orderPrice)}
           </div>
           <div>
-            <span>할인 금액(B)</span>
+            <span>
+              할인 금액<AbcItem>B</AbcItem>
+            </span>
             {formatDollar(discountedPrice)}
           </div>
           <div>
-            <span>로켓배송비(C)</span>
+            <span>
+              로켓배송비<AbcItem>C</AbcItem>
+            </span>
             {orderPrice > 0 ? <span>{formatDollar(3000)}</span> : ""}
           </div>
         </Calculator>
-        <hr />
+        <Line />
         <TotalPrice>
-          <span>총 결제 금액(A-B+C)</span>
+          <span>
+            총 결제 금액
+            <AbcContainer>
+              <div>A</div>
+              <span>-</span>
+              <div>B</div>
+              <span>+</span>
+              <div>C</div>
+            </AbcContainer>
+          </span>
           {orderPrice > 0 ? <span>{formatDollar(totalPrice)}</span> : ""}
         </TotalPrice>
       </OrderWrapper>
@@ -71,12 +86,55 @@ function MainCartOrder({ isChecked }: IChecked) {
   );
 }
 
+const AbcContainer = styled.div`
+  margin-left: 10px;
+  height: 20px;
+  display: inline-flex;
+  span {
+    margin: 0 4px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  div {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 22px;
+    border-radius: 50%;
+    justify-content: center;
+    background-color: ${theme.colors.orange.main};
+  }
+`;
+
+const Line = styled.div`
+  background-color: ${theme.colors.gray[7]};
+  height: 1px;
+`;
+
+const AbcItem = styled.div`
+  width: 16px;
+  height: 16px;
+  display: flex;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 10px;
+  line-height: 16px;
+  border-radius: 50%;
+  justify-content: center;
+  background-color: ${theme.colors.orange.main};
+`;
+
 const Container = styled.div`
   width: 100%;
 `;
 
 const OrderWrapper = styled.div`
   padding: 2rem 1rem;
+  border-radius: 5px;
   border: 1px solid ${theme.colors.gray[3]};
 `;
 
@@ -84,6 +142,7 @@ const PaymentPrice = styled.div`
   margin-bottom: 1.5rem;
   > span {
     font-size: 28px;
+    font-weight: 700;
   }
 `;
 
@@ -100,23 +159,39 @@ const Calculator = styled.div`
   > div {
     display: flex;
     justify-content: space-between;
+    span {
+      display: inline-flex;
+    }
+    span:first-child {
+      font-weight: 700;
+    }
   }
 `;
 
 const TotalPrice = styled.div`
-  margin-top: 2rem;
-  font-size: 20px;
   display: flex;
+  font-size: 20px;
+  margin-top: 2rem;
+  font-weight: 700;
+  align-items: center;
+  padding-bottom: 10px;
   justify-content: space-between;
+  span:last-child {
+    padding-top: 10px;
+    color: ${theme.colors.orange.main};
+  }
 `;
 
 const ButtonWrapper = styled.div`
   width: 100%;
-
   > button {
     width: 100%;
     height: 3rem;
+    font-size: 18px;
     margin-top: 1rem;
+    :hover {
+      background-color: ${theme.colors.orange.hover};
+    }
   }
 `;
 

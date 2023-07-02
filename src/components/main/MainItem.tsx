@@ -48,7 +48,7 @@ function MainCommet(props: IProductLike) {
             )}
 
             <PriceWrapper>
-              <Discount>{props.discountRate}%</Discount>
+              <Discount>{props.discountRate}<div>%</div></Discount>
                 <Py>
                   {typeof props.tags === "object" ? formatUnit(props.tags) : ""}
                 </Py>
