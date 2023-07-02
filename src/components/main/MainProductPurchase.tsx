@@ -43,17 +43,18 @@ const Quantity = styled.div`
 
   > span {
     font-size: 24px;
+    font-weight: 700;
   }
 `;
 
 const ButtonWrapper = styled.div`
-  gap: 2rem;
+  gap: 12px;
   display: flex;
   margin-top: 2rem;
   justify-content: center;
 
   > Button {
-    width: 170px;
+    width: 210px;
     height: 50px;
     display: flex;
     font-size: 18px;
@@ -66,6 +67,12 @@ const ButtonWrapper = styled.div`
       color: ${theme.colors.orange.main};
       background-color: ${theme.colors.white};
       border: 1px solid ${theme.colors.orange.main};
+      transition: 0.1s;
+      &:hover {
+        transform: scale(1.04);
+        color: ${theme.colors.white};
+        background: ${theme.colors.orange.main};
+      }
     }
   }
 `;
@@ -78,12 +85,14 @@ const PriceAll = styled.div`
 
   > span {
     font-size: 24px;
+    font-weight: 700;
   }
 `;
 
 const Price = styled.div`
   font-size: 2rem;
   font-weight: bold;
+  color: ${theme.colors.orange.main};
 `;
 
 export default MainProductPurchase;
