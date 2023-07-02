@@ -210,7 +210,7 @@
 ## 23.07.02
 
 - 컴포넌트 내에서 사용할 로딩 컴포넌트인 SubLoading 생성
-- AdminPage, UserPage 내에 SubLoading 추가
+- AdminPage, UserPage, MainPage(Tag) 내에 SubLoading 추가
 - 계좌 추가시 사용 가능한 계좌 목록이 바로 나오도록 처리
   - 모달 상위 컴포넌트에서 useQuery로 계좌 목록 조회 및 캐싱
   - 모달에서 캐싱된 데이터 사용
