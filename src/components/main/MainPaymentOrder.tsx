@@ -28,26 +28,33 @@ function MainPaymentOrder({
     if (res) {
       // 결제 계좌가 성공적으로 선택되었을 때
       if (accountId) {
-        // 제품 구매 신청
-        for (let i = 0; i < productIds.length; i++) {
-          orderApply(productIds[i], accountId);
-        }
+        if (typeof (await orderApply(productIds[0], accountId)) !== "string") {
+          // 제품 구매 신청
+          for (let i = 0; i < productIds.length; i++) {
+            orderApply(productIds[i], accountId);
+          }
 
-        const confirm = window.confirm(
-          "결제가 완료되었습니다. 주문내역으로 이동하시겠습니까?",
-        );
+          const confirm = window.confirm(
+            "결제가 완료되었습니다. 주문내역으로 이동하시겠습니까?",
+          );
 
-        // 확인 버튼 click 여부
-        if (confirm) {
-          navigate("/user");
+          // 확인 버튼 click 여부
+          if (confirm) {
+            navigate("/user");
+          } else {
+          }
+
+          // 결제 완료 시, 로컬 스토리지 내 장바구니 삭제
+          localStorage.removeItem(`cart_${res.email}`);
+
+          // 최종적으로 결제 후 페이지 리로드
+          window.location.reload();
         } else {
+          const confirm = window.confirm(
+            "잔액이 부족합니다. 계좌 관리 페이지로 이동하시겠습니까?",
+          );
+          if (confirm) navigate("/user/account");
         }
-
-        // 결제 완료 시, 로컬 스토리지 내 장바구니 삭제
-        localStorage.removeItem(`cart_${res.email}`);
-
-        // 최종적으로 결제 후 페이지 리로드
-        window.location.reload();
       } else {
         alert("결제 계좌를 선택하세요.");
       }
@@ -63,22 +70,29 @@ function MainPaymentOrder({
         <Line />
         <Calculator>
           <div>
-            <span>주문 금액<AbcItem>A</AbcItem></span>
+            <span>
+              주문 금액<AbcItem>A</AbcItem>
+            </span>
             {formatDollar(price)}
           </div>
           <div>
-            <span>할인 금액<AbcItem>B</AbcItem></span>
+            <span>
+              할인 금액<AbcItem>B</AbcItem>
+            </span>
             <span>{formatDollar(discountedPrice)}</span>
           </div>
           <div>
-            <span>로켓배송비<AbcItem>C</AbcItem></span>
+            <span>
+              로켓배송비<AbcItem>C</AbcItem>
+            </span>
             {price ? <span>{formatDollar(3000)}</span> : ""}
           </div>
         </Calculator>
         <Line />
         <TotalPrice>
-          <span>총 결제 금액
-          <AbcContainer>
+          <span>
+            총 결제 금액
+            <AbcContainer>
               <div>A</div>
               <span>-</span>
               <div>B</div>
