@@ -5,6 +5,7 @@ import { theme } from "../../styles/theme";
 import { useEffect, useState } from "react";
 import { userCheck, UserList } from "../../lib/API/adminAPI";
 import AdminUserPaging from "../../components/admin/AdminUserPaging";
+import SubLoading from "../../components/common/SubLoading";
 
 function UserListPage() {
   const [products, setProducts] = useState<UserList[]>([]); //리스트에 나타낼 아이템
@@ -14,6 +15,7 @@ function UserListPage() {
   const [indexOfLastPost, setIndexOfLastPost] = useState(0); //현재 페이지의 마지막 아이템 인덱스
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); //현재 페이지의 첫번째 아이템 인덱스
   const [currentPosts, setCurrentPosts] = useState<UserList[]>([]); //현재 페이지에서 보여지는 아이템
+  const [isFetching, setIsFetching] = useState(false);
 
   const setPage = (error: any) => {
     setCurrentPage(error);
@@ -21,8 +23,10 @@ function UserListPage() {
 
   useEffect(() => {
     async function fetchList() {
+      setIsFetching(true);
       try {
         const res = await userCheck();
+        setIsFetching(false);
         setProducts(res);
         setCount(res.length); //API로 받은 데이터의 갯수를 아이템의 총 개수 상태로 setCount에 전달
       } catch (error) {
@@ -42,21 +46,26 @@ function UserListPage() {
     <>
       <UserListContainer>
         <AdminTitle>사용자 조회</AdminTitle>
-        <UserContainer>
-          {currentPosts && currentPosts.length > 0 ? (
-            //(위)currentPosts와 products.length가 0보다 크면 실행한다. *모든 배열을 탐색
-            //(아래)currentPosts를 map로 반환하여 아래 AdminUserItem의 형식으로 반환
-            currentPosts.map((productData: any) => (
-              <AdminUserItem
-                email={productData.email}
-                profileImg={productData.profileImg}
-                displayName={productData.displayName}
-              />
-            ))
-          ) : (
-            <UserData>유저가 없습니다.</UserData> // 데이터가 없는 상태는 해당 문구를 출력한다.
-          )}
-        </UserContainer>
+        {isFetching ? (
+          <SubLoading />
+        ) : (
+          <UserContainer>
+            {currentPosts && currentPosts.length > 0 ? (
+              //(위)currentPosts와 products.length가 0보다 크면 실행한다. *모든 배열을 탐색
+              //(아래)currentPosts를 map로 반환하여 아래 AdminUserItem의 형식으로 반환
+              currentPosts.map((productData: any) => (
+                <AdminUserItem
+                  email={productData.email}
+                  profileImg={productData.profileImg}
+                  displayName={productData.displayName}
+                />
+              ))
+            ) : (
+              <UserData>유저가 없습니다.</UserData> // 데이터가 없는 상태는 해당 문구를 출력한다.
+            )}
+          </UserContainer>
+        )}
+
         <PageNation>
           <AdminUserPaging page={currentPage} count={count} setPage={setPage} />
         </PageNation>

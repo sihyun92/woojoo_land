@@ -6,6 +6,7 @@ import UserTitle from "../../components/user/UserTitle";
 import UserCalendar, { TValuePiece } from "../../components/user/UserCalendar";
 import UserCollapsible from "../../components/user/UserCollapsible";
 import { useQuery } from "react-query";
+import SubLoading from "../../components/common/SubLoading";
 
 export interface IOrdersDetail {
   detailId: string;
@@ -57,7 +58,7 @@ function OrderListPage() {
   );
 
   // 주문 내역 불러오기
-  useQuery("orderDetailsAll", orderDetailsAll, {
+  const { isFetching } = useQuery("orderDetailsAll", orderDetailsAll, {
     onSuccess: (res) => {
       typeof res === "string" ? setError(res) : setOrders(res);
     },
@@ -105,26 +106,31 @@ function OrderListPage() {
   return (
     <OrderRoute>
       <UserTitle>주문 내역</UserTitle>
-      <OrderListBox>
-        {error ? (
-          <ErrorMessage>{error}</ErrorMessage>
-        ) : (
-          filter.map((order: IOrdersDetail, index) => {
-            const isAccordionOpen = detailsMap.has(order.detailId);
-            const accordionDetails = detailsMap.get(order.detailId);
-            return (
-              <UserCollapsible
-                order={order}
-                key={order.detailId}
-                detailsMap={detailsMap}
-                setDetailsMap={setDetailsMap}
-                isAccordionOpen={isAccordionOpen}
-                accordionDetails={accordionDetails}
-              />
-            );
-          })
-        )}
-      </OrderListBox>
+      {isFetching ? (
+        <SubLoading />
+      ) : (
+        <OrderListBox>
+          {error ? (
+            <ErrorMessage>{error}</ErrorMessage>
+          ) : (
+            filter.map((order: IOrdersDetail, index) => {
+              const isAccordionOpen = detailsMap.has(order.detailId);
+              const accordionDetails = detailsMap.get(order.detailId);
+              return (
+                <UserCollapsible
+                  order={order}
+                  key={order.detailId}
+                  detailsMap={detailsMap}
+                  setDetailsMap={setDetailsMap}
+                  isAccordionOpen={isAccordionOpen}
+                  accordionDetails={accordionDetails}
+                />
+              );
+            })
+          )}
+        </OrderListBox>
+      )}
+
       <UserCalendar value={value} onChange={onChange} />
     </OrderRoute>
   );
@@ -133,6 +139,7 @@ function OrderListPage() {
 const OrderRoute = styled.div`
   width: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
 `;
 const OrderListBox = styled.ul`

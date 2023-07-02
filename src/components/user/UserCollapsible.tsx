@@ -86,8 +86,10 @@ function UserCollapsible({
         <OrderList>
           <Title>{order.product.title}</Title>
           <Time>{adjustDate(order.timePaid)}</Time>
-          <PriceTitle>총 주문 금액</PriceTitle>
-          <Price>{formatDollar(order.product.price)}</Price>
+          <Price>
+            <span>총 주문 금액</span>
+            <span>{formatDollar(order.product.price)}</span>
+          </Price>
           <OrderButton>
             {!order.done && !order.isCanceled ? (
               <>
@@ -180,15 +182,17 @@ const Time = styled.span`
   width: 30%;
 `;
 
-const PriceTitle = styled.span``;
-
-const Price = styled.span``;
+const Price = styled.div`
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+`;
 
 const OrderButton = styled.div`
-  padding-left: 10px;
   gap: 8px;
   width: 136px;
   display: flex;
+  padding-left: 10px;
   justify-content: center;
 `;
 
