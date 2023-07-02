@@ -5,19 +5,23 @@ import { IOrdalDetailAll, salesHistory } from "../../lib/API/adminAPI";
 import HistroyItem from "../../components/admin/AdminHistroyItem";
 import Button from "../../components/common/Button";
 import AdminTitle from "../../components/admin/AdminTitle";
+import SubLoading from "../../components/common/SubLoading";
 
 function HistoryPage() {
   const [lists, setLists] = useState<IOrdalDetailAll[]>([]);
   const [isChanged, setIsChanged] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchList = async () => {
+    setIsFetching(true);
     const res = await salesHistory();
+    setIsFetching(false);
     setLists(res);
   };
 
   useEffect(() => {
     fetchList();
-  }, [lists, isChanged]);
+  }, [isChanged]);
 
   return (
     <>
@@ -40,28 +44,32 @@ function HistoryPage() {
             새로고침
           </CancelBtn>
         </CategoryMenuContainer>
-        <ItemContainer>
-          {/* HistroyItem은 개별 아이템 영역, 현재 구매내역이 없어서 리스트 출력 불가 */}
-          {lists ? (
-            lists
-              .sort(
-                (a, b) =>
-                  new Date(b.timePaid).getTime() -
-                  new Date(a.timePaid).getTime(),
-              )
-              .map((list) => {
-                return (
-                  <HistroyItem
-                    list={list}
-                    setIsChanged={setIsChanged}
-                    key={list.detailId}
-                  />
-                );
-              })
-          ) : (
-            <ErrorMessage>거래 내역이 없습니다.</ErrorMessage>
-          )}
-        </ItemContainer>
+        {isFetching ? (
+          <SubLoading />
+        ) : (
+          <ItemContainer>
+            {/* HistroyItem은 개별 아이템 영역, 현재 구매내역이 없어서 리스트 출력 불가 */}
+            {lists ? (
+              lists
+                .sort(
+                  (a, b) =>
+                    new Date(b.timePaid).getTime() -
+                    new Date(a.timePaid).getTime(),
+                )
+                .map((list) => {
+                  return (
+                    <HistroyItem
+                      list={list}
+                      setIsChanged={setIsChanged}
+                      key={list.detailId}
+                    />
+                  );
+                })
+            ) : (
+              <ErrorMessage>거래 내역이 없습니다.</ErrorMessage>
+            )}
+          </ItemContainer>
+        )}
       </HistoryContainer>
     </>
   );
@@ -69,19 +77,21 @@ function HistoryPage() {
 
 const HistoryContainer = styled.div`
   margin: 0 30px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 // 카테고리 메뉴 스타일 시작
 const CategoryMenuContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 90px;
-  font-size: 18px;
-  font-weight: 700;
   align-items: center;
   padding-right: 1px;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  height: 90px;
+  width: 100%;
 `;
 
 const ItemBox = styled.div`
