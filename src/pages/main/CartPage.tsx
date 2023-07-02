@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { ICheckData } from "../../components/common/Header";
 import MainCartList from "../../components/main/MainCartList";
 import MainCartOrder from "../../components/main/MainCartOrder";
-import { useEffect, useState } from "react";
-import { ICheckData } from "../../components/common/Header";
-import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "react-query";
 
 function CartPage() {
   const [isChecked, setIsChecked] = useState(false);
@@ -39,7 +39,7 @@ function CartPage() {
       <Title>장바구니</Title>
       <Container>
         <CartWrapper>
-          <hr />
+          <Line />
           <MainCartList isChecked={isChecked} setIsChecked={setIsChecked} />
         </CartWrapper>
         <PurchaseWrapper>
@@ -50,13 +50,21 @@ function CartPage() {
   );
 }
 
+const Line = styled.div`
+  height: 1px;
+  margin-bottom: 1.5rem;
+  background-color: ${theme.colors.gray[3]};
+`
+
 const Title = styled.div`
   display: flex;
-  align-items: center;
+  height: 66px;
   font-size: 36px;
   font-weight: bold;
-  height: 66px;
+  align-items: center;
+  font-family: 'GmarketSans';
 `;
+
 const Container = styled.div`
   display: flex;
 `;
@@ -64,20 +72,13 @@ const Container = styled.div`
 const CartWrapper = styled.div`
   width: 800px;
   min-width: 800px;
-
-  > hr {
-    height: 1px;
-    border: 0;
-    background: ${theme.colors.gray[4]};
-    margin-bottom: 1.5rem;
-  }
 `;
 
 const PurchaseWrapper = styled.div`
   width: 384px;
   max-width: 384px;
-  margin: 8px 0 0 auto;
   max-height: 384px;
+  margin: 0 0 0 auto;
 `;
 
 export default CartPage;
