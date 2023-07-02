@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { myAccount } from "../../lib/API/userAPI";
 import styled from "styled-components";
 import { IBuyItem } from "../../modules/buyItem";
+import { theme } from "../../styles/theme";
 
 interface IBank {
   id: string; // 계좌 ID
@@ -87,11 +88,11 @@ function MainPaymentInfo({
 
   return (
     <PaymentWrapper>
-      <hr />
+      <Line />
 
       <PaymentDetail>
         <SubTitle>주문 상품</SubTitle>
-        <hr />
+        <Lines />
         <DetailWrapper>
           <ProductName>
             <span>상품 이름</span>
@@ -113,7 +114,7 @@ function MainPaymentInfo({
 
       <UserDetail>
         <SubTitle>주문자 정보</SubTitle>
-        <hr />
+        <Lines />
         <DetailWrapper>
           <UserName>
             <span>주문자 명</span>
@@ -127,7 +128,7 @@ function MainPaymentInfo({
       </UserDetail>
       <AccountDetail>
         <SubTitle>결제 수단 선택</SubTitle>
-        <hr />
+        <Lines />
         {myAccounts?.accounts
           ? myAccounts.accounts.map((account: IBank) => {
               return (
@@ -152,24 +153,38 @@ function MainPaymentInfo({
   );
 }
 
+const Line = styled.div`
+  height: 1px;
+  margin-bottom: 1.5rem;
+  background-color: ${theme.colors.gray[3]};
+`;
+
+const Lines = styled.div`
+  height: 1px;
+  margin-bottom: 1.5rem;
+  background-color: ${theme.colors.gray[7]};
+`;
+
 const PaymentWrapper = styled.div`
   width: 800px;
   min-width: 800px;
-
-  > div {
-    margin-top: 2rem;
-  }
 `;
 
-const SubTitle = styled.span`
-  font-size: 1.5rem;
+const SubTitle = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
 `;
 
 const DetailWrapper = styled.div`
+  gap: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 5px 1rem 5px 1rem;
+
+  span {
+    font-weight: 700;
+  }
 
   > div {
     display: flex;
@@ -178,25 +193,60 @@ const DetailWrapper = styled.div`
   }
 `;
 
-const PaymentDetail = styled.div``;
-const ProductName = styled.div``;
+const PaymentDetail = styled.div`
+  padding: 15px;
+  margin-left: 20px;
+  border-radius: 5px;
+  border: 1px solid ${theme.colors.gray[7]};
+`;
+const ProductName = styled.div`
+  font-size: 16px;
+`;
 const ProductPrice = styled.div``;
 const ProductQty = styled.div``;
-const UserDetail = styled.div``;
+
+const UserDetail = styled.div`
+  padding: 15px;
+  margin-top: 10px;
+  margin-left: 20px;
+  border-radius: 5px;
+  border: 1px solid ${theme.colors.gray[7]};
+`;
 const UserName = styled.div``;
 const UserMail = styled.div``;
-const AccountDetail = styled.div``;
+
+const AccountDetail = styled.div`
+  padding: 15px;
+  margin-top: 10px;
+  margin-left: 20px;
+  border-radius: 5px;
+  border: 1px solid ${theme.colors.gray[7]};
+`;
 
 const UsableAccount = styled.li`
   height: 22px;
   width: 254.5px;
   list-style: none;
   margin-bottom: 0.5rem;
-
-  input {
-    margin-right: 0.5rem;
+  input[type="radio"] {
+    width: 14px;
+    height: 14px;
+    appearance: none;
+    margin-left: 16px;
+    margin-right: 8px;
+    border-radius: 100%;
+    background-color: white;
+    border: 1px solid ${theme.colors.gray[3]};
   }
-
+  input[type="radio"]:checked {
+    border: none;
+    width: 14px;
+    height: 14px;
+    margin-left: 16px;
+    border-radius: 100%;
+    background-color: white;
+    background-color: ${theme.colors.orange.main};
+  }
   label:hover {
     cursor: pointer;
   }

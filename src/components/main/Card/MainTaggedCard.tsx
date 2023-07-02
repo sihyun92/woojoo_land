@@ -14,7 +14,7 @@ interface ITaggedCard {
 function MainTaggedCard({ title, list }: ITaggedCard) {
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title><div/>{title}</Title>
       <Wrapper>
         {list.map((item) => (
           <MainCommet
@@ -35,9 +35,18 @@ function MainTaggedCard({ title, list }: ITaggedCard) {
 const Container = styled.div``;
 
 const Title = styled.h1`
-  font-size: 3.5rem;
+  font-size: 46px;
+  display: flex;
   font-weight: bold;
-  color: ${theme.colors.orange.main};
+  font-family: 'GmarketSans';
+  color: ${theme.colors.black};
+  div{
+    width: 8px;
+    height: 43px;
+    display: flex;
+    margin-right: 10px;
+    background-color: ${theme.colors.orange.main};
+  }
 `;
 
 // const NoList = styled.div`
