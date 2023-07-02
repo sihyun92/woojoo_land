@@ -38,7 +38,7 @@ function Footer() {
         </FooterContent>
         <SocialMenu>
           <BsYoutube />
-          <BsGithub />
+          <a href="https://github.com/pildrums/KDT5-M5/tree/KDT5_TEAM8"><BsGithub /></a>
           <BsFacebook />
           <BsInstagram />
         </SocialMenu>

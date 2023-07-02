@@ -192,6 +192,7 @@ const OnCartButton = styled.button`
 `;
 
 const DeleteLikeButton = styled(Button)`
+  line-height: 18px;
   border: none;
   &:hover {
     cursor: pointer;

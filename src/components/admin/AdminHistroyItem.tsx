@@ -6,7 +6,7 @@ import { adjustDate, formatDollar } from "../../lib/Function/commonFn";
 import { Dispatch, SetStateAction } from "react";
 
 interface HistoryProps {
-  list: IOrdalDetailAll;
+  list: any;
   setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -64,39 +64,44 @@ function HistroyItem({ list, setIsChanged }: HistoryProps) {
         <TotalOrderAmount>{formatDollar(list.product.price)}</TotalOrderAmount>
         <TransactionTime>{adjustDate(list.timePaid)}</TransactionTime>
       </ItemBox>
-      {!list.done && (
-        <CancelBtn
-          admin
-          onClick={(event: MouseEvent) => {
-            handleCancel(event, list);
-          }}
-        >
-          {list.isCanceled ? `취소 해제` : `거래 취소`}
-        </CancelBtn>
-      )}
-      {!list.isCanceled && (
-        <ConfirmBtn
-          admin
-          onClick={(event: MouseEvent) => {
-            handleConfirm(event, list);
-          }}
-        >
-          {list.done ? `확정 해제` : `거래 확정`}
-        </ConfirmBtn>
-      )}
+      <BtnBox>
+        {!list.done && (
+          <CancelBtn
+            admin
+            onClick={(event: MouseEvent) => {
+              handleCancel(event, list);
+            }}
+          >
+            {list.isCanceled ? `취소 해제` : `거래 취소`}
+          </CancelBtn>
+        )}
+        {!list.isCanceled && (
+          <ConfirmBtn
+            admin
+            onClick={(event: MouseEvent) => {
+              handleConfirm(event, list);
+            }}
+          >
+            {list.done ? `확정 해제` : `거래 확정`}
+          </ConfirmBtn>
+        )}
+      </BtnBox>
     </ItemContainer>
   );
 }
 
 const ItemContainer = styled.div`
-  background-color: ${theme.colors.gray[2]};
-  border: 1px solid ${theme.colors.gray[3]};
-  border-radius: 5px;
-  font-size: 18px;
-  display: flex;
   height: 70px;
-  width: 100%;
   margin-bottom: 10px;
+  display: flex;
+  border-radius: 5px;
+  transition: 0.1s;
+  background-color: ${theme.colors.white};
+  border: 1px solid ${theme.colors.gray[7]};
+  &:hover {
+    transform: scale(0.99);
+    background-color: ${theme.colors.gray[2]};
+  }
 `;
 
 const ItemBox = styled.div`
@@ -117,7 +122,7 @@ const UserName = styled.div`
   align-items: center;
   font-size: 14px;
   display: flex;
-  width: 15%;
+  width: 13%;
 `;
 
 const Product = styled.div`
@@ -125,7 +130,7 @@ const Product = styled.div`
   align-items: center;
   font-weight: 700;
   display: flex;
-  width: 35%;
+  width: 34%;
 `;
 
 const TotalOrderAmount = styled.div`
@@ -133,7 +138,7 @@ const TotalOrderAmount = styled.div`
   align-items: center;
   font-size: 14px;
   display: flex;
-  width: 15%;
+  width: 13%;
 `;
 
 const TransactionTime = styled.div`
@@ -141,15 +146,30 @@ const TransactionTime = styled.div`
   align-items: center;
   font-size: 14px;
   display: flex;
-  width: 20%;
+  width: 24%;
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  min-width: 280px;
+  margin: auto 26px auto 0;
+  justify-content: end;
+  gap: 10px;
 `;
 
 const CancelBtn = styled(Button)`
-  margin: auto 26px auto 0;
+  width: 123px;
+  margin: auto 0 auto 0;
+  background-color: white;
+  color: ${theme.colors.orange.main};
+  border: 1px solid ${theme.colors.orange.main};
+  :hover{
+    background-color: ${theme.colors.orange.main};
+  }
 `;
 
 const ConfirmBtn = styled(Button)`
-  margin: auto 26px auto 0;
+  width: 123px;
 `;
 
 export default HistroyItem;
