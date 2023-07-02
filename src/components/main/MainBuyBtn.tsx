@@ -5,7 +5,7 @@ import { IProduct } from "../../lib/API/adminAPI";
 import { productDetail } from "../../lib/API/commonAPI";
 import Button from "../common/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import { payment } from "../../modules/payment";
+import { buyItem } from "../../modules/buyItem";
 
 interface IBuyBtn {
   quantity: number;
@@ -29,7 +29,7 @@ function MainBuyBtn({ quantity }: IBuyBtn) {
     // payment action dispatch
     dispatch(
       // payment 액션 객체를 Redux store에 전달되어 상태 업데이트
-      payment({
+      buyItem({
         productId: item.id as string,
         title: item.title as string,
         quantity: quantity,
