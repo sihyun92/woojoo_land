@@ -225,6 +225,8 @@
   - 태그 수정시 띄어쓰기가 불가능한 문제
     - input value가 updatedform.tags 인데 해당 value를 form에 추가하는 로직에서 띄어쓰기를 제거함
     - trim() 메소드 제거
+- AdminPage의 전체 거래내역의 정렬 문제 해결
+  - Pagenation을 위한 setList 내에 sort적용
 
 ## 프로젝트 회고록
 
