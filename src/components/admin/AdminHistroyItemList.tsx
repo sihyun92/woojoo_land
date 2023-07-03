@@ -39,7 +39,14 @@ function AdminHistroyItemList() {
   useEffect(() => {
     setIndexOfLastPost(currentPage * postPerPage); //현재 페이지와 한 페이지에 보여질 아이템 수를 곱하여 결과 값을 setIndexOfLastPost에 넘긴다. -> 마지막 포스트 수는 3
     setIndexOfFirstPost(indexOfLastPost - postPerPage); //indexOfLastPost의 값과 한 페이지에 보여질 아이템 수를 뺀다 그 결과를 setIndexOfFirstPost에 전달 -> 첫번째 포스트는 0
-    setLists(products.slice(indexOfFirstPost, indexOfLastPost)); //products의 배열을 현재 페이지의 첫번째와 마지막에 인덱스까지 값을 복사, 반환하여 setCurrentPosts에 전달
+    setLists(
+      products
+        .sort(
+          (a, b) =>
+            new Date(b.timePaid).getTime() - new Date(a.timePaid).getTime(),
+        )
+        .slice(indexOfFirstPost, indexOfLastPost),
+    ); //products의 배열을 현재 페이지의 첫번째와 마지막에 인덱스까지 값을 복사, 반환하여 setCurrentPosts에 전달
   }, [currentPage, indexOfLastPost, indexOfFirstPost, postPerPage, products]); //위에 기능이 끝나면 배열 안의 결과들을 한 번 실행
 
   // const [lists, setLists] = useState<IOrdalDetailAll[]>([]);
@@ -86,21 +93,15 @@ function AdminHistroyItemList() {
       ) : (
         <ItemContainer>
           {lists ? (
-            lists
-              .sort(
-                (a, b) =>
-                  new Date(b.timePaid).getTime() -
-                  new Date(a.timePaid).getTime(),
-              )
-              .map((list) => {
-                return (
-                  <HistroyItem
-                    list={list}
-                    setIsChanged={setIsChanged}
-                    key={list.detailId}
-                  />
-                );
-              })
+            lists.map((list) => {
+              return (
+                <HistroyItem
+                  list={list}
+                  setIsChanged={setIsChanged}
+                  key={list.detailId}
+                />
+              );
+            })
           ) : (
             <ErrorMessage>거래 내역이 없습니다.</ErrorMessage>
           )}
@@ -195,7 +196,6 @@ const BtnBox = styled.div`
   margin: auto 0px auto 0;
   justify-content: end;
 `;
-
 
 const CancelBtn = styled(Button)`
   margin: auto 26px auto 0;
