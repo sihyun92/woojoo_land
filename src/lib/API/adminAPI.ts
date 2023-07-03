@@ -38,6 +38,17 @@ export interface RequestBodyEdit {
   discountRate?: number; // 제품 할인율
 }
 
+export interface IEditProduct {
+  tags?: string[];
+  price?: number;
+  title?: string;
+  isSoldOut?: boolean;
+  discountRate?: number;
+  description?: string;
+  photoBase64?: string;
+  thumbnailBase64?: string;
+}
+
 export interface IOrdalDetailAll {
   detailId: string;
   user: {
@@ -196,7 +207,7 @@ const productPost = async (
 // 제품 수정
 const productEdit = async (
   id: string,
-  product: RequestBodyEdit,
+  product: IEditProduct,
   thumbnailBase64: string,
   photoBase64: string,
 ) => {
